@@ -30,5 +30,21 @@
 *.exe
 *.out
 *.app
-/TestProject/Debug/*.pdb
-/TestProject/Debug/*.idb
+
+# Other VS stuff
+*.recipe
+*.ilk
+*.log
+*.tlog
+*.lastbuildstate
+*.idb
+*.pdb
+*.exp
+*.suo
+*.db
+*.db-shm
+*.db-wal
+*.opendb
+*.testlog
+*.manifest
+*.ipch

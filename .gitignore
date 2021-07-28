@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+/TestProject/Debug/*.pdb
+/TestProject/Debug/*.idb

@@ -18,12 +18,23 @@ namespace rt {
 		this->w = w;
 	}
 
-	Tuple Tuple::operator+(Tuple t) {
-		Tuple r;
-		r.x = this->x + t.x;
-		r.y = this->y + t.y;
-		r.z = this->z + t.z;
-		r.w = this->w + t.w;
-		return r;
+	Tuple Tuple::operator+(Tuple t) const {
+		return Tuple(x + t.x, y + t.y, z + t.z, w + t.w);
+	}	
+	
+	Tuple Tuple::operator-(Tuple t) const {
+		return Tuple(x - t.x, y - t.y, z - t.z, w - t.w);
+	}
+
+	Tuple Tuple::operator-() const {
+		return Tuple(-this->x, -this->y, -this->z, -this->w);
+	}
+
+	Tuple Tuple::operator*(f32 s) const {
+		return Tuple(x * s, y * s, z * s, w * s);
+	}
+
+	Tuple Tuple::operator/(f32 s) const {
+		return Tuple(x/s, y/s, z/s, w/s);
 	}
 }

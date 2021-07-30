@@ -13,25 +13,29 @@ namespace rt {
 			Tuple() : x(0), y(0), z(0), w(0) {}
 			Tuple(f32 x, f32 y, f32 z, f32 w);
 
-			Tuple operator+(Tuple);
+			Tuple operator+(Tuple t) const;
+			Tuple operator-(Tuple t) const;
+			Tuple operator-() const;
+			Tuple operator*(f32 s) const;
+			Tuple operator/(f32 s) const;
+
+			bool isPoint() { return w == 1; }
+			bool isVector() { return w == 0; }
 
 			f32 x;
 			f32 y;
 			f32 z;
 			f32 w;
-
 	};
 
 	class Point : public Tuple {
 		public:
-			Point(f32 x, f32 y, f32 z) : Tuple(x, y, z, 1.0f) {
-			}
+			Point(f32 x, f32 y, f32 z) : Tuple(x, y, z, 1.0f) {}
 	};
 
 	class Vector : public Tuple {
 		public:
-			Vector(f32 x, f32 y, f32 z) : Tuple(x, y, z, 0.0f) {
-			}
+			Vector(f32 x, f32 y, f32 z) : Tuple(x, y, z, 0.0f) {}
 	};
 }
 

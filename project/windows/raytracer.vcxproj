@@ -146,10 +146,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\rtDefs.hpp" />
+    <ClInclude Include="..\..\src\rtLog.hpp" />
     <ClInclude Include="..\..\src\rtTuple.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\rtMain.cpp" />
     <ClCompile Include="..\..\src\rtTuple.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

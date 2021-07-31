@@ -147,7 +147,75 @@ namespace TestProject
 			Assert::AreEqual(t2.w, -2.0f);
 		}
 
+		TEST_METHOD(VectorMagnitude)
+		{
+			rt::Vector v1(1, 0, 0);
+			Assert::AreEqual(v1.magnitude(), 1.0f);
 
+			rt::Vector v2(0, 1, 0);
+			Assert::AreEqual(v2.magnitude(), 1.0f);
+
+			rt::Vector v3(0, 0, 1);
+			Assert::AreEqual(v3.magnitude(), 1.0f);
+
+			rt::Vector v4(1, 2, 3);
+			Assert::AreEqual(v4.magnitude(), std::sqrt(14.0f));
+
+			rt::Vector v5(-1, -2, -3);
+			Assert::AreEqual(v5.magnitude(), std::sqrt(14.0f));
+		}
+
+		TEST_METHOD(VectorNormalization)
+		{
+			rt::Vector v1(4, 0, 0);
+
+			rt::Tuple r1 = v1.normalize();
+			Assert::AreEqual(r1.x, 1.0f);
+			Assert::AreEqual(r1.y, 0.0f);
+			Assert::AreEqual(r1.z, 0.0f);
+
+			rt::Vector r2 = v1.normalize();
+			Assert::AreEqual(r2.x, 1.0f);
+			Assert::AreEqual(r2.y, 0.0f);
+			Assert::AreEqual(r2.z, 0.0f);
+
+			rt::Vector v2(1, 2, 3);
+			rt::Vector r3 = v2.normalize();
+			Assert::AreEqual(r3.x, 1.0f/sqrt(14.0f));
+			Assert::AreEqual(r3.y, 2.0f/sqrt(14.0f));
+			Assert::AreEqual(r3.z, 3.0f/sqrt(14.0f));
+		}
+
+		TEST_METHOD(MagnitudeOfNormalizedVector)
+		{
+			rt::Vector v1(4, 0, 0);
+			rt::Vector r1 = v1.normalize();
+			Assert::AreEqual(r1.magnitude(), 1.0f);
+		}
+
+		TEST_METHOD(DotProduct) 
+		{
+			rt::Vector v1(1, 2, 3);
+			rt::Vector v2(2, 3, 4);
+			Assert::AreEqual(v1.dot(v2), 20.0f);
+
+		}		
+		
+		TEST_METHOD(CrossProduct) 
+		{
+			rt::Vector v1(1, 2, 3);
+			rt::Vector v2(2, 3, 4);
+
+			rt::Vector r1 = v1.cross(v2);
+			Assert::AreEqual(r1.x, -1.0f);
+			Assert::AreEqual(r1.y, 2.0f);
+			Assert::AreEqual(r1.z, -1.0f);
+
+			rt::Vector r2 = v2.cross(v1);
+			Assert::AreEqual(r2.x, 1.0f);
+			Assert::AreEqual(r2.y, -2.0f);
+			Assert::AreEqual(r2.z, 1.0f);
+		}
 
 	};
 }

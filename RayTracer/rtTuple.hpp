@@ -19,6 +19,9 @@ namespace rt {
 			Tuple operator*(f32 s) const;
 			Tuple operator/(f32 s) const;
 
+			f32 magnitude() const;
+			Tuple normalize() const;
+
 			bool isPoint() { return w == 1; }
 			bool isVector() { return w == 0; }
 
@@ -36,6 +39,9 @@ namespace rt {
 	class Vector : public Tuple {
 		public:
 			Vector(f32 x, f32 y, f32 z) : Tuple(x, y, z, 0.0f) {}
+			Vector normalize() const;
+			f32 dot(Vector b) const;
+			Vector cross(Vector b) const;
 	};
 }
 

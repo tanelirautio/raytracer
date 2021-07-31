@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include "../RayTracer/rtTuple.hpp"
+#include "../../src/rtTuple.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

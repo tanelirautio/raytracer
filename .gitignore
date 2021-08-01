@@ -48,3 +48,4 @@
 *.testlog
 *.manifest
 *.ipch
+*.FileListAbsolute.txt

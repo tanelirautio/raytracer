@@ -2,7 +2,6 @@
 #define __RT_DEFS_HPP__
 
 #include <cstdint>
-#include <cstdlib> //abs
 
 // ignore warning "conversion from <sometype> to <othertype>: possible loss of data"
 #pragma warning( disable : 4244 ) 

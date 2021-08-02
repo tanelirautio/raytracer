@@ -34,10 +34,7 @@ namespace TestProject
 		{
 			rt::Point p(4, -4, 3);
 			rt::Tuple t(4, -4, 3, 1);
-			Assert::AreEqual(p.x(), t.x());
-			Assert::AreEqual(p.y(), t.y());
-			Assert::AreEqual(p.z(), t.z());
-			Assert::AreEqual(p.w(), t.w());
+			Assert::IsTrue(p == t);
 			Assert::AreEqual(p.isPoint(), true);
 		}		
 		
@@ -185,10 +182,38 @@ namespace TestProject
 		TEST_METHOD(Color_Assign)
 		{
 			rt::Color c(-0.5f, 0.4f, 1.7f);
-			Assert::AreEqual(c.x(), -0.5f);
 			Assert::AreEqual(c.r(), -0.5f);
-			//Assert::AreEqual(c.g, 0.4f);
-			//Assert::AreEqual(c.b, 1.7f);
+			Assert::AreEqual(c.g(), 0.4f);
+			Assert::AreEqual(c.b(), 1.7f);
 		}
+
+		TEST_METHOD(Color_Add)
+		{
+			rt::Color c1(0.9f, 0.6f, 0.75f);
+			rt::Color c2(0.7f, 0.1f, 0.25f);
+			Assert::IsTrue(c1 + c2 == rt::Color(1.6f, 0.7f, 1.0f));
+		}
+
+		TEST_METHOD(Color_Substract)
+		{
+			rt::Color c1(0.9f, 0.6f, 0.75f);
+			rt::Color c2(0.7f, 0.1f, 0.25f);
+			Assert::IsTrue(c1 - c2 == rt::Color(0.2f, 0.5f, 0.5f));
+		}
+
+		TEST_METHOD(Color_MultiplyWithScalar)
+		{
+			rt::Color c(0.2f, 0.3f, 0.4f);
+			Assert::IsTrue(c*2 == rt::Color(0.4f, 0.6f, 0.8f));
+		}
+
+		TEST_METHOD(Color_MultiplyWithColor)
+		{
+			rt::Color c1(1.0f, 0.2f, 0.4f);
+			rt::Color c2(0.9f, 1.0f, 0.1f);
+			Assert::IsTrue(c1*c2 == rt::Color(0.9f, 0.2f, 0.04f));
+		}
+
+
 	};
 }

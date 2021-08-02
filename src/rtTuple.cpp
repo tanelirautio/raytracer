@@ -6,16 +6,14 @@
 namespace rt {
 
 	//TODO: move to math class
-	bool equal(f32 a, f32 b)
-	{
+	bool equal(f32 a, f32 b) {
 		if (std::abs(a - b) < EPSILON) {
 			return true;
 		}
 		return false;
 	}
 
-	bool operator==(const Tuple lhs, const Tuple rhs)
-	{
+	bool operator==(const Tuple lhs, const Tuple rhs) {
 		return equal(lhs.x(), rhs.x()) &&
 			equal(lhs.y(), rhs.y()) &&
 			equal(lhs.z(), rhs.z()) &&
@@ -42,34 +40,16 @@ namespace rt {
 		return Tuple(t.x() / s, t.y() / s, t.z() / s, t.w() / s);
 	}
 
+	Color operator*(const Color lhs, const Color rhs) {
+		return Color(lhs.r() * rhs.r(), lhs.g() * rhs.g(), lhs.b() * rhs.b());
+	}
+
 	Tuple::Tuple(f32 x, f32 y, f32 z, f32 w) {
 		m_x = x;
 		m_y = y;
 		m_z = z;
 		m_w = w;
 	}
-
-	/*
-	Tuple Tuple::operator+(Tuple t) const {
-		return Tuple(x + t.x, y + t.y, z + t.z, w + t.w);
-	}	
-	
-	Tuple Tuple::operator-(Tuple t) const {
-		return Tuple(x - t.x, y - t.y, z - t.z, w - t.w);
-	}
-
-	Tuple Tuple::operator-() const {
-		return Tuple(-this->x, -this->y, -this->z, -this->w);
-	}
-
-	Tuple Tuple::operator*(f32 s) const {
-		return Tuple(x * s, y * s, z * s, w * s);
-	}
-
-	Tuple Tuple::operator/(f32 s) const {
-		return Tuple(x / s, y / s, z / s, w / s);
-	}
-	*/
 
 	f32 Tuple::magnitude() const {
 		return std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z + m_w * m_w);

@@ -17,6 +17,7 @@ namespace TestProject
 			Assert::AreEqual(a.x(), 0.0f);
 			Assert::AreEqual(a.y(), 0.0f);
 			Assert::AreEqual(a.z(), 0.0f);
+			Assert::AreEqual(a.z(), 0.0f);
 			Assert::AreEqual(a.w(), 0.0f);
 		}
 
@@ -27,7 +28,7 @@ namespace TestProject
 			Assert::AreEqual(a.y(), -4.2f);
 			Assert::AreEqual(a.z(), 3.1f);
 			Assert::AreEqual(a.w(), 1.0f);
-			Assert::AreEqual(a.isPoint(), true);
+			Assert::AreEqual(a.is_point(), true);
 		}
 
 		TEST_METHOD(Tuple_PointCreateTuplesWithW1)
@@ -35,7 +36,7 @@ namespace TestProject
 			rt::Point p(4, -4, 3);
 			rt::Tuple t(4, -4, 3, 1);
 			Assert::IsTrue(p == t);
-			Assert::AreEqual(p.isPoint(), true);
+			Assert::AreEqual(p.is_point(), true);
 		}		
 		
 		TEST_METHOD(Tuple_VectorCreateTuplesWithW0)
@@ -43,7 +44,7 @@ namespace TestProject
 			rt::Vector v(4, -4, 3);
 			rt::Tuple t(4, -4, 3, 0);
 			Assert::IsTrue(v == t);
-			Assert::AreEqual(v.isVector(), true);
+			Assert::AreEqual(v.is_vector(), true);
 		}
 
 		TEST_METHOD(Tuple_AddTwoTuples)
@@ -60,7 +61,7 @@ namespace TestProject
 			rt::Point p2(5, 6, 7);
 			rt::Tuple t1 = p1 - p2;
 			Assert::IsTrue(t1 == rt::Tuple(-2, -4, -6, 0));
-			Assert::AreEqual(t1.isVector(), true);
+			Assert::AreEqual(t1.is_vector(), true);
 		}
 		
 		TEST_METHOD(Tuple_SubtractVectorFromPoint)
@@ -69,7 +70,7 @@ namespace TestProject
 			rt::Vector v1(5, 6, 7);
 			rt::Tuple t1 = p1 - v1;
 			Assert::IsTrue(t1 == rt::Tuple(-2, -4, -6, 1));
-			Assert::AreEqual(t1.isPoint(), true);
+			Assert::AreEqual(t1.is_point(), true);
 		}
 		
 		TEST_METHOD(Tuple_SubtractTwoVectors)
@@ -78,7 +79,7 @@ namespace TestProject
 			rt::Vector v2(5, 6, 7);
 			rt::Tuple t1 = v1 - v2;
 			Assert::IsTrue(t1 == rt::Tuple(-2, -4, -6, 0));
-			Assert::AreEqual(t1.isVector(), true);
+			Assert::AreEqual(t1.is_vector(), true);
 		}
 
 		TEST_METHOD(Tuple_SubtractVectorFromZeroVector)
@@ -87,7 +88,7 @@ namespace TestProject
 			rt::Vector v1(1, -2, 3);
 			rt::Tuple t1 = zero - v1;
 			Assert::IsTrue(t1 == rt::Vector(-1, 2, -3));
-			Assert::AreEqual(t1.isVector(), true);
+			Assert::AreEqual(t1.is_vector(), true);
 		}
 
 		TEST_METHOD(Tuple_Negate)

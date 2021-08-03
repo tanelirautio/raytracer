@@ -16,8 +16,8 @@ namespace rt {
 			f32 magnitude() const;
 			Tuple normalize() const;
 
-			bool isPoint() const { return m_w == 1; }
-			bool isVector() const { return m_w == 0; }
+			bool is_point() const { return m_w == 1; }
+			bool is_vector() const { return m_w == 0; }
 
 			f32 x() const { return m_x; }
 			f32 y() const { return m_y; }

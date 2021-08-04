@@ -4,6 +4,7 @@
 #include "rtDefs.hpp"
 #include "rtTuple.hpp"
 
+#include <string>
 #include <vector>
 
 namespace rt {
@@ -16,6 +17,7 @@ namespace rt {
 
 			void write_pixel(i32 x, i32 y, const rt::Color& c);
 			rt::Color pixel_at(i32 x, i32 y) const;
+			std::string canvas_to_ppm() const;
 		private:
 			i32 m_width;
 			i32 m_height;

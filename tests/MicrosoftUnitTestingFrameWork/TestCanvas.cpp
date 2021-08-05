@@ -46,18 +46,17 @@ namespace TestProject
 		{
 			rt::Canvas c(5, 3);
 			auto data = c.canvas_to_ppm();
+
+			//TODO: write file and read file for asserting instead
 			auto lines = split_string_by_newline(data);
 
-			for (int i = 0; i < 3; i++) {
-				Assert::AreEqual(lines[0].c_str(), "P3");
-				Assert::AreEqual(lines[1].c_str(), "5 3");
-				Assert::AreEqual(lines[2].c_str(), "255");
-			}
+			Assert::AreEqual(lines[0].c_str(), "P3");
+			Assert::AreEqual(lines[1].c_str(), "5 3");
+			Assert::AreEqual(lines[2].c_str(), "255");
 		}
 
 		TEST_METHOD(Canvas_ConstructPPMPixelData) 
 		{
-			
 			rt::Canvas c(5, 3);
 			rt::Color c1(1.5f, 0, 0);
 			rt::Color c2(0, 0.5f, 0);
@@ -68,13 +67,35 @@ namespace TestProject
 			c.write_pixel(4, 2, c3);
 
 			auto data = c.canvas_to_ppm();
+
+			//TODO: write file and read file for asserting instead
 			auto lines = split_string_by_newline(data);
 
-			for (int i = 3; i < 6; i++) {
-				Assert::AreEqual(lines[3].c_str(), "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
-				Assert::AreEqual(lines[4].c_str(), "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0");
-				Assert::AreEqual(lines[5].c_str(), "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255");
+			Assert::AreEqual(lines[3].c_str(), "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
+			Assert::AreEqual(lines[4].c_str(), "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0");
+			Assert::AreEqual(lines[5].c_str(), "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255");
+		}		
+		
+		TEST_METHOD(Canvas_SplittingLongLinesInPPMFiles) 
+		{
+			rt::Canvas c(10, 2);
+			rt::Color c1(1.0f, 0.8f, 0.6f);
+
+			for (int y = 0; y < c.get_height(); y++) {
+				for (int x = 0; x < c.get_width(); x++) {
+					c.write_pixel(x, y, c1);
+				}
 			}
+
+			auto data = c.canvas_to_ppm();
+
+			//TODO: write file and read file for asserting instead
+			auto lines = split_string_by_newline(data);
+
+			Assert::AreEqual(lines[3].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153");
+			Assert::AreEqual(lines[4].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153");
+			Assert::AreEqual(lines[5].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153");
+			Assert::AreEqual(lines[6].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153");	
 		}
 
 

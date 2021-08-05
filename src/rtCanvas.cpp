@@ -65,7 +65,6 @@ namespace rt {
 		std::ostringstream imploded;
 		std::copy(data.begin(), data.end(), std::ostream_iterator<std::string>(imploded, delim));
 
-
 		return header + imploded.str();
 	}
 

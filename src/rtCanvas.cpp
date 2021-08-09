@@ -17,11 +17,19 @@ namespace rt {
 	}
 
 	void Canvas::write_pixel(i32 x, i32 y, const rt::Color& c)  {
-		m_data[x + y * m_width] = c;
+		i32 v = x + y * m_width;
+		if (v < 0 || v > m_data.size()) {
+			return;
+		}
+		m_data[v] = c;
 	}
 
 	rt::Color Canvas::pixel_at(i32 x, i32 y) const {
-		return m_data[x + y * m_width];
+		i32 v = x + y * m_width;
+		if (v < 0 || v > m_data.size()) {
+			return rt::get_color_black();
+		}
+		return m_data[v];
 	}
 
 	std::string Canvas::canvas_to_ppm() const {
@@ -41,18 +49,23 @@ namespace rt {
 				g = std::clamp(g, 0, 255);
 				b = std::clamp(b, 0, 255);
 
-				std::string entry = std::to_string(r) + " " + std::to_string(g) + " " + std::to_string(b);
+				std::vector<std::string> rgb_str;
+				rgb_str.emplace_back(std::to_string(r));
+				rgb_str.emplace_back(std::to_string(g));
+				rgb_str.emplace_back(std::to_string(b));
 
-				if (current_line.size() + entry.size() + 2 > PPM_MAX_LINE_LENGTH) {
-					data.emplace_back(current_line);
-					current_line.clear();
-					current_line = entry;
-				}
-				else if (current_line.empty()) {
-					current_line = entry;
-				}
-				else {
-					current_line += " " + entry;
+				for (auto& str : rgb_str) {
+					if (current_line.size() + str.size() + 2 > PPM_MAX_LINE_LENGTH) {
+						data.emplace_back(current_line);
+						current_line.clear();
+						current_line = str;
+					}
+					else if (current_line.empty()) {
+						current_line = str;
+					}
+					else {
+						current_line += " " + str;
+					}
 				}
 			}
 

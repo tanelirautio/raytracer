@@ -46,8 +46,6 @@ namespace TestProject
 		{
 			rt::Canvas c(5, 3);
 			auto data = c.canvas_to_ppm();
-
-			//TODO: write file and read file for asserting instead
 			auto lines = split_string_by_newline(data);
 
 			Assert::AreEqual(lines[0].c_str(), "P3");
@@ -67,8 +65,6 @@ namespace TestProject
 			c.write_pixel(4, 2, c3);
 
 			auto data = c.canvas_to_ppm();
-
-			//TODO: write file and read file for asserting instead
 			auto lines = split_string_by_newline(data);
 
 			Assert::AreEqual(lines[3].c_str(), "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
@@ -88,14 +84,20 @@ namespace TestProject
 			}
 
 			auto data = c.canvas_to_ppm();
-
-			//TODO: write file and read file for asserting instead
 			auto lines = split_string_by_newline(data);
 
-			Assert::AreEqual(lines[3].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153");
-			Assert::AreEqual(lines[4].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153");
-			Assert::AreEqual(lines[5].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153");
-			Assert::AreEqual(lines[6].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153");	
+			Assert::AreEqual(lines[3].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204");
+			Assert::AreEqual(lines[4].c_str(), "153 255 204 153 255 204 153 255 204 153 255 204 153");
+			Assert::AreEqual(lines[5].c_str(), "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204");
+			Assert::AreEqual(lines[6].c_str(), "153 255 204 153 255 204 153 255 204 153 255 204 153");	
+		}
+
+		TEST_METHOD(Canvas_FilesAreTerminatedWithNewline)
+		{
+			rt::Canvas c(5, 3);
+			auto data = c.canvas_to_ppm();
+
+			Assert::AreEqual(data.back(), '\n');
 		}
 
 

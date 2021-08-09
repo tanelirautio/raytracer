@@ -14,23 +14,50 @@ std::vector<std::string> split_string_by_newline(const std::string& str)
 	return result;
 }
 
+struct Proj {
+	Proj(rt::Point pos, rt::Vector vel) {
+		this->pos = pos;
+		this->vel = vel;
+	}
+	rt::Point pos;
+	rt::Vector vel;
+};
+
+struct Env {
+	Env(rt::Vector grav, rt::Vector wind) {
+		this->grav = grav;
+		this->wind = wind;
+	}
+	rt::Vector grav;
+	rt::Vector wind;
+};
+
+Proj tick(Env& e, Proj& p) {
+	auto pos = p.pos + p.vel;
+	auto vel = p.vel + e.grav + e.wind;
+	return Proj(pos, vel);
+}
+
 int main() {
 
-	rt::Canvas c(10, 2);
-	rt::Color c1(1.0f, 0.8f, 0.6f);
+	rt::Vector vel = rt::Vector(6, 6, 0);
+	vel.normalize();
+	//vel = vel * 11.25f;
 
-	for (int y = 0; y < c.get_height(); y++) {
-		for (int x = 0; x < c.get_width(); x++) {
-			c.write_pixel(x, y, c1);
-		}
+	Proj p(rt::Point(0, 1, 0), vel);
+	Env e(rt::Vector(0, -0.1f, 0), rt::Vector(-0.01f, 0, 0));
+
+	rt::Canvas c(900, 550);
+
+	LOG("P (x, y): (%f, %f) ", p.pos.x(), p.pos.y());
+	c.write_pixel(p.pos.x(), p.pos.y(), rt::get_color_white());
+
+	while (p.pos.y() > 0) {
+		p = tick(e, p);
+		LOG("P (x, y): (%f, %f) ", p.pos.x(), p.pos.y());
+		c.write_pixel(p.pos.x(), c.get_height() - p.pos.y(), rt::get_color_white());
 	}
 
-	auto data = c.canvas_to_ppm();
-	auto lines = split_string_by_newline(data);
-
-	for (auto& line : lines) {
-		LOG("%s", line.c_str());
-	}
-
+	rt::File::write("plot.ppm", c.canvas_to_ppm());
 	return 0;
 }

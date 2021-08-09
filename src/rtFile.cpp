@@ -12,7 +12,7 @@ namespace rt {
 		return buffer.str();
 	}
 
-	void File::write(const std::string& filename, std::string& data) {
+	void File::write(const std::string& filename, const std::string& data) {
 		std::ofstream out(filename);
 		out << data << std::endl;
 		out.close();

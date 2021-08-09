@@ -44,6 +44,14 @@ namespace rt {
 		return Color(lhs.r() * rhs.r(), lhs.g() * rhs.g(), lhs.b() * rhs.b());
 	}
 
+	Color get_color_white() {
+		return Color(1,1,1);
+	}
+
+	Color get_color_black() {
+		return Color(0,0,0);
+	}
+
 	Tuple::Tuple(f32 x, f32 y, f32 z, f32 w) {
 		m_x = x;
 		m_y = y;

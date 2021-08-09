@@ -62,6 +62,10 @@ namespace rt {
 	};
 
 	Color operator*(const Color lhs, const Color rhs);
+
+	Color get_color_white();
+	Color get_color_black();
+
 }
 
 #endif

@@ -151,12 +151,14 @@
     <ClInclude Include="..\..\src\rtLog.hpp" />
     <ClInclude Include="..\..\src\rtMatrix.hpp" />
     <ClInclude Include="..\..\src\rtTuple.hpp" />
+    <ClInclude Include="..\..\src\rtUtil.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\rtCanvas.cpp" />
     <ClCompile Include="..\..\src\rtFile.cpp" />
     <ClCompile Include="..\..\src\rtMatrix.cpp" />
     <ClCompile Include="..\..\src\rtTuple.cpp" />
+    <ClCompile Include="..\..\src\rtUtil.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

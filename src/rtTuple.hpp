@@ -4,10 +4,6 @@
 #include "rtDefs.hpp"
 
 namespace rt {
-
-	//TODO move to math class
-	bool equal(f32 a, f32 b); 
-
 	class Tuple {
 		public:
 			Tuple() : m_x(0), m_y(0), m_z(0), m_w(0) {}
@@ -27,12 +23,12 @@ namespace rt {
 			f32 m_x, m_y, m_z, m_w;
 	};
 
-	bool operator==(const Tuple lhs, const Tuple rhs);
-	Tuple operator+(const Tuple lhs, const Tuple rhs);
-	Tuple operator-(const Tuple lhs, const Tuple rhs);
-	Tuple operator-(const Tuple t);
-	Tuple operator*(const Tuple t, f32 s);
-	Tuple operator/(const Tuple t, f32 s);
+	bool operator==(const Tuple& lhs, const Tuple& rhs);
+	Tuple operator+(const Tuple& lhs, const Tuple& rhs);
+	Tuple operator-(const Tuple& lhs, const Tuple& rhs);
+	Tuple operator-(const Tuple& t);
+	Tuple operator*(const Tuple& t, f32 s);
+	Tuple operator/(const Tuple& t, f32 s);
 
 	class Point : public Tuple {
 		public:
@@ -61,7 +57,7 @@ namespace rt {
 			f32 b() const { return z(); }
 	};
 
-	Color operator*(const Color lhs, const Color rhs);
+	Color operator*(const Color& lhs, const Color& rhs);
 
 	Color get_color_white();
 	Color get_color_black();

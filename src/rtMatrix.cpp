@@ -1,4 +1,5 @@
 #include "rtMatrix.hpp"
+#include "rtUtil.hpp"
 
 namespace rt {
 
@@ -23,11 +24,34 @@ namespace rt {
 		}
 	}
 
-	f32 Matrix::at(i32 row, i32 col) {
+	f32 Matrix::at(i32 row, i32 col) const {
 		//TODO: sanity check
 		return m_matrix[row][col];
 	}
 
+	std::pair<f32, f32> Matrix::get_size() const {
+		return std::pair<f32, f32>(std::make_pair(m_rows, m_cols));
+	}
 
+	bool operator==(const Matrix& lhs, const Matrix& rhs) {
+		if (lhs.get_size() != rhs.get_size()) {
+			return false;
+		}
+		
+		const auto& size = lhs.get_size();
+		for (i32 r = 0; r < size.first; r++) {
+			for (i32 c = 0; c < size.second; c++) {
+				if (!equal(lhs.at(r, c), rhs.at(r, c))) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	bool operator!=(const Matrix& lhs, const Matrix& rhs) {
+		return !(lhs == rhs);
+	}
 
 }

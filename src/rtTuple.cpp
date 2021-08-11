@@ -1,46 +1,37 @@
 #include "rtTuple.hpp"
-#include "rtTuple.hpp"
+#include "rtUtil.hpp"
 
 #include <cmath>
 
 namespace rt {
-
-	//TODO: move to math class
-	bool equal(f32 a, f32 b) {
-		if (std::abs(a - b) < EPSILON) {
-			return true;
-		}
-		return false;
-	}
-
-	bool operator==(const Tuple lhs, const Tuple rhs) {
+	bool operator==(const Tuple& lhs, const Tuple& rhs) {
 		return equal(lhs.x(), rhs.x()) &&
 			equal(lhs.y(), rhs.y()) &&
 			equal(lhs.z(), rhs.z()) &&
 			equal(lhs.w(), rhs.w());
 	}
 
-	Tuple operator+(const Tuple lhs, const Tuple rhs) {
+	Tuple operator+(const Tuple& lhs, const Tuple& rhs) {
 		return Tuple(lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z(), lhs.w() + rhs.w());
 	}
 
-	Tuple operator-(const Tuple lhs, const Tuple rhs) {
+	Tuple operator-(const Tuple& lhs, const Tuple& rhs) {
 		return Tuple(lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z(), lhs.w() - rhs.w());
 	}
 
-	Tuple operator-(const Tuple t) {
+	Tuple operator-(const Tuple& t) {
 		return Tuple(-t.x(), -t.y(), -t.z(), -t.w());
 	}
 
-	Tuple operator*(const Tuple t, f32 s) {
+	Tuple operator*(const Tuple& t, f32 s) {
 		return Tuple(t.x() * s, t.y() * s, t.z() * s, t.w() * s);
 	}
 
-	Tuple operator/(const Tuple t, f32 s) {
+	Tuple operator/(const Tuple& t, f32 s) {
 		return Tuple(t.x() / s, t.y() / s, t.z() / s, t.w() / s);
 	}
 
-	Color operator*(const Color lhs, const Color rhs) {
+	Color operator*(const Color& lhs, const Color& rhs) {
 		return Color(lhs.r() * rhs.r(), lhs.g() * rhs.g(), lhs.b() * rhs.b());
 	}
 

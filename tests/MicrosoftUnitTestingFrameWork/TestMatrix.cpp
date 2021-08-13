@@ -135,17 +135,47 @@ namespace TestProject
 											4, 8, 16, 32 };
 
 			rt::Matrix A(4, 4, values_A);
-			rt::Matrix B = rt::Matrix::get_identity();
+			rt::Matrix B = rt::get_identity_matrix(4);
 			Assert::IsTrue(A * B == A);
 		}
 
 		TEST_METHOD(Matrix_Identity_Matrix_Multiplied_With_Tuple)
 		{
-			rt::Matrix A = rt::Matrix::get_identity();
+			rt::Matrix A = rt::get_identity_matrix(4);
 			rt::Tuple B(1, 2, 3, 4);
 			Assert::IsTrue(A * B == B);
 		}
+		
+		TEST_METHOD(Matrix_Transpose_Matrix)
+		{
+			std::vector<float> values_A = { 0, 9, 3, 0,
+											9, 8, 0, 8,
+											1, 8, 5, 3,
+											0, 0, 5, 8 };
 
+			std::vector<float> values_B = { 0, 9, 1, 0,
+											9, 8, 8, 0,
+											3, 0, 5, 5,
+											0, 8, 3, 8 };
 
+			rt::Matrix A(4, 4, values_A);
+			rt::Matrix B(4, 4, values_B);
+
+			Assert::IsTrue(A.transpose() == B);
+		}
+
+		TEST_METHOD(Matrix_Transpose_Identity_Matrix)
+		{
+			std::vector<float> values_I = { 1, 0, 0, 0,
+											0, 1, 0, 0,
+											0, 0, 1, 0,
+											0, 0, 0, 1 };
+
+			rt::Matrix A = rt::get_identity_matrix(4);
+			rt::Matrix I(4, 4, values_I);
+
+			Assert::IsTrue(A.transpose() == rt::get_identity_matrix(4));
+			Assert::IsTrue(A.transpose() == I);
+		}
 	};
 }

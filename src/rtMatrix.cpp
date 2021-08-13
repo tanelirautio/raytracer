@@ -1,5 +1,7 @@
 #include "rtMatrix.hpp"
+#include "rtMatrix.hpp"
 #include "rtUtil.hpp"
+#include "rtLog.hpp"
 
 namespace rt {
 
@@ -13,7 +15,6 @@ namespace rt {
 	}
 
 	Matrix::Matrix(i32 rows, i32 cols, std::vector<f32> values) : Matrix(rows, cols) {
-		//TODO: sanity check for values
 		i32 i = 0;
 		for (i32 r = 0; r < m_size.rows(); r++) {
 			for (i32 c = 0; c < m_size.cols(); c++) {
@@ -24,20 +25,49 @@ namespace rt {
 	}
 
 	f32 Matrix::at(i32 row, i32 col) const {
-		//TODO: sanity check
 		return m_matrix[row][col];
+	}
+
+	void Matrix::set(i32 row, i32 col, f32 value) {
+		m_matrix[row][col] = value;
 	}
 
 	Matrix::MatrixSize Matrix::get_size() const {
 		return m_size;
 	}
 
-	Matrix Matrix::get_identity() {
-		std::vector<f32> v{ 1, 0, 0, 0,
-							0, 1, 0, 0,
-							0, 0, 1, 0,
-							0, 0, 0, 1 };
-		return Matrix(4, 4, v);
+	Matrix Matrix::transpose() {
+		Matrix transposed = Matrix(get_size().cols(), get_size().rows());
+				
+		for (i32 r = 0; r < get_size().rows(); r++) {
+			for (i32 c = 0; c < get_size().cols(); c++) {
+				transposed.set(c, r, at(r,c));
+			}
+		}
+
+		return transposed;
+	}
+
+	void Matrix::print() {
+		std::string row;
+
+		for (i32 r = 0; r < m_size.rows(); r++) {
+			for (i32 c = 0; c < m_size.cols(); c++) {
+				f32 value = m_matrix[r][c];
+				row += std::to_string(value) + " ";
+			}
+			LOG("%s", row.c_str());
+			row.clear();
+		}
+
+	}
+
+	Matrix get_identity_matrix(i32 dimension) {
+		Matrix identity = Matrix(dimension, dimension);
+		for (i32 i = 0; i < dimension; i++) {
+			identity.set(i, i, 1);
+		}
+		return identity;
 	}
 
 	bool operator==(const Matrix& lhs, const Matrix& rhs) {

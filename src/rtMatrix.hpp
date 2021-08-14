@@ -26,8 +26,10 @@ namespace rt {
 			MatrixSize get_size() const;
 
 			Matrix transpose();
+			f32 determinant() const;
+			Matrix submatrix(i32 row, i32 col) const;
 
-			void print();
+			void debug_print();
 
 		private:
 			std::vector<std::vector<f32>> m_matrix;

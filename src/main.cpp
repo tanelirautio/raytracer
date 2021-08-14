@@ -23,15 +23,15 @@ int main() {
 	rt::Matrix D = B.transpose();
 
 	LOG("---");
-	A.print();
+	A.debug_print();
 	LOG("---");
-	C.print();
+	C.debug_print();
 
 	LOG("#####");
 	LOG("#####");
-	B.print();
+	B.debug_print();
 	LOG("---");
-	D.print();
+	D.debug_print();
 
 	return 0;
 }

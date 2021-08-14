@@ -19,7 +19,6 @@ namespace TestProject
 										  9.0f,  10.f,  11.f,  12.f,
 										  13.5f, 14.5f, 15.5f, 16.5f };
 			rt::Matrix m(4, 4, values);
-
 			Assert::AreEqual(m.at(0, 0), 1.0f);
 			Assert::AreEqual(m.at(0, 3), 4.0f);
 			Assert::AreEqual(m.at(1, 0), 5.5f);
@@ -34,7 +33,6 @@ namespace TestProject
 			std::vector<float> values = { -3,  5,  
 										  1,  -2 };
 			rt::Matrix m(2, 2, values);
-
 			Assert::AreEqual(m.at(0, 0), -3.0f);
 			Assert::AreEqual(m.at(0, 1), 5.0f);
 			Assert::AreEqual(m.at(1, 0), 1.0f);
@@ -47,7 +45,6 @@ namespace TestProject
 										   1,  -2,  -7,
 										   0,   1,   1 };
 			rt::Matrix m(3, 3, values);
-
 			Assert::AreEqual(m.at(0, 0), -3.0f);
 			Assert::AreEqual(m.at(1, 1), -2.0f);
 			Assert::AreEqual(m.at(2, 2), 1.0f);
@@ -68,7 +65,6 @@ namespace TestProject
 			
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
-
 			Assert::IsTrue(A == B);
 		}
 
@@ -109,7 +105,6 @@ namespace TestProject
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
 			rt::Matrix C(4, 4, values_C);
-
 			Assert::IsTrue(A * B == C);
 		}
 
@@ -160,7 +155,6 @@ namespace TestProject
 
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
-
 			Assert::IsTrue(A.transpose() == B);
 		}
 
@@ -173,9 +167,46 @@ namespace TestProject
 
 			rt::Matrix A = rt::get_identity_matrix(4);
 			rt::Matrix I(4, 4, values_I);
-
 			Assert::IsTrue(A.transpose() == rt::get_identity_matrix(4));
 			Assert::IsTrue(A.transpose() == I);
 		}
+
+		TEST_METHOD(Matrix_2x2_Determinant)
+		{
+			std::vector<float> values_A = { 1, 5,
+											-3, 2 };
+			rt::Matrix A(2, 2, values_A);
+			Assert::IsTrue(A.determinant() == 17);
+		}
+
+		TEST_METHOD(Matrix_3x3_Submatrix)
+		{
+			std::vector<float> values_A = { 1, 5, 0,
+											-3, 2, 7,
+											0, 6, -3};
+			std::vector<float> values_B = { -3, 2,
+											0, 6 };
+			rt::Matrix A(3, 3, values_A);
+			rt::Matrix B(2, 2, values_B);
+
+			Assert::IsTrue(A.submatrix(0,2) == B);
+		}
+
+		TEST_METHOD(Matrix_4x4_Submatrix)
+		{
+			std::vector<float> values_A = { -6, 1, 1, 6,
+											-8, 5, 8, 6,
+											-1, 0, 8, 2,
+											-7, 1, -1, 1 };
+			std::vector<float> values_B = { -6, 1, 6,
+											-8, 8, 6,
+											-7, -1, 1 };
+			rt::Matrix A(4, 4, values_A);
+			rt::Matrix B(3, 3, values_B);
+
+			Assert::IsTrue(A.submatrix(2,1) == B);
+		}
+
+
 	};
 }

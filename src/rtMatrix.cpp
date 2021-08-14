@@ -48,7 +48,24 @@ namespace rt {
 		return transposed;
 	}
 
-	void Matrix::print() {
+	f32 Matrix::determinant() const {
+		f32 r = at(0,0) * at(1,1) - at(0,1) * at(1,0);
+		return r;
+	}
+
+	Matrix Matrix::submatrix(i32 row, i32 col) const {		
+		std::vector<f32> values;
+		for (i32 r = 0; r < m_size.rows(); r++) {
+			for (i32 c = 0; c < m_size.cols(); c++) {
+				if (r != row && c != col) {
+					values.emplace_back(at(r, c));
+				}
+			}
+		}
+		return Matrix(m_size.rows() - 1, m_size.cols() - 1, values);
+	}
+
+	void Matrix::debug_print() {
 		std::string row;
 
 		for (i32 r = 0; r < m_size.rows(); r++) {

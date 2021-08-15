@@ -9,7 +9,7 @@
 // ignore warning "fopen might be unsafe"
 #pragma warning( disable : 4996 )
 
-namespace rt {
+//namespace rt {
 
 	typedef int8_t		i8;
 	typedef int16_t		i16;
@@ -25,6 +25,6 @@ namespace rt {
 	typedef double		f64;
 
 	const f32 EPSILON = 0.00001f;
-}
+//}
 
 #endif

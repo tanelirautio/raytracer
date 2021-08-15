@@ -205,6 +205,89 @@ namespace TestProject
 			rt::Matrix B(3, 3, values_B);
 
 			Assert::IsTrue(A.submatrix(2,1) == B);
+		}		
+		
+		TEST_METHOD(Matrix_Calculate_Minor_Of_3x3_Matrix)
+		{
+			std::vector<float> values_A = { 3, 5, 0,
+											2, -1, -7,
+											6, -1, 5 };
+			rt::Matrix A(3, 3, values_A);
+			rt::Matrix B = A.submatrix(1, 0);
+
+			Assert::IsTrue(B.determinant() == 25);
+			Assert::IsTrue(A.minor(1,0) == 25);
+		}
+
+		TEST_METHOD(Matrix_Compute_Cofactor)
+		{
+			std::vector<float> values_A = { 3, 5, 0,
+											2, -1, -7,
+											6, -1, 5 };
+			rt::Matrix A(3, 3, values_A);
+
+			Assert::IsTrue(A.minor(0,0) == -12);
+			Assert::IsTrue(A.cofactor(0,0) == -12);
+			Assert::IsTrue(A.minor(1,0) == 25);
+			Assert::IsTrue(A.cofactor(1,0) == -25);
+		}
+
+		TEST_METHOD(Matrix_3x3_Determinant)
+		{
+			std::vector<float> values_A = { 1, 2, 6,
+											-5, 8, -4,
+											2, 6, 4 };
+			rt::Matrix A(3, 3, values_A);
+
+			Assert::IsTrue(A.cofactor(0,0) == 56);
+			Assert::IsTrue(A.cofactor(0,1) == 12);
+			Assert::IsTrue(A.cofactor(0,2) == -46);
+			Assert::IsTrue(A.determinant() == -196);
+		}
+
+		TEST_METHOD(Matrix_4x4_Determinant)
+		{
+			std::vector<float> values_A = { -2, -8, 3, 5,
+											-3, 1, 7, 3,
+											1, 2, -9, 6,
+											-6, 7, 7, -9 };
+			rt::Matrix A(4, 4, values_A);
+
+			Assert::IsTrue(A.cofactor(0,0) == 690);
+			Assert::IsTrue(A.cofactor(0,1) == 447);
+			Assert::IsTrue(A.cofactor(0,2) == 210);
+			Assert::IsTrue(A.cofactor(0,3) == 51);
+			Assert::IsTrue(A.determinant() == -4071);
+		}
+		
+		TEST_METHOD(Matrix_Invert_Invertible_Matrix)
+		{
+			std::vector<float> values_A = { 6, 4, 4, 4,
+											5, 5, 7, 6,
+											4, -9, 3, -7,
+											9, 1, 7, -6 };
+			rt::Matrix A(4, 4, values_A);
+
+			Assert::IsTrue(A.determinant() == -2120);
+			auto B = A.inverse();
+			if (!B) {
+				Assert::Fail();
+			}
+		}
+		
+		TEST_METHOD(Matrix_Invert_Non_Invertible_Matrix)
+		{
+			std::vector<float> values_A = { -4, 2, -2, -3,
+											9, 6, 2, 6,
+											0, -5, 1, -5,
+											0, 0, 0, 0 };
+			rt::Matrix A(4, 4, values_A);
+
+			Assert::IsTrue(A.determinant() == 0);
+			auto B = A.inverse();
+			if (B) {
+				Assert::Fail();
+			}
 		}
 
 

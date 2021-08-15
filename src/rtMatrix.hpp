@@ -7,13 +7,14 @@
 #include "rtTuple.hpp"
 
 #include <utility>
+#include <optional>
 
 namespace rt {
 	class Matrix {
 		public:
-			struct MatrixSize {
-				MatrixSize() {};
-				MatrixSize(const std::pair<i32, i32>& size) { m_size = size; }
+			struct Size {
+				Size() {};
+				Size(const std::pair<i32, i32>& size) { m_size = size; }
 				i32 rows() const { return m_size.first; }
 				i32 cols() const { return m_size.second; }
 				std::pair<i32, i32> m_size;
@@ -23,17 +24,20 @@ namespace rt {
 			Matrix(i32 w, i32 h, std::vector<f32> values);
 			f32 at(i32 row, i32 col) const;
 			void set(i32 row, i32 col, f32 value);
-			MatrixSize get_size() const;
+			Size get_size() const;
 
 			Matrix transpose();
 			f32 determinant() const;
 			Matrix submatrix(i32 row, i32 col) const;
+			f32 minor(i32 row, i32 col) const;
+			f32 cofactor(i32 row, i32 col) const;
+			std::optional<Matrix> inverse() const;
 
 			void debug_print();
 
 		private:
 			std::vector<std::vector<f32>> m_matrix;
-			MatrixSize m_size;
+			Size m_size;
 	};
 
 	Matrix get_identity_matrix(i32 dimension);

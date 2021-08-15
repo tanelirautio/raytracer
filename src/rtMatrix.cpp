@@ -6,7 +6,7 @@
 namespace rt {
 
 	Matrix::Matrix(i32 rows, i32 cols) {
-		m_size = MatrixSize(std::pair<i32,i32>(std::make_pair(rows, cols)));
+		m_size = Size(std::pair<i32,i32>(std::make_pair(rows, cols)));
 
 		m_matrix.resize(rows);
 		for (auto& col : m_matrix) {
@@ -32,7 +32,7 @@ namespace rt {
 		m_matrix[row][col] = value;
 	}
 
-	Matrix::MatrixSize Matrix::get_size() const {
+	Matrix::Size Matrix::get_size() const {
 		return m_size;
 	}
 
@@ -49,8 +49,16 @@ namespace rt {
 	}
 
 	f32 Matrix::determinant() const {
-		f32 r = at(0,0) * at(1,1) - at(0,1) * at(1,0);
-		return r;
+		f32 det = 0;
+		if (m_size.rows() == 2 && m_size.cols() == 2) {
+			det = at(0, 0) * at(1, 1) - at(0, 1) * at(1, 0);
+		}
+		else {
+			for (i32 c = 0; c < m_size.cols(); c++) {
+				det = det + at(0, c) * cofactor(0, c);
+			}
+		}
+		return det;
 	}
 
 	Matrix Matrix::submatrix(i32 row, i32 col) const {		
@@ -63,6 +71,24 @@ namespace rt {
 			}
 		}
 		return Matrix(m_size.rows() - 1, m_size.cols() - 1, values);
+	}
+
+	f32 Matrix::minor(i32 row, i32 col) const {
+		Matrix m = submatrix(row, col);
+		return m.determinant();
+	}
+
+	f32 Matrix::cofactor(i32 row, i32 col) const {
+		f32 cofactor = minor(row, col);
+		return (row + col) % 2 == 0 ? cofactor : -cofactor;
+	}
+
+	std::optional<Matrix> Matrix::inverse() const {
+		if (determinant() == 0) {
+			return std::nullopt;
+		}
+
+		return Matrix(4,4);
 	}
 
 	void Matrix::debug_print() {

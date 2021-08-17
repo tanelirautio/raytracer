@@ -88,7 +88,15 @@ namespace rt {
 			return std::nullopt;
 		}
 
-		return Matrix(4,4);
+		Matrix m(m_size.rows(), m_size.cols());
+		for (i32 row = 0; row < m_size.rows(); row++) {
+			for (i32 col = 0; col < m_size.cols(); col++) {
+				f32 c = cofactor(row, col);
+				m.set(col, row, (c / determinant()));
+			}
+		}
+
+		return m;
 	}
 
 	void Matrix::debug_print() {

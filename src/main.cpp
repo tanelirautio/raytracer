@@ -8,13 +8,21 @@
 
 int main() {
 
-	std::vector<float> values_A = { 1, 2, 6,
-									-5, 8, -4,
-									2, 6, 4 };
-	rt::Matrix A(3, 3, values_A);
+	rt::Matrix I = rt::get_identity_matrix(4);
+	auto invI = I.inverse();
+	if (invI) {
+		invI.value().debug_print();
+	}
+	else {
+		LOG("Cannot invert!");
+	}
 
-	f32 det = A.determinant();
-	LOG("%f", det);
-	
+	std::vector<f32> values_A = { 1, 2, 3, 4,
+								 5, 6, 7, 8,
+								9, 10, 11, 12,
+								13,14,15,16 };
+
+	rt::Matrix A(4, 4, { 1, 2, 3 });
+	A.debug_print();
 	return 0;
 }

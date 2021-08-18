@@ -18,7 +18,12 @@ namespace rt {
 		i32 i = 0;
 		for (i32 r = 0; r < m_size.rows(); r++) {
 			for (i32 c = 0; c < m_size.cols(); c++) {
-				m_matrix[r][c] = values[i];
+				if (i < values.size()) {
+					m_matrix[r][c] = values[i];
+				}
+				else {
+					m_matrix[r][c] = 0;
+				}
 				i++;
 			}
 		}

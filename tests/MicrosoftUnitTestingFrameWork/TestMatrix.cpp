@@ -61,8 +61,6 @@ namespace TestProject
 											5, 6, 7, 8,
 											9, 8, 7, 6,
 											5, 4, 3, 2};
-			
-			
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
 			Assert::IsTrue(A == B);
@@ -79,7 +77,6 @@ namespace TestProject
 											6, 7, 8, 9,
 											8, 7, 6, 5,
 											4, 3, 2, 1};
-			
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
 			Assert::IsTrue(A != B);
@@ -101,7 +98,6 @@ namespace TestProject
 											44, 54, 114, 108,
 											40, 58, 110, 102,
 											16, 26, 46, 42 };
-
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
 			rt::Matrix C(4, 4, values_C);
@@ -118,7 +114,6 @@ namespace TestProject
 			rt::Matrix A(4, 4, values_A);
 			rt::Tuple B(1, 2, 3, 1);
 			rt::Tuple C(18, 24, 33, 1);
-
 			Assert::IsTrue(A * B == C);
 		}
 
@@ -128,7 +123,6 @@ namespace TestProject
 											1, 2, 4, 8,
 											2, 4, 8, 16,
 											4, 8, 16, 32 };
-
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B = rt::get_identity_matrix(4);
 			Assert::IsTrue(A * B == A);
@@ -152,7 +146,6 @@ namespace TestProject
 											9, 8, 8, 0,
 											3, 0, 5, 5,
 											0, 8, 3, 8 };
-
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
 			Assert::IsTrue(A.transpose() == B);
@@ -175,7 +168,7 @@ namespace TestProject
 		{
 			std::vector<float> values_A = { 1, 5,
 											-3, 2 };
-			rt::Matrix A(2, 2, values_A);
+			rt::Matrix A(2, 2, values_A );
 			Assert::IsTrue(A.determinant() == 17);
 		}
 
@@ -188,7 +181,6 @@ namespace TestProject
 											0, 6 };
 			rt::Matrix A(3, 3, values_A);
 			rt::Matrix B(2, 2, values_B);
-
 			Assert::IsTrue(A.submatrix(0,2) == B);
 		}
 
@@ -203,7 +195,6 @@ namespace TestProject
 											-7, -1, 1 };
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(3, 3, values_B);
-
 			Assert::IsTrue(A.submatrix(2,1) == B);
 		}		
 		
@@ -214,7 +205,6 @@ namespace TestProject
 											6, -1, 5 };
 			rt::Matrix A(3, 3, values_A);
 			rt::Matrix B = A.submatrix(1, 0);
-
 			Assert::IsTrue(B.determinant() == 25);
 			Assert::IsTrue(A.minor(1,0) == 25);
 		}
@@ -225,7 +215,6 @@ namespace TestProject
 											2, -1, -7,
 											6, -1, 5 };
 			rt::Matrix A(3, 3, values_A);
-
 			Assert::IsTrue(A.minor(0,0) == -12);
 			Assert::IsTrue(A.cofactor(0,0) == -12);
 			Assert::IsTrue(A.minor(1,0) == 25);
@@ -238,7 +227,6 @@ namespace TestProject
 											-5, 8, -4,
 											2, 6, 4 };
 			rt::Matrix A(3, 3, values_A);
-
 			Assert::IsTrue(A.cofactor(0,0) == 56);
 			Assert::IsTrue(A.cofactor(0,1) == 12);
 			Assert::IsTrue(A.cofactor(0,2) == -46);
@@ -252,7 +240,6 @@ namespace TestProject
 											1, 2, -9, 6,
 											-6, 7, 7, -9 };
 			rt::Matrix A(4, 4, values_A);
-
 			Assert::IsTrue(A.cofactor(0,0) == 690);
 			Assert::IsTrue(A.cofactor(0,1) == 447);
 			Assert::IsTrue(A.cofactor(0,2) == 210);
@@ -267,7 +254,6 @@ namespace TestProject
 											4, -9, 3, -7,
 											9, 1, 7, -6 };
 			rt::Matrix A(4, 4, values_A);
-
 			Assert::IsTrue(A.determinant() == -2120);
 			auto B = A.inverse();
 			if (!B) {
@@ -282,7 +268,6 @@ namespace TestProject
 											0, -5, 1, -5,
 											0, 0, 0, 0 };
 			rt::Matrix A(4, 4, values_A);
-
 			Assert::IsTrue(A.determinant() == 0);
 			auto B = A.inverse();
 			if (B) {
@@ -301,12 +286,8 @@ namespace TestProject
 											-0.07692f, 0.12308f, 0.02564f, 0.03077f,
 											0.35897f, 0.35897f, 0.43590f, 0.92308f,
 											-0.69231f, -0.69231f, -0.76923f, -1.92308f };
-
-			
-
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
-
 			Assert::IsTrue(A.inverse() == B);
 		}
 
@@ -316,18 +297,30 @@ namespace TestProject
 											-5, -2, -6, -3,
 											-4, 9, 6, 4,
 											-7, 6, 6, 2 };			
-			
 			std::vector<float> values_B = { -0.04074f, -0.07778f, 0.14444f, -0.22222f,
 											-0.07778f, 0.03333f, 0.36667f, -0.33333f,
 											-0.02901f, -0.14630f, -0.10926f, 0.12963f,
 											0.17778f, 0.06667f, -0.26667f, 0.33333f };
-
-			
-
 			rt::Matrix A(4, 4, values_A);
 			rt::Matrix B(4, 4, values_B);
-
 			Assert::IsTrue(A.inverse() == B);
+		}
+
+		TEST_METHOD(Matrix_Multiply_A_Product_By_Its_Inverse)
+		{
+			std::vector<float> values_A = { 3, -9, 7, 3,
+											3, -8, 2, -9,
+											-4, 4, 4, 1,
+											-6, 5, -1, 1 };				
+			std::vector<float> values_B = { 8, 2, 2, 2,
+											3, -1, 7, 0,
+											7, 0, 5, 4,
+											6, -2, 0, 5 };			
+			rt::Matrix A(4, 4, values_A);
+			rt::Matrix B(4, 4, values_B);
+			
+			rt::Matrix C = A * B;
+			Assert::IsTrue(C * B.inverse().value() == A);
 		}
 
 

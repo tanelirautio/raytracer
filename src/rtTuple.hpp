@@ -19,6 +19,8 @@ namespace rt {
 			f32 y() const { return m_y; }
 			f32 z() const { return m_z; }
 			f32 w() const { return m_w; }
+
+			void debug_print();
 		private:
 			f32 m_x, m_y, m_z, m_w;
 	};

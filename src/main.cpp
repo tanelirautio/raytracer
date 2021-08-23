@@ -1,28 +1,27 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include "rtTuple.hpp"
 #include "rtFile.hpp"
 #include "rtCanvas.hpp"
 #include "rtLog.hpp"
 #include "rtMatrix.hpp"
 #include "rtDefs.hpp"
+#include "rtTransformations.hpp"
 
 
 int main() {
 
-	rt::Matrix I = rt::get_identity_matrix(4);
-	auto invI = I.inverse();
-	if (invI) {
-		invI.value().debug_print();
-	}
-	else {
-		LOG("Cannot invert!");
-	}
+	rt::Point p(0, 1, 0);
+	rt::Matrix half_quarter = rt::rotateX((f32)M_PI / 4.f);
+	rt::Matrix full_quarter = rt::rotateX((f32)M_PI / 2.f);
 
-	std::vector<f32> values_A = { 1, 2, 3, 4,
-								 5, 6, 7, 8,
-								9, 10, 11, 12,
-								13,14,15,16 };
+	//Assert::IsTrue(half_quarter * p == rt::Point(0, sqrt(2.f)/2.f, -sqrt(2.f)/2.f));
+	rt::Point r = half_quarter * p;
+	r.debug_print();
 
-	rt::Matrix A(4, 4, { 1, 2, 3 });
-	A.debug_print();
+	rt::Point t(0, sqrt(2.f) / 2.f, -sqrt(2.f) / 2.f);
+	t.debug_print();
+	
 	return 0;
 }

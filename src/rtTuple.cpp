@@ -1,7 +1,9 @@
 #include "rtTuple.hpp"
 #include "rtUtil.hpp"
+#include "rtLog.hpp"
 
 #include <cmath>
+#include <string>
 
 namespace rt {
 	bool operator==(const Tuple& lhs, const Tuple& rhs) {
@@ -57,6 +59,10 @@ namespace rt {
 	Tuple Tuple::normalize() const {
 		f32 m = magnitude();
 		return Tuple(m_x / m, m_y / m, m_z / m, m_w / m);
+	}
+
+	void Tuple::debug_print() {
+		LOG("[%f, %f, %f, %f]", m_x, m_y, m_z, m_w);
 	}
 
 	Vector Vector::normalize() const {

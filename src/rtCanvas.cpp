@@ -50,13 +50,13 @@ namespace rt {
 				b = std::clamp(b, 0, 255);
 
 				std::vector<std::string> rgb_str;
-				rgb_str.emplace_back(std::to_string(r));
-				rgb_str.emplace_back(std::to_string(g));
-				rgb_str.emplace_back(std::to_string(b));
+				rgb_str.push_back(std::to_string(r));
+				rgb_str.push_back(std::to_string(g));
+				rgb_str.push_back(std::to_string(b));
 
 				for (auto& str : rgb_str) {
 					if (current_line.size() + str.size() + 2 > PPM_MAX_LINE_LENGTH) {
-						data.emplace_back(current_line);
+						data.push_back(current_line);
 						current_line.clear();
 						current_line = str;
 					}
@@ -69,7 +69,7 @@ namespace rt {
 				}
 			}
 
-			data.emplace_back(current_line);
+			data.push_back(current_line);
 			current_line.clear();
 		}
 

@@ -71,7 +71,7 @@ namespace rt {
 		for (i32 r = 0; r < m_size.rows(); r++) {
 			for (i32 c = 0; c < m_size.cols(); c++) {
 				if (r != row && c != col) {
-					values.emplace_back(at(r, c));
+					values.push_back(at(r, c));
 				}
 			}
 		}
@@ -158,7 +158,7 @@ namespace rt {
 					lhs.at(r, 1) * rhs.at(1, c) +
 					lhs.at(r, 2) * rhs.at(2, c) +
 					lhs.at(r, 3) * rhs.at(3, c);
-				values.emplace_back(v);
+				values.push_back(v);
 			}
 		}
 
@@ -175,7 +175,7 @@ namespace rt {
 					lhs.at(r, 1) * rhs.y() +
 					lhs.at(r, 2) * rhs.z() +
 					lhs.at(r, 3) * rhs.w();
-				values.emplace_back(v);
+				values.push_back(v);
 			
 		}
 

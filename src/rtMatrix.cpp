@@ -165,8 +165,7 @@ namespace rt {
 		return Matrix(4, 4, values);
 	}
 
-	Tuple operator*(const Matrix& lhs, const Tuple& rhs)
-	{
+	Tuple operator*(const Matrix& lhs, const Tuple& rhs) {
 		std::vector<f32> values;
 		f32 v = 0;
 

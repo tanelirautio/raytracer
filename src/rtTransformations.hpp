@@ -8,8 +8,9 @@ namespace rt {
 
 	Matrix translation(f32 x, f32 y, f32 z);
 	Matrix scaling(f32 x, f32 y, f32 z);
-	Matrix rotateX(f32 rot);
-	Matrix rotateY(f32 rot);
-	Matrix rotateZ(f32 rot);
+	Matrix rotation_x(f32 rot);
+	Matrix rotation_y(f32 rot);
+	Matrix rotation_z(f32 rot);
+	Matrix shearing(f32 xy, f32 xz, f32 yx, f32 yz, f32 zx, f32 zy);
 }
 #endif

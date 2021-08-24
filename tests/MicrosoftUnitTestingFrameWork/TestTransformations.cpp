@@ -67,8 +67,8 @@ namespace TestProject
 		TEST_METHOD(Rotation_Rotate_A_Point_Around_X_Axis)
 		{
 			rt::Point p(0, 1, 0);
-			rt::Matrix half_quarter = rt::rotateX((f32)M_PI / 4.f);
-			rt::Matrix full_quarter = rt::rotateX((f32)M_PI / 2.f);
+			rt::Matrix half_quarter = rt::rotation_x((f32)M_PI / 4.f);
+			rt::Matrix full_quarter = rt::rotation_x((f32)M_PI / 2.f);
 			
 			Assert::IsTrue(half_quarter * p == rt::Point(0, sqrt(2.f)/2.f, sqrt(2.f)/2.f));
 			Assert::IsTrue(full_quarter * p == rt::Point(0, 0, 1));	
@@ -77,9 +77,102 @@ namespace TestProject
 		TEST_METHOD(Rotation_The_Inverse_Of_An_X_Rotation_Rotates_In_The_Opposite_Direction)
 		{
 			rt::Point p(0, 1, 0);
-			rt::Matrix half_quarter = rt::rotateX((f32)M_PI / 4.f);
+			rt::Matrix half_quarter = rt::rotation_x((f32)M_PI / 4.f);
 			auto inv = half_quarter.inverse().value();
 			Assert::IsTrue(inv * p == rt::Point(0, sqrt(2.f)/2.f, -sqrt(2.f)/2.f));
+		}
+
+		TEST_METHOD(Rotation_Rotate_A_Point_Around_Y_Axis)
+		{
+			rt::Point p(0, 0, 1);
+			rt::Matrix half_quarter = rt::rotation_y((f32)M_PI / 4.f);
+			rt::Matrix full_quarter = rt::rotation_y((f32)M_PI / 2.f);
+
+			Assert::IsTrue(half_quarter * p == rt::Point(sqrt(2.f)/2.f, 0, sqrt(2.f)/2.f));
+			Assert::IsTrue(full_quarter * p == rt::Point(1, 0, 0));
+		}
+
+		TEST_METHOD(Rotation_Rotate_A_Point_Around_Z_Axis)
+		{
+			rt::Point p(0, 1, 0);
+			rt::Matrix half_quarter = rt::rotation_z((f32)M_PI / 4.f);
+			rt::Matrix full_quarter = rt::rotation_z((f32)M_PI / 2.f);
+			
+			Assert::IsTrue(half_quarter * p == rt::Point(-sqrt(2.f)/2.f, sqrt(2.f)/2.f, 0));
+			Assert::IsTrue(full_quarter * p == rt::Point(-1, 0, 0));	
+		}
+
+		TEST_METHOD(Shearing_Transformation_Moves_X_In_Proportion_To_Y) 
+		{
+			rt::Matrix t = rt::shearing(1, 0, 0, 0, 0, 0);
+			rt::Point p(2, 3, 4);
+			Assert::IsTrue(t * p == rt::Point(5, 3, 4));
+		}
+
+		TEST_METHOD(Shearing_Transformation_Moves_X_In_Proportion_To_Z) 
+		{
+			rt::Matrix t = rt::shearing(0, 1, 0, 0, 0, 0);
+			rt::Point p(2, 3, 4);
+			Assert::IsTrue(t * p == rt::Point(6, 3, 4));
+		}
+
+		TEST_METHOD(Shearing_Transformation_Moves_Y_In_Proportion_To_X) 
+		{
+			rt::Matrix t = rt::shearing(0, 0, 1, 0, 0, 0);
+			rt::Point p(2, 3, 4);
+			Assert::IsTrue(t * p == rt::Point(2, 5, 4));
+		}
+
+		TEST_METHOD(Shearing_Transformation_Moves_Y_In_Proportion_To_Z) 
+		{
+			rt::Matrix t = rt::shearing(0, 0, 0, 1, 0, 0);
+			rt::Point p(2, 3, 4);
+			Assert::IsTrue(t * p == rt::Point(2, 7, 4));
+		}
+
+		TEST_METHOD(Shearing_Transformation_Moves_Z_In_Proportion_To_X) 
+		{
+			rt::Matrix t = rt::shearing(0, 0, 0, 0, 1, 0);
+			rt::Point p(2, 3, 4);
+			Assert::IsTrue(t * p == rt::Point(2, 3, 6));
+		}
+
+		TEST_METHOD(Shearing_Transformation_Moves_Z_In_Proportion_To_Y) 
+		{
+			rt::Matrix t = rt::shearing(0, 0, 0, 0, 0, 1);
+			rt::Point p(2, 3, 4);
+			Assert::IsTrue(t * p == rt::Point(2, 3, 7));
+		}
+
+		TEST_METHOD(Transformation_Individual_Transformations_Are_Applied_In_Sequence)
+		{
+			rt::Point p(1, 0, 1);
+			auto a = rt::rotation_x((f32)M_PI / 2);
+			auto b = rt::scaling(5, 5, 5);
+			auto c = rt::translation(10, 5, 7);
+
+			// rotation first
+			auto p2 = a * p;
+			Assert::IsTrue(p2 == rt::Point(1, -1, 0));
+
+			// then scaling
+			auto p3 = b * p2;
+			Assert::IsTrue(p3 == rt::Point(5, -5, 0));
+
+			// then translation
+			auto p4 = c * p3;
+			Assert::IsTrue(p4 == rt::Point(15, 0, 7));
+		}
+
+		TEST_METHOD(Transformation_Chained_Transformations_Applied_In_Reverse_Order)
+		{
+			rt::Point p(1, 0, 1);
+			auto a = rt::rotation_x((f32)M_PI / 2);
+			auto b = rt::scaling(5, 5, 5);
+			auto c = rt::translation(10, 5, 7);
+
+			auto t = c * b * a;
+			Assert::IsTrue(t * p == rt::Point(15, 0, 7));
 		}
 	};
 }

@@ -49,3 +49,5 @@
 *.manifest
 *.ipch
 *.FileListAbsolute.txt
+*.iobj
+*.ipdb

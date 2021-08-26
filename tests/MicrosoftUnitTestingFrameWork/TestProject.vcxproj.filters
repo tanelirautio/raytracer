@@ -27,5 +27,8 @@
     <ClCompile Include="TestTransformations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestRay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

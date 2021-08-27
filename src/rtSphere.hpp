@@ -2,14 +2,25 @@
 #define __RT_SPHERE_HPP__
 
 #include "rtDefs.hpp"
+#include "rtShape.hpp"
+#include "rtTuple.hpp"
+#include "rtIntersection.hpp"
+#include "rtRay.hpp"
 
 namespace rt {
-	class Sphere {
+	class Sphere : public Shape {
 		public:
-			Sphere();
-			i32 id() const { return ID; }
+			Sphere(rt::Point origin = rt::Point(0, 0, 0), f32 radius = 1.0f);
+			
+			rt::Point origin() { return m_origin; }
+			f32 radius() { return m_radius; }
+
+
+			std::vector<Intersection> intersects(Ray r);
+
 		private:
-			static i32 ID;
+			rt::Point m_origin;
+			f32 m_radius;
 	};
 }
 

@@ -2,6 +2,7 @@
 #define __RT_RAY_HPP__
 
 #include "rtTuple.hpp"
+#include <vector>
 
 namespace rt {
 	class Ray {

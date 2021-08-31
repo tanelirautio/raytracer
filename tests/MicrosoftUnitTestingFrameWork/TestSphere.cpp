@@ -71,5 +71,29 @@ namespace TestProject
 			Assert::IsTrue(i.t == 3.5f);
 			Assert::IsTrue(i.object == &s);
 		}
+
+		TEST_METHOD(Aggregating_Intersections)
+		{			
+			rt::Sphere s;
+			rt::Intersection i1(1, &s);
+			rt::Intersection i2(2, &s);
+			auto xs = rt::intersections(i1, i2);
+
+			Assert::IsTrue(xs.size() == 2);
+			Assert::IsTrue(xs[0].t == 1);
+			Assert::IsTrue(xs[1].t == 2);
+		}
+
+		TEST_METHOD(Intersect_Sets_The_Object_On_The_Intersection)
+		{		
+			rt::Ray r(rt::Point(0, 0, -5), rt::Vector(0, 0, 1));
+			rt::Sphere s;
+			auto xs = s.intersects(r);
+			Assert::IsTrue(xs.size() == 2);
+			Assert::IsTrue(xs[0].object == &s);
+			Assert::IsTrue(xs[1].object == &s);
+		}
+
+
 	};
 }

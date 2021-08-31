@@ -5,6 +5,7 @@
 #include "rtDefs.hpp"
 #include "rtShape.hpp"
 #include <vector>
+#include <algorithm>
 
 namespace rt {
 	struct Intersection {
@@ -18,9 +19,17 @@ namespace rt {
 			friend bool operator==(const Intersection& lhs, const Intersection& rhs) {
 				return equal(lhs.t, rhs.t);
 			}
+			friend bool operator<(const Intersection& lhs, const Intersection& rhs) {
+				return lhs.t < rhs.t;
+			}
 	};
 
-
+	template<typename ...Args>
+	std::vector<Intersection> intersections(Args const&... args) {
+		std::vector<Intersection> xs{ args... };
+		std::sort(xs.begin(), xs.end());
+		return xs;
+	}
 }
 
 #endif

@@ -4,13 +4,18 @@
 #include "rtDefs.hpp"
 #include <string>
 #include <map>
+#include <optional>
+#include <vector>
 
 namespace rt {
+	struct Intersection;
 	class Shape {
 		public:
 			Shape() { ID++; }
 			virtual ~Shape() = default;
 			i32 id() const { return ID; }
+
+			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) = 0;
 		private:
 			static i32 ID;
 	};

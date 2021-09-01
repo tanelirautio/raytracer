@@ -1,5 +1,6 @@
 #include "rtSphere.hpp"
 #include <cmath>
+#include <algorithm>
 
 namespace rt {
 	Sphere::Sphere(rt::Point origin, f32 radius) : Shape() {
@@ -22,6 +23,15 @@ namespace rt {
 		auto t1 = (-b - sqrt(d)) / (2 * a);
 		auto t2 = (-b + sqrt(d)) / (2 * a);
 		return { Intersection(t1, this), Intersection(t2, this) };
+	}
+
+	std::optional<Intersection> Sphere::hit(std::vector<Intersection>& xs) {
+		std::sort(xs.begin(), xs.end());
+		auto lowest = std::lower_bound(xs.begin(), xs.end(), Intersection(0, this));
+		if (lowest != xs.end()) {
+			return *lowest;
+		}
+		return std::nullopt;
 	}
 
 }

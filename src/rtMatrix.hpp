@@ -20,6 +20,7 @@ namespace rt {
 				std::pair<i32, i32> m_size;
 			};
 
+			Matrix() : Matrix(4, 4) {}
 			Matrix(i32 w, i32 h);
 			Matrix(i32 w, i32 h, std::vector<f32> values);
 			f32 at(i32 row, i32 col) const;
@@ -41,6 +42,7 @@ namespace rt {
 	};
 
 	Matrix get_identity_matrix(i32 dimension);
+	std::optional<Matrix> inverse(const Matrix& m);
 
 	bool operator==(const Matrix& lhs, const Matrix& rhs);
 	bool operator!=(const Matrix& lhs, const Matrix& rhs);

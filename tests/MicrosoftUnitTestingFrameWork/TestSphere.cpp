@@ -3,6 +3,8 @@
 #include "../../src/rtRay.hpp"
 #include "../../src/rtSphere.hpp"
 #include "../../src/rtIntersection.hpp"
+#include "../../src/rtTransformations.hpp"
+#include "../../src/rtMatrix.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -137,6 +139,43 @@ namespace TestProject
 			auto hit = s.hit(xs);
 			Assert::AreEqual(hit.has_value(), true); 
 			Assert::IsTrue(hit.value() == i4);
+		}
+		
+		TEST_METHOD(A_Spheres_Default_Transformation)
+		{		
+			rt::Sphere s;
+			Assert::IsTrue(s.get_transform() == rt::get_identity_matrix(4));
+		}
+
+		TEST_METHOD(Changing_A_Spheres_Transformation)
+		{
+			rt::Sphere s;
+			rt::Matrix t = rt::translation(2, 3, 4);
+			s.set_transform(t);
+			Assert::IsTrue(s.get_transform() == t);
+		}		
+		
+		TEST_METHOD(Intersecting_A_Scaled_Sphere_With_Ray)
+		{
+			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
+			rt::Sphere s;
+			s.set_transform(rt::scaling(2, 2, 2));
+
+			auto xs = s.intersects(r);
+			auto hit = s.hit(xs);
+			Assert::AreEqual(hit.has_value(), true);
+			Assert::IsTrue(xs.size() == 2);
+			Assert::IsTrue(xs[0].t = 3);
+			Assert::IsTrue(xs[1].t = 7);
+		}
+		TEST_METHOD(Intersecting_A_Translated_Sphere_With_Ray)
+		{
+			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
+			rt::Sphere s;
+			s.set_transform(rt::translation(5, 0, 0));
+
+			auto xs = s.intersects(r);
+			Assert::IsTrue(xs.size() == 0);
 		}
 
 

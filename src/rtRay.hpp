@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace rt {
+	class Matrix;
 	class Ray {
 		public:
 			Ray(Point origin, Vector direction);
@@ -12,6 +13,8 @@ namespace rt {
 
 			Point origin() const { return m_origin; }
 			Vector direction() const { return m_direction; }
+			Ray transform(const Matrix& m) const;
+
 		private:
 			Point m_origin;
 			Vector m_direction;

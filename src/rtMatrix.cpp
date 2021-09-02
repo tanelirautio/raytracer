@@ -4,7 +4,6 @@
 #include "rtLog.hpp"
 
 namespace rt {
-
 	Matrix::Matrix(i32 rows, i32 cols) {
 		m_size = Size(std::pair<i32,i32>(std::make_pair(rows, cols)));
 
@@ -93,15 +92,15 @@ namespace rt {
 			return std::nullopt;
 		}
 
-		Matrix m(m_size.rows(), m_size.cols());
+		Matrix i(m_size.rows(), m_size.cols());
 		for (i32 row = 0; row < m_size.rows(); row++) {
 			for (i32 col = 0; col < m_size.cols(); col++) {
 				f32 c = cofactor(row, col);
-				m.set(col, row, (c / determinant()));
+				i.set(col, row, (c / determinant()));
 			}
 		}
 
-		return m;
+		return i;
 	}
 
 	void Matrix::debug_print() {
@@ -124,6 +123,22 @@ namespace rt {
 			identity.set(i, i, 1);
 		}
 		return identity;
+	}
+
+	std::optional<Matrix> inverse(const Matrix& m) {
+		if (m.determinant() == 0) {
+			return std::nullopt;
+		}
+
+		Matrix i(m.get_size().rows(), m.get_size().cols());
+		for (i32 row = 0; row < m.get_size().rows(); row++) {
+			for (i32 col = 0; col < m.get_size().cols(); col++) {
+				f32 c = m.cofactor(row, col);
+				i.set(col, row, (c / m.determinant()));
+			}
+		}
+
+		return i;
 	}
 
 	bool operator==(const Matrix& lhs, const Matrix& rhs) {

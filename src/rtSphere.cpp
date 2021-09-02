@@ -6,9 +6,17 @@ namespace rt {
 	Sphere::Sphere(rt::Point origin, f32 radius) : Shape() {
 		m_origin = origin;
 		m_radius = radius;
+		m_transform = rt::get_identity_matrix(4);
 	}
 
-	std::vector<Intersection> Sphere::intersects(Ray r) {
+	std::vector<Intersection> Sphere::intersects(Ray ray) {
+
+		auto inv = rt::inverse(get_transform());
+		if(!inv.has_value()) {
+			return {};
+		}
+		rt::Ray r = ray.transform(inv.value());
+
 		rt::Vector sphere_to_ray = (rt::Vector)(r.origin() - m_origin);		
 		f32 a = r.direction().dot(r.direction());
 		f32 b = 2 * r.direction().dot(sphere_to_ray);

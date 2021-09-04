@@ -9,12 +9,14 @@
 
 namespace rt {
 	struct Intersection;
+	class Ray;
 	class Shape {
 		public:
 			Shape() { ID++; }
 			virtual ~Shape() = default;
 			i32 id() const { return ID; }
 
+			virtual std::vector<Intersection> intersect(Ray ray) = 0;
 			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) = 0;
 		private:
 			static i32 ID;

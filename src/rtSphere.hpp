@@ -20,7 +20,7 @@ namespace rt {
 			Matrix get_transform() const { return m_transform; }
 			void set_transform(const rt::Matrix& m) { m_transform = m; }
 
-			std::vector<Intersection> intersects(Ray r);
+			std::vector<Intersection> intersect(Ray r);
 			std::optional<Intersection> hit(std::vector<Intersection>& intersections);
 		private:
 			rt::Point m_origin;

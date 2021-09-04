@@ -9,7 +9,7 @@ namespace rt {
 		m_transform = rt::get_identity_matrix(4);
 	}
 
-	std::vector<Intersection> Sphere::intersects(Ray ray) {
+	std::vector<Intersection> Sphere::intersect(Ray ray) {
 
 		auto inv = rt::inverse(get_transform());
 		if(!inv.has_value()) {

@@ -18,7 +18,7 @@ namespace TestProject
 			rt::Ray ray(rt::Point(0,0,-5), rt::Vector(0,0,1));
 			rt::Sphere s;
 
-			auto xs = s.intersects(ray);
+			auto xs = s.intersect(ray);
 			Assert::IsTrue(xs.size() == 2);
 			Assert::IsTrue(xs[0].t == 4.0f);
 			Assert::IsTrue(xs[1].t == 6.0f);
@@ -29,7 +29,7 @@ namespace TestProject
 			rt::Ray ray(rt::Point(0,1,-5), rt::Vector(0,0,1));
 			rt::Sphere s;
 
-			auto xs = s.intersects(ray);
+			auto xs = s.intersect(ray);
 			Assert::IsTrue(xs.size() == 2);
 			Assert::IsTrue(xs[0].t == 5.0f);
 			Assert::IsTrue(xs[1].t == 5.0f);
@@ -40,7 +40,7 @@ namespace TestProject
 			rt::Ray ray(rt::Point(0,2,-5), rt::Vector(0,0,1));
 			rt::Sphere s;
 
-			auto xs = s.intersects(ray);
+			auto xs = s.intersect(ray);
 			Assert::IsTrue(xs.size() == 0);
 		}
 
@@ -49,7 +49,7 @@ namespace TestProject
 			rt::Ray ray(rt::Point(0,0,0), rt::Vector(0,0,1));
 			rt::Sphere s;
 
-			auto xs = s.intersects(ray);
+			auto xs = s.intersect(ray);
 			Assert::IsTrue(xs.size() == 2);
 			Assert::IsTrue(xs[0].t == -1.0f);
 			Assert::IsTrue(xs[1].t == 1.0f);
@@ -60,7 +60,7 @@ namespace TestProject
 			rt::Ray ray(rt::Point(0,0,5), rt::Vector(0,0,1));
 			rt::Sphere s;
 
-			auto xs = s.intersects(ray);
+			auto xs = s.intersect(ray);
 			Assert::IsTrue(xs.size() == 2);
 			Assert::IsTrue(xs[0].t == -6.0f);
 			Assert::IsTrue(xs[1].t == -4.0f);
@@ -90,7 +90,7 @@ namespace TestProject
 		{		
 			rt::Ray r(rt::Point(0, 0, -5), rt::Vector(0, 0, 1));
 			rt::Sphere s;
-			auto xs = s.intersects(r);
+			auto xs = s.intersect(r);
 			Assert::IsTrue(xs.size() == 2);
 			Assert::IsTrue(xs[0].object == &s);
 			Assert::IsTrue(xs[1].object == &s);
@@ -161,7 +161,7 @@ namespace TestProject
 			rt::Sphere s;
 			s.set_transform(rt::scaling(2, 2, 2));
 
-			auto xs = s.intersects(r);
+			auto xs = s.intersect(r);
 			auto hit = s.hit(xs);
 			Assert::AreEqual(hit.has_value(), true);
 			Assert::IsTrue(xs.size() == 2);
@@ -174,7 +174,7 @@ namespace TestProject
 			rt::Sphere s;
 			s.set_transform(rt::translation(5, 0, 0));
 
-			auto xs = s.intersects(r);
+			auto xs = s.intersect(r);
 			Assert::IsTrue(xs.size() == 0);
 		}
 

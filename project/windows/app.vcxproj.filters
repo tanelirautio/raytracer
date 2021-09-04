@@ -21,9 +21,15 @@
     <ClCompile Include="..\..\src\appClock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\appSphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\appClock.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\appSphere.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

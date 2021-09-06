@@ -1,8 +1,6 @@
-#define _USE_MATH_DEFINES
-#include <cmath>
-
 #include "CppUnitTest.h"
 
+#include "../../src/rtDefs.hpp"
 #include "../../src/rtTransformations.hpp"
 #include "../../src/rtMatrix.hpp"
 

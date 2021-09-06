@@ -22,6 +22,8 @@ namespace rt {
 
 			std::vector<Intersection> intersect(Ray r);
 			std::optional<Intersection> hit(std::vector<Intersection>& intersections);
+
+			rt::Vector normal_at(const rt::Point& point);
 		private:
 			rt::Point m_origin;
 			f32 m_radius;

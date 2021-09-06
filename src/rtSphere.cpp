@@ -22,7 +22,7 @@ namespace rt {
 		f32 b = 2 * r.direction().dot(sphere_to_ray);
 		f32 c = sphere_to_ray.dot(sphere_to_ray) - 1;
 
-		f32 d = pow(b, 2) - 4 * (f64)a * (f64)c;
+		f32 d = (f32)(pow(b, 2) - 4 * (d64)a * (d64)c);
 
 		// No hit
 		if (d < 0) return {};
@@ -40,6 +40,10 @@ namespace rt {
 			return *lowest;
 		}
 		return std::nullopt;
+	}
+
+	rt::Vector Sphere::normal_at(const rt::Point& point) {
+		return (point - rt::Point(0, 0, 0)).normalize();
 	}
 
 }

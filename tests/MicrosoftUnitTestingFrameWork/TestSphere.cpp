@@ -1,5 +1,6 @@
 #include "CppUnitTest.h"
 
+#include "../../src/rtDefs.hpp"
 #include "../../src/rtRay.hpp"
 #include "../../src/rtSphere.hpp"
 #include "../../src/rtIntersection.hpp"
@@ -66,81 +67,6 @@ namespace TestProject
 			Assert::IsTrue(xs[1].t == -4.0f);
 		}
 
-		TEST_METHOD(An_Intersection_Encapsulates_T_And_Object)
-		{
-			rt::Sphere s;
-			rt::Intersection i(3.5f, &s);
-			Assert::IsTrue(i.t == 3.5f);
-			Assert::IsTrue(i.object == &s);
-		}
-
-		TEST_METHOD(Aggregating_Intersections)
-		{			
-			rt::Sphere s;
-			rt::Intersection i1(1, &s);
-			rt::Intersection i2(2, &s);
-			auto xs = rt::intersections(i1, i2);
-
-			Assert::IsTrue(xs.size() == 2);
-			Assert::IsTrue(xs[0].t == 1);
-			Assert::IsTrue(xs[1].t == 2);
-		}
-
-		TEST_METHOD(Intersect_Sets_The_Object_On_The_Intersection)
-		{		
-			rt::Ray r(rt::Point(0, 0, -5), rt::Vector(0, 0, 1));
-			rt::Sphere s;
-			auto xs = s.intersect(r);
-			Assert::IsTrue(xs.size() == 2);
-			Assert::IsTrue(xs[0].object == &s);
-			Assert::IsTrue(xs[1].object == &s);
-		}
-
-		TEST_METHOD(Hit_When_All_Xs_Have_Positive_T)
-		{		
-			rt::Sphere s;
-			rt::Intersection i1(1, &s);
-			rt::Intersection i2(2, &s);
-			auto xs = rt::intersections(i2, i1);
-			auto hit = s.hit(xs);
-			Assert::AreEqual(hit.has_value(), true); 
-			Assert::IsTrue(hit.value() == i1);
-		}
-
-		TEST_METHOD(Hit_When_Some_Xs_Have_Negative_T)
-		{		
-			rt::Sphere s;
-			rt::Intersection i1(-1, &s);
-			rt::Intersection i2(1, &s);
-			auto xs = rt::intersections(i2, i1);
-			auto hit = s.hit(xs);
-			Assert::AreEqual(hit.has_value(), true); 
-			Assert::IsTrue(hit.value() == i2);
-		}
-
-		TEST_METHOD(Hit_When_All_Xs_Have_Negative_T)
-		{		
-			rt::Sphere s;
-			rt::Intersection i1(-2, &s);
-			rt::Intersection i2(-1, &s);
-			auto xs = rt::intersections(i2, i1);
-			auto hit = s.hit(xs);
-			Assert::AreEqual(hit.has_value(), false); 
-		}
-
-		TEST_METHOD(Hit_Is_Always_The_Lowest_Nonnegative_Xs)
-		{		
-			rt::Sphere s;
-			rt::Intersection i1(5, &s);
-			rt::Intersection i2(7, &s);			
-			rt::Intersection i3(-3, &s);			
-			rt::Intersection i4(2, &s);
-			auto xs = rt::intersections(i1, i2, i3, i4);
-			auto hit = s.hit(xs);
-			Assert::AreEqual(hit.has_value(), true); 
-			Assert::IsTrue(hit.value() == i4);
-		}
-		
 		TEST_METHOD(A_Spheres_Default_Transformation)
 		{		
 			rt::Sphere s;
@@ -168,6 +94,7 @@ namespace TestProject
 			Assert::IsTrue(xs[0].t = 3);
 			Assert::IsTrue(xs[1].t = 7);
 		}
+		
 		TEST_METHOD(Intersecting_A_Translated_Sphere_With_Ray)
 		{
 			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
@@ -178,6 +105,52 @@ namespace TestProject
 			Assert::IsTrue(xs.size() == 0);
 		}
 
+		TEST_METHOD(The_Normal_On_A_Sphere_At_A_Point_On_The_X_Axis)
+		{
+			rt::Sphere s;
+			rt::Vector n = s.normal_at({ 1, 0, 0 });
+			Assert::IsTrue(n == rt::Vector(1, 0, 0));
+		}
+
+		TEST_METHOD(The_Normal_On_A_Sphere_At_A_Point_On_The_Y_Axis)
+		{
+			rt::Sphere s;
+			rt::Vector n = s.normal_at({ 0, 1, 0 });
+			Assert::IsTrue(n == rt::Vector(0, 1, 0));
+		}
+
+		TEST_METHOD(The_Normal_On_A_Sphere_At_A_Point_On_The_Z_Axis)
+		{
+			rt::Sphere s;
+			rt::Vector n = s.normal_at({ 0, 0, 1 });
+			Assert::IsTrue(n == rt::Vector(0, 0, 1));
+		}
+
+		TEST_METHOD(The_Normal_On_A_Sphere_At_A_Nonaxial_Point)
+		{
+			rt::Sphere s;
+			rt::Vector n = s.normal_at({ sqrt(3.f) / 3.f, sqrt(3.f) / 3.f, sqrt(3.f) / 3.f });
+			Assert::IsTrue(n == rt::Vector(sqrt(3.f) / 3.f, sqrt(3.f) / 3.f, sqrt(3.f) / 3.f));
+		}
+		
+		/*
+		TEST_METHOD(Computing_the_normal_on_a_translated_sphere)
+		{
+			rt::Sphere s;
+			s.set_transform(rt::translation(0, 1, 0));
+			rt::Vector n = s.normal_at(rt::Point(0, 1.70711f, -0.70711f));
+			Assert::IsTrue(n == rt::Vector(0, 0.70711f, -0.70711f));
+		}
+
+		TEST_METHOD(Computing_the_normal_on_a_transformed_sphere)
+		{
+			rt::Sphere s;
+			rt::Matrix m = rt::scaling(1, 0.5f, 1) * rt::rotation_z(M_PI / 5.f);
+			s.set_transform(m);
+			rt::Vector n = s.normal_at({ 0, sqrt(2.f) / 2.f, sqrtf(2.f) / 2.f });
+			Assert::IsTrue(n == rt::Vector(0, 0.97014f, -0.24254f));
+		}
+		*/
 
 	};
 }

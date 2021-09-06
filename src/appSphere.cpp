@@ -19,7 +19,7 @@ namespace app {
 		auto pixel_size = wall_size / canvas_pixels;
 		auto half = wall_size / 2;
 
-		auto canvas = rt::Canvas(canvas_pixels, canvas_pixels);
+		auto canvas = rt::Canvas((i32)canvas_pixels, (i32)canvas_pixels);
 		auto color = rt::Color(1, 0, 0); //red
 		auto color2 = rt::Color(0, 0, 1); // blue
 		auto shape = rt::Sphere();

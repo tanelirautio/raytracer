@@ -6,14 +6,14 @@
 
 namespace rt {
 
-	const i32 PPM_MAX_LINE_LENGTH = 70;
+	constexpr i32 PPM_MAX_LINE_LENGTH = 70;
 
 	Canvas::Canvas(i32 width, i32 height) {
 		m_width = width;
 		m_height = height;
 
-		m_data.reserve(width * height);
-		m_data.resize(width*height);
+		m_data.reserve((i64)width * (i64)height);
+		m_data.resize((i64)width * (i64)height);
 	}
 
 	void Canvas::write_pixel(i32 x, i32 y, const rt::Color& c)  {

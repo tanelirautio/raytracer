@@ -29,7 +29,7 @@ namespace app {
 			auto x = p.x() * radius + 400;
 			auto y = p.z() * radius + 400;
 			LOG("x: %f y: %f", x, y);
-			canvas.write_pixel(x, y, rt::get_color_white());
+			canvas.write_pixel((i32)x, (i32)y, rt::get_color_white());
 		}
 
 		rt::File::write("clock.ppm", canvas.canvas_to_ppm());

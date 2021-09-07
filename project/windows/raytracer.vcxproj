@@ -149,7 +149,10 @@
     <ClInclude Include="..\..\src\rtDefs.hpp" />
     <ClInclude Include="..\..\src\rtFile.hpp" />
     <ClInclude Include="..\..\src\rtIntersection.hpp" />
+    <ClInclude Include="..\..\src\rtLight.hpp" />
     <ClInclude Include="..\..\src\rtLog.hpp" />
+    <ClInclude Include="..\..\src\rtMain.hpp" />
+    <ClInclude Include="..\..\src\rtMaterial.hpp" />
     <ClInclude Include="..\..\src\rtMatrix.hpp" />
     <ClInclude Include="..\..\src\rtShape.hpp" />
     <ClInclude Include="..\..\src\rtRay.hpp" />
@@ -161,6 +164,8 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\rtCanvas.cpp" />
     <ClCompile Include="..\..\src\rtFile.cpp" />
+    <ClCompile Include="..\..\src\rtLight.cpp" />
+    <ClCompile Include="..\..\src\rtMaterial.cpp" />
     <ClCompile Include="..\..\src\rtMatrix.cpp" />
     <ClCompile Include="..\..\src\rtRay.cpp" />
     <ClCompile Include="..\..\src\rtShape.cpp" />

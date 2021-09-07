@@ -20,10 +20,10 @@ namespace rt {
 			Matrix get_transform() const { return m_transform; }
 			void set_transform(const rt::Matrix& m) { m_transform = m; }
 
-			std::vector<Intersection> intersect(Ray r);
-			std::optional<Intersection> hit(std::vector<Intersection>& intersections);
+			std::vector<Intersection> intersect(Ray r) const;
+			std::optional<Intersection> hit(std::vector<Intersection>& intersections) const;
 
-			rt::Vector normal_at(const rt::Point& point);
+			rt::Vector normal_at(const rt::Point& point) const;
 		private:
 			rt::Point m_origin;
 			f32 m_radius;

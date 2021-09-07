@@ -1,6 +1,6 @@
 #include "CppUnitTest.h"
 
-#include "../../src/rtMatrix.hpp"
+#include "../../src/rtMain.hpp"
 #include <vector>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

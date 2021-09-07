@@ -1,11 +1,6 @@
 #include "CppUnitTest.h"
 
-#include "../../src/rtDefs.hpp"
-#include "../../src/rtRay.hpp"
-#include "../../src/rtSphere.hpp"
-#include "../../src/rtIntersection.hpp"
-#include "../../src/rtTransformations.hpp"
-#include "../../src/rtMatrix.hpp"
+#include "../../src/rtMain.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -132,8 +127,7 @@ namespace TestProject
 			rt::Vector n = s.normal_at({ sqrt(3.f) / 3.f, sqrt(3.f) / 3.f, sqrt(3.f) / 3.f });
 			Assert::IsTrue(n == rt::Vector(sqrt(3.f) / 3.f, sqrt(3.f) / 3.f, sqrt(3.f) / 3.f));
 		}
-		
-		/*
+			
 		TEST_METHOD(Computing_the_normal_on_a_translated_sphere)
 		{
 			rt::Sphere s;
@@ -147,10 +141,9 @@ namespace TestProject
 			rt::Sphere s;
 			rt::Matrix m = rt::scaling(1, 0.5f, 1) * rt::rotation_z(M_PI / 5.f);
 			s.set_transform(m);
-			rt::Vector n = s.normal_at({ 0, sqrt(2.f) / 2.f, sqrtf(2.f) / 2.f });
+			rt::Vector n = s.normal_at({ 0, sqrt(2.f) / 2.f, -sqrtf(2.f) / 2.f });
 			Assert::IsTrue(n == rt::Vector(0, 0.97014f, -0.24254f));
 		}
-		*/
-
+		
 	};
 }

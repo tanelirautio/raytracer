@@ -164,6 +164,8 @@
   <ItemGroup>
     <ClCompile Include="TestCanvas.cpp" />
     <ClCompile Include="TestIntersections.cpp" />
+    <ClCompile Include="TestLights.cpp" />
+    <ClCompile Include="TestMaterials.cpp" />
     <ClCompile Include="TestMatrix.cpp" />
     <ClCompile Include="TestRay.cpp" />
     <ClCompile Include="TestSphere.cpp" />

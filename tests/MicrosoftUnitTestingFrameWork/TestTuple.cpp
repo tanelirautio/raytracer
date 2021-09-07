@@ -1,6 +1,6 @@
 #include "CppUnitTest.h"
 
-#include "../../src/rtTuple.hpp"
+#include "../../src/rtMain.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -214,6 +214,20 @@ namespace TestProject
 			Assert::IsTrue(c1*c2 == rt::Color(0.9f, 0.2f, 0.04f));
 		}
 
+		TEST_METHOD(Vector_Reflecting_a_vector_approaching_at_45_degrees)
+		{
+			rt::Vector v(1, -1, 0);
+			rt::Vector n(0, 1, 0);
+			rt::Vector r = v.reflect(n);
+			Assert::IsTrue(r == rt::Vector(1,1,0));
+		}
 
+		TEST_METHOD(Vector_Reflecting_a_vector_off_a_slanted_surface)
+		{
+			rt::Vector v(0, -1, 0);
+			rt::Vector n(sqrt(2.f)/2.f, sqrt(2.f)/2.f, 0);
+			rt::Vector r = v.reflect(n);
+			Assert::IsTrue(r == rt::Vector(1, 0, 0));
+		}
 	};
 }

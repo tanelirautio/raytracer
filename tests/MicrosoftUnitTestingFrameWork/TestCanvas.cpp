@@ -1,6 +1,6 @@
 #include "CppUnitTest.h"
 
-#include "../../src/rtCanvas.hpp"
+#include "../../src/rtMain.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

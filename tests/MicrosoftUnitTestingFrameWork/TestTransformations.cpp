@@ -1,8 +1,6 @@
 #include "CppUnitTest.h"
 
-#include "../../src/rtDefs.hpp"
-#include "../../src/rtTransformations.hpp"
-#include "../../src/rtMatrix.hpp"
+#include "../../src/rtMain.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

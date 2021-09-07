@@ -20,6 +20,11 @@ namespace rt {
 			f32 z() const { return m_z; }
 			f32 w() const { return m_w; }
 
+			void x(f32 v) { m_x = v; }
+			void y(f32 v) { m_y = v; }
+			void z(f32 v) { m_z = v; }
+			void w(f32 v) { m_w = v; }
+
 			void debug_print();
 		private:
 			f32 m_x, m_y, m_z, m_w;
@@ -47,6 +52,7 @@ namespace rt {
 			Vector normalize() const;
 			f32 dot(Vector b) const;
 			Vector cross(Vector b) const;
+			Vector reflect(Vector normal) const;
 	};
 
 	class Color : public Tuple {

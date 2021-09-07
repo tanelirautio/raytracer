@@ -79,4 +79,8 @@ namespace rt {
 			          z() * b.x() - x() * b.z(),
 					  x() * b.y() - y() * b.x());
 	}
+
+	Vector Vector::reflect(Vector normal) const {
+		return *this - (normal * 2 * dot(normal));
+	}
 }

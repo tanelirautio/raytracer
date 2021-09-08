@@ -145,5 +145,21 @@ namespace TestProject
 			Assert::IsTrue(n == rt::Vector(0, 0.97014f, -0.24254f));
 		}
 		
+		TEST_METHOD(A_sphere_has_a_default_material)
+		{
+			rt::Sphere s;
+			rt::Material m = s.get_material();
+			Assert::IsTrue(m == rt::Material());
+		}
+		
+		TEST_METHOD(A_sphere_may_be_assigned_a_material)
+		{
+			rt::Sphere s;
+			rt::Material m = rt::Material();
+			m.ambient(1);
+			s.set_material(m);
+			Assert::IsTrue(s.get_material() == m);
+		}
+		
 	};
 }

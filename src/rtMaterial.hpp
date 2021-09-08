@@ -5,16 +5,25 @@
 #include "rtTuple.hpp"
 
 namespace rt {
+	class PointLight;
 	class Material {
 		public:
 			Material() {
 				set_default();
 			}
-			rt::Color color() { return m_color; }
-			f32 ambient() { return m_ambient; }
-			f32 diffuse() { return m_diffuse; }
-			f32 specular() { return m_specular; }
-			f32 shininess() { return m_shininess; }
+			Color color() const { return m_color; }
+			f32 ambient() const { return m_ambient; }
+			f32 diffuse() const { return m_diffuse; }
+			f32 specular() const { return m_specular; }
+			f32 shininess() const { return m_shininess; }
+
+			void color(Color value) { m_color = value; }
+			void ambient(f32 value) { m_ambient = value; }
+			void diffuse(f32 value) { m_diffuse = value; }
+			void specular(f32 value) { m_specular = value; }
+			void shininess(f32 value) { m_shininess = value; }
+
+			Color lighting(const PointLight& light, const Point& position, const Vector& eyev, const Vector& normalv);
 		private:
 			void set_default() {
 				m_color = { 1,1,1 };
@@ -30,6 +39,8 @@ namespace rt {
 			f32 m_specular;
 			f32 m_shininess;
 	};
+
+	bool operator==(const Material& lhs, const Material& rhs);
 }
 
 #endif

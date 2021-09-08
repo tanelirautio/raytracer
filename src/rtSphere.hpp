@@ -8,26 +8,30 @@
 #include "rtIntersection.hpp"
 #include "rtRay.hpp"
 #include "rtMatrix.hpp"
+#include "rtMaterial.hpp"
 
 namespace rt {
 	class Sphere : public Shape {
 		public:
-			Sphere(rt::Point origin = rt::Point(0, 0, 0), f32 radius = 1.0f);
+			Sphere(Point origin = Point(0, 0, 0), f32 radius = 1.0f);
 			
-			rt::Point origin() const { return m_origin; }
+			Point origin() const { return m_origin; }
 			f32 radius() const { return m_radius; }
 
 			Matrix get_transform() const { return m_transform; }
-			void set_transform(const rt::Matrix& m) { m_transform = m; }
+			void set_transform(const Matrix& m) { m_transform = m; }
+
+			Material get_material() { return m_material; }
+			void set_material(const Material& m) { m_material = m; }
 
 			std::vector<Intersection> intersect(Ray r) const;
 			std::optional<Intersection> hit(std::vector<Intersection>& intersections) const;
-
-			rt::Vector normal_at(const rt::Point& point) const;
+			Vector normal_at(const rt::Point& point) const;
 		private:
-			rt::Point m_origin;
+			Point m_origin;
 			f32 m_radius;
-			rt::Matrix m_transform;
+			Matrix m_transform;
+			Material m_material;
 	};
 }
 

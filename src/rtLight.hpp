@@ -10,8 +10,8 @@ namespace rt {
 				m_position = position;
 				m_intensity = intensity;
 			}
-			rt::Point position() { return m_position; }
-			rt::Color intensity() { return m_intensity; }
+			rt::Point position() const { return m_position; }
+			rt::Color intensity() const { return m_intensity; }
 		private:
 			rt::Point m_position;
 			rt::Color m_intensity;

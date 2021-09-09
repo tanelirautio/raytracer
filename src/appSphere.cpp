@@ -6,6 +6,7 @@
 #include "rtSphere.hpp"
 #include "rtDefs.hpp"
 #include "rtFile.hpp"
+#include "rtLight.hpp"
 
 #include <iostream>
 
@@ -20,9 +21,15 @@ namespace app {
 		auto half = wall_size / 2;
 
 		auto canvas = rt::Canvas((i32)canvas_pixels, (i32)canvas_pixels);
-		auto color = rt::Color(1, 0, 0); //red
-		auto color2 = rt::Color(0, 0, 1); // blue
+		
 		auto shape = rt::Sphere();
+		auto m = shape.get_material();
+		m.color({ 1, 0.2f, 1 });
+		shape.set_material(m);
+
+		auto light_position = rt::Point(-10, 10, -10);
+		auto light_color = rt::Color(1, 1, 1);
+		auto light = rt::PointLight(light_position, light_color);
 
 		for (i32 y = 0; y < canvas_pixels; y++) {
 			auto world_y = half - pixel_size * y;
@@ -30,18 +37,22 @@ namespace app {
 				auto world_x = -half + pixel_size * x;
 				auto position = rt::Point(world_x, world_y, wall_z);
 
-				auto dir(position - ray_origin);
+				auto dir = (position - ray_origin).normalize();
 
-				auto r = rt::Ray(ray_origin, dir.normalize());
-				auto xs = shape.intersect(r);
+				auto ray = rt::Ray(ray_origin, dir);
+				auto xs = shape.intersect(ray);
 				auto hit = shape.hit(xs);
 				if (hit.has_value()) {
+					auto point = ray.position(hit.value().t);
+					auto normal = shape.normal_at(point);
+					auto eye = -ray.direction();
+					auto color = rt::lighting(hit.value().object->get_material(), light, point, eye, normal);
 					canvas.write_pixel(x, y, color);
 				}				
 			}
 		}
 
-		rt::File::write("sphere.ppm", canvas.canvas_to_ppm());
+		rt::File::write("sphere2.ppm", canvas.canvas_to_ppm());
 
 	}
 }

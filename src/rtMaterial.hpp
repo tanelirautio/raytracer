@@ -23,7 +23,7 @@ namespace rt {
 			void specular(f32 value) { m_specular = value; }
 			void shininess(f32 value) { m_shininess = value; }
 
-			Color lighting(const PointLight& light, const Point& position, const Vector& eyev, const Vector& normalv);
+
 		private:
 			void set_default() {
 				m_color = { 1,1,1 };
@@ -39,6 +39,8 @@ namespace rt {
 			f32 m_specular;
 			f32 m_shininess;
 	};
+
+	Color lighting(const Material& material, const PointLight& light, const Point& position, const Vector& eyev, const Vector& normalv);
 
 	bool operator==(const Material& lhs, const Material& rhs);
 }

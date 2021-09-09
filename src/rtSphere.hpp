@@ -21,10 +21,10 @@ namespace rt {
 			Matrix get_transform() const { return m_transform; }
 			void set_transform(const Matrix& m) { m_transform = m; }
 
-			Material get_material() { return m_material; }
+			Material get_material() const { return m_material; }
 			void set_material(const Material& m) { m_material = m; }
 
-			std::vector<Intersection> intersect(Ray r) const;
+			std::vector<Intersection> intersect(const Ray& r) const;
 			std::optional<Intersection> hit(std::vector<Intersection>& intersections) const;
 			Vector normal_at(const rt::Point& point) const;
 		private:

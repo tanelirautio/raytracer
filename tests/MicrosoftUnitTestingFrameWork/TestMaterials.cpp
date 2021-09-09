@@ -27,7 +27,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, 0, -1);
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0,0,-10 }, { 1,1,1 });
-			rt::Color result = m.lighting(light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(1.9f,1.9f,1.9f));
 		}
 
@@ -38,7 +38,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, sqrt(2.f)/2.f, -sqrt(2.f)/2.f);
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0, 0, -10 }, { 1, 1, 1 });
-			rt::Color result = m.lighting(light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(1.0f,1.0f,1.0f));
 		}
 
@@ -49,7 +49,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, 0, -1); 
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0, 10, -10 }, { 1, 1, 1 });
-			rt::Color result = m.lighting(light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(0.7364f, 0.7364f, 0.7364f));
 		}
 
@@ -60,7 +60,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, -sqrt(2.f) / 2.f, -sqrt(2.f) / 2.f);
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0, 10, -10 }, { 1, 1, 1 });
-			rt::Color result = m.lighting(light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(1.63638f, 1.63638f, 1.63638f));
 		}
 
@@ -71,7 +71,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, 0, -1);
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0, 0, 10 }, { 1, 1, 1 });
-			rt::Color result = m.lighting(light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(0.1f, 0.1f, 0.1f));
 		}
 

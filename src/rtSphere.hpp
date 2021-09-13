@@ -21,17 +21,14 @@ namespace rt {
 			Matrix get_transform() const { return m_transform; }
 			void set_transform(const Matrix& m) { m_transform = m; }
 
-			Material get_material() const { return m_material; }
-			void set_material(const Material& m) { m_material = m; }
-
-			std::vector<Intersection> intersect(const Ray& r) const;
-			std::optional<Intersection> hit(std::vector<Intersection>& intersections) const;
-			Vector normal_at(const rt::Point& point) const;
+			std::vector<Intersection> intersect(const Ray& r) const override;
+			std::optional<Intersection> hit(std::vector<Intersection>& intersections) const override;
+			Vector normal_at(const rt::Point& point) const override;
 		private:
 			Point m_origin;
 			f32 m_radius;
 			Matrix m_transform;
-			Material m_material;
+
 	};
 }
 

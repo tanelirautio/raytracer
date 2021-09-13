@@ -22,8 +22,6 @@ namespace rt {
 			void diffuse(f32 value) { m_diffuse = value; }
 			void specular(f32 value) { m_specular = value; }
 			void shininess(f32 value) { m_shininess = value; }
-
-
 		private:
 			void set_default() {
 				m_color = { 1,1,1 };
@@ -33,7 +31,7 @@ namespace rt {
 				m_shininess = 200.f;
 			}
 
-			rt::Color m_color;
+			Color m_color;
 			f32 m_ambient;
 			f32 m_diffuse;
 			f32 m_specular;

@@ -160,6 +160,7 @@
     <ClInclude Include="..\..\src\rtTransformations.hpp" />
     <ClInclude Include="..\..\src\rtTuple.hpp" />
     <ClInclude Include="..\..\src\rtUtil.hpp" />
+    <ClInclude Include="..\..\src\rtWorld.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\rtCanvas.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="..\..\src\rtTransformations.cpp" />
     <ClCompile Include="..\..\src\rtTuple.cpp" />
     <ClCompile Include="..\..\src\rtUtil.cpp" />
+    <ClCompile Include="..\..\src\rtWorld.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

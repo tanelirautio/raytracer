@@ -6,15 +6,15 @@
 namespace rt {
 	class PointLight {
 		public:
-			PointLight(const rt::Point& position, const rt::Color& intensity) {
+			PointLight(const Point& position, const Color& intensity) {
 				m_position = position;
 				m_intensity = intensity;
 			}
-			rt::Point position() const { return m_position; }
-			rt::Color intensity() const { return m_intensity; }
+			Point position() const { return m_position; }
+			Color intensity() const { return m_intensity; }
 		private:
-			rt::Point m_position;
-			rt::Color m_intensity;
+			Point m_position;
+			Color m_intensity;
 	};
  }
 

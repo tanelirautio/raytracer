@@ -17,5 +17,6 @@
 #include "rtUtil.hpp"
 #include "rtLight.hpp"
 #include "rtMaterial.hpp"
+#include "rtWorld.hpp"
 
 #endif

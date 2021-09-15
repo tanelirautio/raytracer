@@ -8,14 +8,20 @@
 #include <memory>
 
 namespace rt {
+	class Ray;
 	class World {
 		public:
-			World() {};
-			void create_default() {}
+			World() = default;
+			~World() = default;
+			void create_default();
 
+			std::vector<Intersection> intersect(const Ray& ray) const;
+			
 			std::vector<PointLight> get_lights() { return m_lights; }
 			std::vector<Shape> get_objects() { return m_objects; }
 		private:
+
+
 			std::vector<PointLight> m_lights;
 			std::vector<Shape> m_objects;
 	};

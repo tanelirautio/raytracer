@@ -18,16 +18,13 @@ namespace rt {
 			Point origin() const { return m_origin; }
 			f32 radius() const { return m_radius; }
 
-			Matrix get_transform() const { return m_transform; }
-			void set_transform(const Matrix& m) { m_transform = m; }
-
+			Type get_type() const override;
 			std::vector<Intersection> intersect(const Ray& r) const override;
 			std::optional<Intersection> hit(std::vector<Intersection>& intersections) const override;
 			Vector normal_at(const rt::Point& point) const override;
 		private:
 			Point m_origin;
 			f32 m_radius;
-			Matrix m_transform;
 
 	};
 }

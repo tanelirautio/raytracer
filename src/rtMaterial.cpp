@@ -16,15 +16,15 @@ namespace rt {
 
 	Color lighting(const Material& material, const PointLight& light, const Point& point, const Vector& eyev, const Vector& normalv) {
 		// initialize the three different contibutions
-		rt::Color ambient;
-		rt::Color diffuse;
-		rt::Color specular;
+		Color ambient;
+		Color diffuse;
+		Color specular;
 
 		// combine the surface color with the light's color/intensity
 		auto effective_color = material.color() * light.intensity();
 
 		// find the direction to light source
-		rt::Vector lightv = (light.position() - point).normalize();
+		Vector lightv = (light.position() - point).normalize();
 
 		// compute the ambient contribution
 		ambient = effective_color * material.ambient();

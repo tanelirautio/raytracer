@@ -16,6 +16,9 @@ namespace rt {
 			Point m_position;
 			Color m_intensity;
 	};
+
+	bool operator==(const PointLight& lhs, const PointLight& rhs);
+
  }
 
 #endif

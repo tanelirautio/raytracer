@@ -3,6 +3,7 @@
 
 #include "rtDefs.hpp"
 #include "rtMaterial.hpp"
+#include "rtMatrix.hpp"
 #include <optional>
 #include <vector>
 
@@ -14,6 +15,12 @@ namespace rt {
 
 	class IShape {
 		public:
+			enum Type {
+				Sphere,
+				Cube,
+				Unknown
+			};
+			virtual Type get_type() const = 0;
 			virtual std::vector<Intersection> intersect(const Ray& ray) const = 0;
 			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) const = 0;
 			virtual Vector normal_at(const Point& world_point) const = 0;
@@ -25,16 +32,21 @@ namespace rt {
 			virtual ~Shape() = default;
 			i32 id() const { return ID; }
 
-			Material get_material() const { return m_material; }
-			void set_material(const Material& m) { m_material = m; }
+			Matrix get_transform() const;
+			void set_transform(const Matrix& m);
 
+			Material get_material() const;
+			void set_material(const Material& m);
+
+			virtual Type get_type() const { return Type::Unknown; }
 			virtual std::vector<Intersection> intersect(const Ray& ray) const;
 			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) const;
 			virtual Vector normal_at(const Point& world_point) const;
+		protected:
+			Material m_material;
+			Matrix m_transform;
 		private:
 			static i32 ID;
-
-			Material m_material;
 	};
 
 	bool operator==(const Shape& lhs, const Shape& rhs);

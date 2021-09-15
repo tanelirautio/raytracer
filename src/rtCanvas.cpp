@@ -16,7 +16,7 @@ namespace rt {
 		m_data.resize((i64)width * (i64)height);
 	}
 
-	void Canvas::write_pixel(i32 x, i32 y, const rt::Color& c)  {
+	void Canvas::write_pixel(i32 x, i32 y, const Color& c)  {
 		i32 v = x + y * m_width;
 		if (v < 0 || v > m_data.size()) {
 			return;
@@ -24,10 +24,10 @@ namespace rt {
 		m_data[v] = c;
 	}
 
-	rt::Color Canvas::pixel_at(i32 x, i32 y) const {
+	Color Canvas::pixel_at(i32 x, i32 y) const {
 		i32 v = x + y * m_width;
 		if (v < 0 || v > m_data.size()) {
-			return rt::get_color_black();
+			return get_color_black();
 		}
 		return m_data[v];
 	}

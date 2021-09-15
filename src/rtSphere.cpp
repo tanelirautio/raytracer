@@ -3,21 +3,25 @@
 #include <algorithm>
 
 namespace rt {
-	Sphere::Sphere(rt::Point origin, f32 radius) : Shape() {
+	Sphere::Sphere(Point origin, f32 radius) : Shape() {
 		m_origin = origin;
 		m_radius = radius;
-		m_transform = rt::get_identity_matrix(4);
+		m_transform = get_identity_matrix(4);
+	}
+
+	Shape::Type Sphere::get_type() const {
+		return Type::Sphere;
 	}
 
 	std::vector<Intersection> Sphere::intersect(const Ray& ray) const {
 
-		auto inv = rt::inverse(get_transform());
+		auto inv = inverse(get_transform());
 		if(!inv.has_value()) {
 			return {};
 		}
-		rt::Ray r = ray.transform(inv.value());
+		Ray r = ray.transform(inv.value());
 
-		rt::Vector sphere_to_ray = (rt::Vector)(r.origin() - m_origin);		
+		Vector sphere_to_ray = (Vector)(r.origin() - m_origin);		
 		f32 a = r.direction().dot(r.direction());
 		f32 b = 2 * r.direction().dot(sphere_to_ray);
 		f32 c = sphere_to_ray.dot(sphere_to_ray) - 1;
@@ -42,13 +46,13 @@ namespace rt {
 		return std::nullopt;
 	}
 
-	rt::Vector Sphere::normal_at(const rt::Point& world_point) const {
-		rt::Vector world_normal;
+	Vector Sphere::normal_at(const Point& world_point) const {
+		Vector world_normal;
 
 		auto transform_inverse = get_transform().inverse();
 		if (transform_inverse.has_value()) {
 			auto object_point = transform_inverse.value() * world_point;
-			auto object_normal = object_point - rt::Point(0, 0, 0);
+			auto object_normal = object_point - Point(0, 0, 0);
 			world_normal = transform_inverse.value().transpose() * object_normal;
 			world_normal.w(0);
 			return world_normal.normalize();

@@ -15,13 +15,13 @@ namespace rt {
 			i32 get_width() const { return m_width;  }
 			i32 get_height() const { return m_height; }
 
-			void write_pixel(i32 x, i32 y, const rt::Color& c);
-			rt::Color pixel_at(i32 x, i32 y) const;
+			void write_pixel(i32 x, i32 y, const Color& c);
+			Color pixel_at(i32 x, i32 y) const;
 			std::string canvas_to_ppm() const;
 		private:
 			i32 m_width;
 			i32 m_height;
-			std::vector<rt::Color> m_data;
+			std::vector<Color> m_data;
 	};
 }
 

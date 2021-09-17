@@ -15,12 +15,6 @@ namespace rt {
 
 	class IShape {
 		public:
-			enum Type {
-				Sphere,
-				Cube,
-				Unknown
-			};
-			virtual Type get_type() const = 0;
 			virtual std::vector<Intersection> intersect(const Ray& ray) const = 0;
 			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) const = 0;
 			virtual Vector normal_at(const Point& world_point) const = 0;
@@ -28,8 +22,17 @@ namespace rt {
 	
 	class Shape : public IShape {
 		public:
-			Shape() { ID++; }
+			enum class Type {
+				Sphere,
+				Cube,
+				Unknown
+			};
+			Shape(Type type) { 
+				ID++;
+				m_type = type;
+			}
 			virtual ~Shape() = default;
+
 			i32 id() const { return ID; }
 
 			Matrix get_transform() const;
@@ -38,7 +41,8 @@ namespace rt {
 			Material get_material() const;
 			void set_material(const Material& m);
 
-			virtual Type get_type() const { return Type::Unknown; }
+			Type get_type() const { return m_type; }
+
 			virtual std::vector<Intersection> intersect(const Ray& ray) const;
 			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) const;
 			virtual Vector normal_at(const Point& world_point) const;
@@ -46,6 +50,8 @@ namespace rt {
 			Material m_material;
 			Matrix m_transform;
 		private:
+			Type m_type = Type::Unknown;
+
 			static i32 ID;
 	};
 

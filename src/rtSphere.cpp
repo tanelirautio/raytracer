@@ -3,14 +3,10 @@
 #include <algorithm>
 
 namespace rt {
-	Sphere::Sphere(Point origin, f32 radius) : Shape() {
+	Sphere::Sphere(Point origin, f32 radius) : Shape(Type::Sphere) {
 		m_origin = origin;
 		m_radius = radius;
 		m_transform = get_identity_matrix(4);
-	}
-
-	Shape::Type Sphere::get_type() const {
-		return Type::Sphere;
 	}
 
 	std::vector<Intersection> Sphere::intersect(const Ray& ray) const {
@@ -60,4 +56,11 @@ namespace rt {
 		return world_normal;
 	}
 
+	bool operator==(const Sphere& lhs, const Sphere& rhs) {
+		return lhs.origin() == rhs.origin() &&
+			lhs.get_material() == rhs.get_material() &&
+			lhs.get_transform() == rhs.get_transform() &&
+			lhs.get_type() == rhs.get_type() &&
+			equal(lhs.radius(), rhs.radius());
+	}
 }

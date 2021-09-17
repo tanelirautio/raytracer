@@ -13,34 +13,32 @@ namespace rt {
 	std::vector<Intersection> World::intersect(const Ray& ray) const {
 
 		std::vector<Intersection> xs;
+	
+		for (const auto& shape : m_objects) {
+			switch (shape->get_type()) {
+				case Shape::Type::Sphere: {
+					LOG("Sphere!");
 
-		/*
-		for(auto shape : m_objects) {
-			switch (shape.get_type()) {
-				case Shape::Sphere: {
-					LOG("SPHERE");
-					Sphere& sphere = dynamic_cast<Sphere&>(&shape);
+					auto sphere = dynamic_cast<Sphere*>(shape.get());
 					if (sphere) {
 						auto v = sphere->intersect(ray);
 						xs.insert(xs.end(), v.begin(), v.end());
 					}
 					break;
 				}
-				case Shape::Cube: {
-					LOG("CUBE");
-					//TODO
+				case Shape::Type::Cube: {
+					LOG("Cube!");
 					break;
 				}
-				case Shape::Unknown: 
 				default: {
-					LOG("UNKNOWN OR DEFAULT");
-					//assert(false);
+					LOG("Unknown!");
+					assert(false);
 					break;
 				}
 			}
 		}
-		*/
-
+		
+		std::sort(xs.begin(), xs.end());
 		return xs;
 	}
 
@@ -51,12 +49,12 @@ namespace rt {
 		m1.color({ 0.8f, 1.0f, 0.6f });
 		m1.diffuse(0.7f);
 		m1.specular(0.2f);
-		rt::Sphere s1;
-		s1.set_material(m1);
 
-		rt::Matrix t1 = scaling(0.5f, 0.5f, 0.5f);
-		rt::Sphere s2;
-		s2.set_transform(t1);
+		auto s1 = std::make_shared<Sphere>();
+		s1->set_material(m1);
+
+		auto s2 = std::make_shared<Sphere>();
+		s2->set_transform(scaling(0.5f, 0.5f, 0.5f));
 
 		m_objects.push_back(s1);
 		m_objects.push_back(s2);

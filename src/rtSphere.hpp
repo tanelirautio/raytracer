@@ -18,15 +18,15 @@ namespace rt {
 			Point origin() const { return m_origin; }
 			f32 radius() const { return m_radius; }
 
-			Type get_type() const override;
 			std::vector<Intersection> intersect(const Ray& r) const override;
 			std::optional<Intersection> hit(std::vector<Intersection>& intersections) const override;
 			Vector normal_at(const rt::Point& point) const override;
 		private:
 			Point m_origin;
 			f32 m_radius;
-
 	};
+
+	bool operator==(const Sphere& lhs, const Sphere& rhs);
 }
 
 #endif

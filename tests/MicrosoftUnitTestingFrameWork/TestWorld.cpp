@@ -37,20 +37,21 @@ namespace TestProject
 			Assert::IsTrue(w.get_objects().size() == 2);
 
 			Assert::IsTrue(w.get_lights().at(0) == light);
-			Assert::IsTrue(w.get_objects().at(0) == s1);
-			Assert::IsTrue(w.get_objects().at(1) == s2);
+			Assert::IsTrue(*w.get_objects().at(0).get() == s1);
+			Assert::IsTrue(*w.get_objects().at(1).get() == s2);
 		}
 
-		/*
 		TEST_METHOD(Intersect_a_world_with_a_ray)
 		{
 			rt::World w = rt::get_default_world();
 			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
 
 			auto xs = w.intersect(r);
-
 			Assert::IsTrue(xs.size() == 4);
+			Assert::IsTrue(xs[0].t == 4.f);
+			Assert::IsTrue(xs[1].t == 4.5f);
+			Assert::IsTrue(xs[2].t == 5.5f);
+			Assert::IsTrue(xs[3].t == 6.f);
 		}
-		*/
 	};
 }

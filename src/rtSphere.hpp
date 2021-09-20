@@ -14,6 +14,7 @@ namespace rt {
 	class Sphere : public Shape {
 		public:
 			Sphere(Point origin = Point(0, 0, 0), f32 radius = 1.0f);
+			~Sphere() {}
 			
 			Point origin() const { return m_origin; }
 			f32 radius() const { return m_radius; }

@@ -28,7 +28,7 @@ namespace app {
 		m.color({ 1, 0.2f, 1 });
 		shape.set_material(m);
 
-		shape.set_transform(rt::rotation_z(M_PI/4.f) * rt::scaling(0.5f, 1, 1));
+		shape.set_transform(rt::rotation_z((f32)M_PI/4.f) * rt::scaling(0.5f, 1, 1));
 
 		auto light_position = rt::Point(-10, 10, -10);
 		auto light_color = rt::Color(1, 1, 1);

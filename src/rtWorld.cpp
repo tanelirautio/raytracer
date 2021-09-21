@@ -51,15 +51,17 @@ namespace rt {
 		m1.diffuse(0.7f);
 		m1.specular(0.2f);
 
-		auto s1 = std::make_unique<Sphere>();
+		//auto s1 = std::make_unique<Sphere>();
+		auto s1 = std::make_shared<Sphere>();
 		s1->set_material(m1);
 
-		auto s2 = std::make_unique<Sphere>();
+		//auto s2 = std::make_unique<Sphere>();
+		auto s2 = std::make_shared<Sphere>();
 		s2->set_transform(scaling(0.5f, 0.5f, 0.5f));
 
 		
-		m_objects.push_back(std::move(s1));
-		m_objects.push_back(std::move(s2));
+		m_objects.push_back(s1);
+		m_objects.push_back(s2);
 	}
 
 	World get_default_world() {

@@ -18,11 +18,13 @@ namespace rt {
 			std::vector<Intersection> intersect(const Ray& ray) const;
 			
 			std::vector<PointLight> get_lights() const { return m_lights; }
-			std::vector<std::unique_ptr<Shape>> const& get_objects() const { return m_objects; }
+			//std::vector<std::unique_ptr<Shape>> const& get_objects() const { return m_objects; }
+			std::vector<std::shared_ptr<Shape>>& get_objects() { return m_objects; }
 
 		private:
 			std::vector<PointLight> m_lights;
-			std::vector<std::unique_ptr<Shape>> m_objects;
+			//std::vector<std::unique_ptr<Shape>> m_objects;
+			std::vector<std::shared_ptr<Shape>> m_objects;
 	};
 
 	World get_default_world();

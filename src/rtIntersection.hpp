@@ -32,6 +32,7 @@ namespace rt {
 		Point point;
 		Vector eyev;
 		Vector normalv;
+		bool inside = false;
 	};
 
 	Computations prepare_computations(Intersection i, Ray r);

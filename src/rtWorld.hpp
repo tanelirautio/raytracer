@@ -1,6 +1,7 @@
 #ifndef __RT_WORLD_HPP__
 #define __RT_WORLD_HPP__
 
+
 #include "rtShape.hpp"
 #include "rtLight.hpp"
 
@@ -8,6 +9,8 @@
 #include <memory>
 
 namespace rt {
+	struct Computations;
+	class Color;
 	class Ray;
 	class World {
 		public:
@@ -15,15 +18,18 @@ namespace rt {
 
 			void create_default();
 
-			std::vector<Intersection> intersect(const Ray& ray) const;
-			
-			std::vector<PointLight> get_lights() const { return m_lights; }
-			//std::vector<std::unique_ptr<Shape>> const& get_objects() const { return m_objects; }
-			std::vector<std::shared_ptr<Shape>>& get_objects() { return m_objects; }
+			void set_light(const PointLight& light, bool reset = false);
+			void set_object(const std::shared_ptr<Shape>& shape, bool reset = false);
 
+			std::vector<Intersection> intersect(const Ray& ray) const;
+
+			Color shade_hit(const Computations& comps);
+			
+
+			std::vector<PointLight>& get_lights() { return m_lights; }
+			std::vector<std::shared_ptr<Shape>>& get_objects() { return m_objects; }
 		private:
 			std::vector<PointLight> m_lights;
-			//std::vector<std::unique_ptr<Shape>> m_objects;
 			std::vector<std::shared_ptr<Shape>> m_objects;
 	};
 

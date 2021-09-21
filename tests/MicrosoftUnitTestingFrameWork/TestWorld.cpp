@@ -53,5 +53,31 @@ namespace TestProject
 			Assert::IsTrue(xs[2].t == 5.5f);
 			Assert::IsTrue(xs[3].t == 6.f);
 		}
+
+		/*
+		TEST_METHOD(Shading_an_intersection)
+		{
+			rt::World w = rt::get_default_world();
+			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
+			auto shape = w.get_objects().at(0);
+			rt::Intersection i(4, shape.get());
+			rt::Computations comps = rt::prepare_computations(i, r);
+			rt::Color c = w.shade_hit(comps);
+			Assert::IsTrue(c == rt::Color(0.38066f, 0.47583f, 0.2855f));
+		}
+
+		TEST_METHOD(Shading_an_intersection_from_the_inside)
+		{
+			rt::World w = rt::get_default_world();
+			w.set_light(rt::PointLight({ 0,0.25f,0 }, { 1,1,1 }));
+			rt::Ray r({ 0,0,0 }, { 0,0,1 });
+			auto shape = w.get_objects().at(1);
+			rt::Intersection i(0.5f, shape.get());
+			rt::Computations comps = rt::prepare_computations(i, r);
+			rt::Color c = w.shade_hit(comps);
+			Assert::IsTrue(c == rt::Color(0.90498f, 0.90498f, 0.90498f));
+		}
+		*/
+
 	};
 }

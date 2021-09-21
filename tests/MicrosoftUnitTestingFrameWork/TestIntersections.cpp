@@ -90,12 +90,33 @@ namespace TestProject
 			rt::Sphere s;
 			rt::Intersection i(4, &s);
 			rt::Computations comps = rt::prepare_computations(i, r);
-			
 			Assert::IsTrue(comps.t == i.t);
 			Assert::IsTrue(comps.object == i.object);
 			Assert::IsTrue(comps.point == rt::Point(0,0,-1));
 			Assert::IsTrue(comps.eyev == rt::Vector(0,0,-1));
 			Assert::IsTrue(comps.normalv == rt::Vector(0,0,-1));
+		}
+
+		TEST_METHOD(The_hit_when_an_intersection_occurs_on_the_outside)
+		{
+			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
+			rt::Sphere s;
+			rt::Intersection i(4, &s);
+			rt::Computations comps = rt::prepare_computations(i, r);
+			Assert::AreEqual(comps.inside, false);
+		}
+
+		TEST_METHOD(The_hit_when_an_intersection_occurs_on_the_inside)
+		{
+			rt::Ray r({ 0,0,0 }, { 0,0,1 });
+			rt::Sphere s;
+			rt::Intersection i(1, &s);
+			rt::Computations comps = rt::prepare_computations(i, r);
+			Assert::IsTrue(comps.point == rt::Point(0, 0, 1));
+			Assert::IsTrue(comps.eyev == rt::Vector(0, 0, -1));
+			//normal would have been (0,0,1), but it's inverted!
+			Assert::IsTrue(comps.normalv == rt::Vector(0, 0, -1));
+			Assert::AreEqual(comps.inside, true);
 		}
 
 

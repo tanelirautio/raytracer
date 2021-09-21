@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\rtCanvas.cpp" />
     <ClCompile Include="..\..\src\rtFile.cpp" />
+    <ClCompile Include="..\..\src\rtIntersection.cpp" />
     <ClCompile Include="..\..\src\rtLight.cpp" />
     <ClCompile Include="..\..\src\rtMaterial.cpp" />
     <ClCompile Include="..\..\src\rtMatrix.cpp" />

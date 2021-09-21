@@ -83,5 +83,21 @@ namespace TestProject
 			Assert::AreEqual(hit.has_value(), true);
 			Assert::IsTrue(hit.value() == i4);
 		}
+
+		TEST_METHOD(Precomputing_the_state_of_an_intersection)
+		{
+			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
+			rt::Sphere s;
+			rt::Intersection i(4, &s);
+			rt::Computations comps = rt::prepare_computations(i, r);
+			
+			Assert::IsTrue(comps.t == i.t);
+			Assert::IsTrue(comps.object == i.object);
+			Assert::IsTrue(comps.point == rt::Point(0,0,-1));
+			Assert::IsTrue(comps.eyev == rt::Vector(0,0,-1));
+			Assert::IsTrue(comps.normalv == rt::Vector(0,0,-1));
+		}
+
+
 	};
 }

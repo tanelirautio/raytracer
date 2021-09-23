@@ -57,14 +57,27 @@ namespace rt {
 		return xs;
 	}
 
-	Color World::shade_hit(const Computations& comps) {
+	Color World::shade_hit(const Computations& comps) const {
 		// TODO: support multiple light sources by calling lighting() for each light and adding the colors together
 		return lighting(comps.object->get_material(), get_lights()[0], comps.point, comps.eyev, comps.normalv);
+	}
+
+	Color World::color_at(const Ray& ray) const {
+		auto xs = intersect(ray);
+		if (xs.size() > 0) {
+			for (i32 i = 0; i < xs.size(); i++) {
+				if (xs[i].t > 0) {
+					auto comps = prepare_computations(xs[i], ray);
+					return shade_hit(comps);
+				}
+			}
+		}
+		return get_color_black();
 	}
 	
 
 	void World::create_default() {
-		m_lights.push_back(PointLight({ -10,10,10 }, { 1,1,1 }));
+		m_lights.push_back(PointLight({ -10,10,-10 }, { 1,1,1 }));
 
 		rt::Material m1;
 		m1.color({ 0.8f, 1.0f, 0.6f });
@@ -73,11 +86,10 @@ namespace rt {
 
 		auto s1 = std::make_shared<Sphere>();
 		s1->set_material(m1);
+		m_objects.push_back(s1);
 
 		auto s2 = std::make_shared<Sphere>();
 		s2->set_transform(scaling(0.5f, 0.5f, 0.5f));
-
-		m_objects.push_back(s1);
 		m_objects.push_back(s2);
 	}
 

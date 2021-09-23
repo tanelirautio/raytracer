@@ -19,7 +19,7 @@ namespace TestProject
 		
 		TEST_METHOD(Create_a_default_world)
 		{
-			rt::PointLight light({ -10,10,10 }, { 1,1,1 });
+			rt::PointLight light({ -10,10,-10 }, { 1,1,1 });
 
 			rt::Material m1;
 			m1.color({ 0.8f, 1.0f, 0.6f });
@@ -54,22 +54,37 @@ namespace TestProject
 			Assert::IsTrue(xs[3].t == 6.f);
 		}
 
-		/*
+		
 		TEST_METHOD(Shading_an_intersection)
 		{
 			rt::World w = rt::get_default_world();
 			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
 			auto shape = w.get_objects().at(0);
+
+			Assert::IsTrue(w.get_lights().at(0) == rt::PointLight({ -10,10,-10 }, { 1,1,1 }));
+
 			rt::Intersection i(4, shape.get());
 			rt::Computations comps = rt::prepare_computations(i, r);
+
+			Assert::IsTrue(comps.t == i.t);
+			Assert::IsTrue(comps.object == i.object);
+			Assert::IsTrue(comps.point == rt::Point(0, 0, -1));
+			Assert::IsTrue(comps.eyev == rt::Vector(0, 0, -1));
+			Assert::IsTrue(comps.normalv == rt::Vector(0, 0, -1));
+
+			rt::Material m = comps.object->get_material();
+			Assert::IsTrue(m.color() == rt::Color(0.8f, 1.0f, 0.6f));
+			Assert::IsTrue(m.diffuse() == 0.7f);
+			Assert::IsTrue(m.specular() == 0.2f);
+
 			rt::Color c = w.shade_hit(comps);
 			Assert::IsTrue(c == rt::Color(0.38066f, 0.47583f, 0.2855f));
 		}
-
+		
 		TEST_METHOD(Shading_an_intersection_from_the_inside)
 		{
 			rt::World w = rt::get_default_world();
-			w.set_light(rt::PointLight({ 0,0.25f,0 }, { 1,1,1 }));
+			w.set_light(rt::PointLight({ 0,0.25f,0 }, { 1,1,1 }), true); // if true, remove already existing lights
 			rt::Ray r({ 0,0,0 }, { 0,0,1 });
 			auto shape = w.get_objects().at(1);
 			rt::Intersection i(0.5f, shape.get());
@@ -77,7 +92,23 @@ namespace TestProject
 			rt::Color c = w.shade_hit(comps);
 			Assert::IsTrue(c == rt::Color(0.90498f, 0.90498f, 0.90498f));
 		}
-		*/
+
+		TEST_METHOD(The_color_when_a_ray_misses)
+		{
+			rt::World w = rt::get_default_world();
+			rt::Ray r({ 0,0,-5 }, { 0,1,0 });
+			rt::Color c = w.color_at(r);
+			Assert::IsTrue(c == rt::Color(0,0,0));
+		}
+
+		TEST_METHOD(The_color_when_a_ray_hits)
+		{
+			rt::World w = rt::get_default_world();
+			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
+			rt::Color c = w.color_at(r);
+			Assert::IsTrue(c == rt::Color(0.38066f, 0.47583f, 0.2855f));
+		}
+
 
 	};
 }

@@ -23,11 +23,12 @@ namespace rt {
 
 			std::vector<Intersection> intersect(const Ray& ray) const;
 
-			Color shade_hit(const Computations& comps);
+			Color shade_hit(const Computations& comps) const;
 			
+			Color color_at(const Ray& ray) const;
 
-			std::vector<PointLight>& get_lights() { return m_lights; }
-			std::vector<std::shared_ptr<Shape>>& get_objects() { return m_objects; }
+			const std::vector<PointLight>& get_lights() const { return m_lights; }
+			const std::vector<std::shared_ptr<Shape>>& get_objects() const { return m_objects; }
 		private:
 			std::vector<PointLight> m_lights;
 			std::vector<std::shared_ptr<Shape>> m_objects;

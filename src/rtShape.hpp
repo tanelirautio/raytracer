@@ -35,11 +35,14 @@ namespace rt {
 
 			i32 id() const { return ID; }
 
-			Matrix get_transform() const;
-			void set_transform(const Matrix& m);
+			//Matrix get_transform() const;
+			const Matrix& transform() const { return m_transform; }
+			Matrix& transform() { return m_transform; }
 
-			Material get_material() const;
-			void set_material(const Material& m);
+			//void set_transform(const Matrix & m);
+
+			const Material& material() const { return m_material; }
+			Material& material() { return m_material; }
 
 			Type get_type() const { return m_type; }
 

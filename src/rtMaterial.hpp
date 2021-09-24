@@ -6,6 +6,22 @@
 
 namespace rt {
 	class PointLight;
+
+	struct Material {
+		Material() {
+			color = { 1,1,1 };
+			ambient = 0.1f;
+			diffuse = 0.9f;
+			specular = 0.9f;
+			shininess = 200.f;
+		}
+		Color color;
+		f32 ambient;
+		f32 diffuse;
+		f32 specular;
+		f32 shininess;
+	};
+	/*
 	class Material {
 		public:
 			Material() {
@@ -37,6 +53,7 @@ namespace rt {
 			f32 m_specular;
 			f32 m_shininess;
 	};
+	*/
 
 	Color lighting(const Material& material, const PointLight& light, const Point& position, const Vector& eyev, const Vector& normalv);
 

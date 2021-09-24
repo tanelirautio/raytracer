@@ -22,15 +22,15 @@ namespace TestProject
 			rt::PointLight light({ -10,10,-10 }, { 1,1,1 });
 
 			rt::Material m1;
-			m1.color({ 0.8f, 1.0f, 0.6f });
-			m1.diffuse(0.7f);
-			m1.specular(0.2f);
+			m1.color = { 0.8f, 1.0f, 0.6f };
+			m1.diffuse = 0.7f;
+			m1.specular = 0.2f;
 			rt::Sphere s1;
-			s1.set_material(m1);
+			s1.material() = m1;
 
 			rt::Matrix t1 = rt::scaling(0.5f, 0.5f, 0.5f);
 			rt::Sphere s2;
-			s2.set_transform(t1);
+			s2.transform() = t1;
 
 			rt::World w = rt::get_default_world();
 			Assert::IsTrue(w.get_lights().size() == 1);
@@ -72,10 +72,10 @@ namespace TestProject
 			Assert::IsTrue(comps.eyev == rt::Vector(0, 0, -1));
 			Assert::IsTrue(comps.normalv == rt::Vector(0, 0, -1));
 
-			rt::Material m = comps.object->get_material();
-			Assert::IsTrue(m.color() == rt::Color(0.8f, 1.0f, 0.6f));
-			Assert::IsTrue(m.diffuse() == 0.7f);
-			Assert::IsTrue(m.specular() == 0.2f);
+			rt::Material m = comps.object->material();
+			Assert::IsTrue(m.color == rt::Color(0.8f, 1.0f, 0.6f));
+			Assert::IsTrue(m.diffuse == 0.7f);
+			Assert::IsTrue(m.specular == 0.2f);
 
 			rt::Color c = w.shade_hit(comps);
 			Assert::IsTrue(c == rt::Color(0.38066f, 0.47583f, 0.2855f));
@@ -109,6 +109,19 @@ namespace TestProject
 			Assert::IsTrue(c == rt::Color(0.38066f, 0.47583f, 0.2855f));
 		}
 
+		TEST_METHOD(The_color_with_an_intersection_behind_the_ray)
+		{
+			rt::World w = rt::get_default_world();
+			auto outer = w.get_objects().at(0);
+			outer.get()->material().ambient = 1;
+
+			auto inner = w.get_objects().at(1);
+			auto m2 = inner.get()->material().ambient = 1;
+
+			rt::Ray r({ 0,0,0.75f }, { 0,0,-1 });
+			rt::Color c = w.color_at(r);
+			Assert::IsTrue(c == inner.get()->material().color);
+		}
 
 	};
 }

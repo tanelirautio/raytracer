@@ -4,6 +4,18 @@
 namespace rt {
 
 	bool operator==(const Material& lhs, const Material& rhs) {
+		if (lhs.color == rhs.color &&
+			lhs.ambient == rhs.ambient &&
+			lhs.diffuse == rhs.diffuse &&
+			lhs.specular == rhs.specular &&
+			lhs.shininess == rhs.shininess) {
+			return true;
+		}
+		return false;
+	}
+
+	/*
+	bool operator==(const Material& lhs, const Material& rhs) {
 		if (lhs.color() == rhs.color() &&
 			lhs.ambient() == rhs.ambient() &&
 			lhs.diffuse() == rhs.diffuse() &&
@@ -13,6 +25,7 @@ namespace rt {
 		}
 		return false;
 	}
+	*/
 
 	Color lighting(const Material& material, const PointLight& light, const Point& point, const Vector& eyev, const Vector& normalv) {
 		// initialize the three different contibutions
@@ -21,13 +34,13 @@ namespace rt {
 		Color specular;
 
 		// combine the surface color with the light's color/intensity
-		auto effective_color = material.color() * light.intensity();
+		auto effective_color = material.color * light.intensity();
 
 		// find the direction to light source
 		Vector lightv = (light.position() - point).normalize();
 
 		// compute the ambient contribution
-		ambient = effective_color * material.ambient();
+		ambient = effective_color * material.ambient;
 
 		// light_dot_normal represents the cosine of the angle between the
 		// light vector and the normal vector. A negative number means the
@@ -39,7 +52,7 @@ namespace rt {
 		}
 		else {
 			// compute the diffuse contribution
-			diffuse = effective_color * material.diffuse() * light_dot_normal;
+			diffuse = effective_color * material.diffuse * light_dot_normal;
 
 			// reflect_dot_eye represents the cosine of the angle between the
 			// reflection vector and the eye vector. A negative number means the
@@ -51,8 +64,8 @@ namespace rt {
 			}
 			else {
 				// compute the specular contribution
-				auto factor = pow(reflect_dot_eye, material.shininess());
-				specular = light.intensity() * material.specular() * factor;
+				auto factor = pow(reflect_dot_eye, material.shininess);
+				specular = light.intensity() * material.specular * factor;
 			}
 		}
 

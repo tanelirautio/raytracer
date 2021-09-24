@@ -24,11 +24,9 @@ namespace app {
 		auto canvas = rt::Canvas((i32)canvas_pixels, (i32)canvas_pixels);
 		
 		auto shape = rt::Sphere();
-		auto m = shape.get_material();
-		m.color({ 1, 0.2f, 1 });
-		shape.set_material(m);
-
-		shape.set_transform(rt::rotation_z((f32)M_PI/4.f) * rt::scaling(0.5f, 1, 1));
+		auto m = shape.material().color = { 1, 0.2f, 1 };
+		
+		shape.transform() = rt::rotation_z((f32)M_PI/4.f) * rt::scaling(0.5f, 1, 1);
 
 		auto light_position = rt::Point(-10, 10, -10);
 		auto light_color = rt::Color(1, 1, 1);
@@ -49,7 +47,7 @@ namespace app {
 					auto point = ray.position(hit.value().t);
 					auto normal = shape.normal_at(point);
 					auto eye = -ray.direction();
-					auto color = rt::lighting(hit.value().object->get_material(), light, point, eye, normal);
+					auto color = rt::lighting(hit.value().object->material(), light, point, eye, normal);
 					canvas.write_pixel(x, y, color);
 				}				
 			}

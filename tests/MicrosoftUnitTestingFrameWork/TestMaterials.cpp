@@ -13,11 +13,11 @@ namespace TestProject
 		TEST_METHOD(The_default_material)
 		{
 			rt::Material m;
-			Assert::IsTrue(m.color() == rt::Color(1,1,1));
-			Assert::IsTrue(m.ambient() == 0.1f);
-			Assert::IsTrue(m.diffuse() == 0.9f);
-			Assert::IsTrue(m.specular() == 0.9f);
-			Assert::IsTrue(m.shininess() == 200.f);
+			Assert::IsTrue(m.color == rt::Color(1,1,1));
+			Assert::IsTrue(m.ambient == 0.1f);
+			Assert::IsTrue(m.diffuse == 0.9f);
+			Assert::IsTrue(m.specular == 0.9f);
+			Assert::IsTrue(m.shininess == 200.f);
 		}
 
 		TEST_METHOD(Lighting_with_the_eye_between_the_light_and_and_the_surface)

@@ -11,7 +11,7 @@ namespace rt {
 
 	std::vector<Intersection> Sphere::intersect(const Ray& ray) const {
 
-		auto inv = inverse(get_transform());
+		auto inv = inverse(transform());
 		if(!inv.has_value()) {
 			return {};
 		}
@@ -45,7 +45,7 @@ namespace rt {
 	Vector Sphere::normal_at(const Point& world_point) const {
 		Vector world_normal;
 
-		auto transform_inverse = get_transform().inverse();
+		auto transform_inverse = transform().inverse();
 		if (transform_inverse.has_value()) {
 			auto object_point = transform_inverse.value() * world_point;
 			auto object_normal = object_point - Point(0, 0, 0);
@@ -58,8 +58,8 @@ namespace rt {
 
 	bool operator==(const Sphere& lhs, const Sphere& rhs) {
 		return lhs.origin() == rhs.origin() &&
-			lhs.get_material() == rhs.get_material() &&
-			lhs.get_transform() == rhs.get_transform() &&
+			lhs.material() == rhs.material() &&
+			lhs.transform() == rhs.transform() &&
 			lhs.get_type() == rhs.get_type() &&
 			equal(lhs.radius(), rhs.radius());
 	}

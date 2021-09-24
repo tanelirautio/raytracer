@@ -31,25 +31,25 @@ namespace rt {
 
 		for (const auto& shape : m_objects) {
 			switch (shape->get_type()) {
-			case Shape::Type::Sphere: {
-				LOG("Sphere!");
+				case Shape::Type::Sphere: {
+					LOG("Sphere!");
 
-				auto sphere = dynamic_cast<Sphere*>(shape.get());
-				if (sphere) {
-					auto v = sphere->intersect(ray);
-					xs.insert(xs.end(), v.begin(), v.end());
+					auto sphere = dynamic_cast<Sphere*>(shape.get());
+					if (sphere) {
+						auto v = sphere->intersect(ray);
+						xs.insert(xs.end(), v.begin(), v.end());
+					}
+					break;
 				}
-				break;
-			}
-			case Shape::Type::Cube: {
-				LOG("Cube!");
-				break;
-			}
-			default: {
-				LOG("Unknown!");
-				assert(false);
-				break;
-			}
+				case Shape::Type::Cube: {
+					LOG("Cube!");
+					break;
+				}
+				default: {
+					LOG("Unknown!");
+					assert(false);
+					break;
+				}
 			}
 		}
 
@@ -59,16 +59,16 @@ namespace rt {
 
 	Color World::shade_hit(const Computations& comps) const {
 		// TODO: support multiple light sources by calling lighting() for each light and adding the colors together
-		return lighting(comps.object->get_material(), get_lights()[0], comps.point, comps.eyev, comps.normalv);
+		return lighting(comps.object->material(), get_lights()[0], comps.point, comps.eyev, comps.normalv);
 	}
 
 	Color World::color_at(const Ray& ray) const {
 		auto xs = intersect(ray);
 		if (xs.size() > 0) {
+			// Intersections have been already sorted - we just need to find the first intersection with the lowest non-negative value
 			for (i32 i = 0; i < xs.size(); i++) {
 				if (xs[i].t > 0) {
-					auto comps = prepare_computations(xs[i], ray);
-					return shade_hit(comps);
+					return shade_hit(prepare_computations(xs[i], ray));
 				}
 			}
 		}
@@ -80,16 +80,16 @@ namespace rt {
 		m_lights.push_back(PointLight({ -10,10,-10 }, { 1,1,1 }));
 
 		rt::Material m1;
-		m1.color({ 0.8f, 1.0f, 0.6f });
-		m1.diffuse(0.7f);
-		m1.specular(0.2f);
+		m1.color = { 0.8f, 1.0f, 0.6f };
+		m1.diffuse = 0.7f;
+		m1.specular = 0.2f;
 
 		auto s1 = std::make_shared<Sphere>();
-		s1->set_material(m1);
+		s1->material() = m1;
 		m_objects.push_back(s1);
 
 		auto s2 = std::make_shared<Sphere>();
-		s2->set_transform(scaling(0.5f, 0.5f, 0.5f));
+		s2->transform() = scaling(0.5f, 0.5f, 0.5f);
 		m_objects.push_back(s2);
 	}
 

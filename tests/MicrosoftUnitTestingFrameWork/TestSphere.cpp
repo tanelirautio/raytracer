@@ -65,22 +65,22 @@ namespace TestProject
 		TEST_METHOD(A_Spheres_Default_Transformation)
 		{		
 			rt::Sphere s;
-			Assert::IsTrue(s.get_transform() == rt::get_identity_matrix(4));
+			Assert::IsTrue(s.transform() == rt::get_identity_matrix(4));
 		}
 
 		TEST_METHOD(Changing_A_Spheres_Transformation)
 		{
 			rt::Sphere s;
 			rt::Matrix t = rt::translation(2, 3, 4);
-			s.set_transform(t);
-			Assert::IsTrue(s.get_transform() == t);
+			s.transform() = t;
+			Assert::IsTrue(s.transform() == t);
 		}		
 		
 		TEST_METHOD(Intersecting_A_Scaled_Sphere_With_Ray)
 		{
 			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
 			rt::Sphere s;
-			s.set_transform(rt::scaling(2, 2, 2));
+			s.transform() = rt::scaling(2, 2, 2);
 
 			auto xs = s.intersect(r);
 			auto hit = s.hit(xs);
@@ -94,7 +94,7 @@ namespace TestProject
 		{
 			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
 			rt::Sphere s;
-			s.set_transform(rt::translation(5, 0, 0));
+			s.transform() = rt::translation(5, 0, 0);
 
 			auto xs = s.intersect(r);
 			Assert::IsTrue(xs.size() == 0);
@@ -131,7 +131,7 @@ namespace TestProject
 		TEST_METHOD(Computing_the_normal_on_a_translated_sphere)
 		{
 			rt::Sphere s;
-			s.set_transform(rt::translation(0, 1, 0));
+			s.transform() = rt::translation(0, 1, 0);
 			rt::Vector n = s.normal_at(rt::Point(0, 1.70711f, -0.70711f));
 			Assert::IsTrue(n == rt::Vector(0, 0.70711f, -0.70711f));
 		}
@@ -139,8 +139,7 @@ namespace TestProject
 		TEST_METHOD(Computing_the_normal_on_a_transformed_sphere)
 		{
 			rt::Sphere s;
-			rt::Matrix m = rt::scaling(1, 0.5f, 1) * rt::rotation_z(M_PI / 5.f);
-			s.set_transform(m);
+			s.transform() = rt::scaling(1, 0.5f, 1) * rt::rotation_z(M_PI / 5.f);
 			rt::Vector n = s.normal_at({ 0, sqrt(2.f) / 2.f, -sqrtf(2.f) / 2.f });
 			Assert::IsTrue(n == rt::Vector(0, 0.97014f, -0.24254f));
 		}
@@ -148,7 +147,7 @@ namespace TestProject
 		TEST_METHOD(A_sphere_has_a_default_material)
 		{
 			rt::Sphere s;
-			rt::Material m = s.get_material();
+			rt::Material m = s.material();
 			Assert::IsTrue(m == rt::Material());
 		}
 		
@@ -156,9 +155,9 @@ namespace TestProject
 		{
 			rt::Sphere s;
 			rt::Material m = rt::Material();
-			m.ambient(1);
-			s.set_material(m);
-			Assert::IsTrue(s.get_material() == m);
+			m.ambient = 1;
+			s.material() = m;
+			Assert::IsTrue(s.material() == m);
 		}
 		
 	};

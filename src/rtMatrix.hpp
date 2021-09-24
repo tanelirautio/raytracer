@@ -25,7 +25,7 @@ namespace rt {
 			Matrix(i32 w, i32 h, const std::vector<f32>& values);
 			f32 at(i32 row, i32 col) const;
 			void set(i32 row, i32 col, f32 value);
-			Size get_size() const;
+			Size size() const;
 
 			Matrix transpose();
 			f32 determinant() const;

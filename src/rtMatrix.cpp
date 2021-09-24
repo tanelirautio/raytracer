@@ -37,15 +37,15 @@ namespace rt {
 		m_matrix[row][col] = value;
 	}
 
-	Matrix::Size Matrix::get_size() const {
+	Matrix::Size Matrix::size() const {
 		return m_size;
 	}
 
 	Matrix Matrix::transpose() {
-		Matrix transposed = Matrix(get_size().cols(), get_size().rows());
+		Matrix transposed = Matrix(size().cols(), size().rows());
 				
-		for (i32 r = 0; r < get_size().rows(); r++) {
-			for (i32 c = 0; c < get_size().cols(); c++) {
+		for (i32 r = 0; r < size().rows(); r++) {
+			for (i32 c = 0; c < size().cols(); c++) {
 				transposed.set(c, r, at(r,c));
 			}
 		}
@@ -131,9 +131,9 @@ namespace rt {
 			return std::nullopt;
 		}
 
-		Matrix i(m.get_size().rows(), m.get_size().cols());
-		for (i32 row = 0; row < m.get_size().rows(); row++) {
-			for (i32 col = 0; col < m.get_size().cols(); col++) {
+		Matrix i(m.size().rows(), m.size().cols());
+		for (i32 row = 0; row < m.size().rows(); row++) {
+			for (i32 col = 0; col < m.size().cols(); col++) {
 				f32 c = m.cofactor(row, col);
 				i.set(col, row, (c / m.determinant()));
 			}
@@ -143,11 +143,11 @@ namespace rt {
 	}
 
 	bool operator==(const Matrix& lhs, const Matrix& rhs) {
-		if (lhs.get_size().m_size != rhs.get_size().m_size) {
+		if (lhs.size().m_size != rhs.size().m_size) {
 			return false;
 		}
 		
-		const auto& size = lhs.get_size();
+		const auto& size = lhs.size();
 		for (i32 r = 0; r < size.rows(); r++) {
 			for (i32 c = 0; c < size.cols(); c++) {
 				if (!equal(lhs.at(r, c), rhs.at(r, c))) {
@@ -168,8 +168,8 @@ namespace rt {
 		std::vector<f32> values;
 		f32 v = 0;
 
-		for (i32 r = 0; r < lhs.get_size().rows(); r++) {
-			for (i32 c = 0; c < lhs.get_size().cols(); c++) {
+		for (i32 r = 0; r < lhs.size().rows(); r++) {
+			for (i32 c = 0; c < lhs.size().cols(); c++) {
 				v = lhs.at(r, 0) * rhs.at(0, c) +
 					lhs.at(r, 1) * rhs.at(1, c) +
 					lhs.at(r, 2) * rhs.at(2, c) +
@@ -185,7 +185,7 @@ namespace rt {
 		std::vector<f32> values;
 		f32 v = 0;
 
-		for (i32 r = 0; r < lhs.get_size().rows(); r++) {
+		for (i32 r = 0; r < lhs.size().rows(); r++) {
 				v = lhs.at(r, 0) * rhs.x() +
 					lhs.at(r, 1) * rhs.y() +
 					lhs.at(r, 2) * rhs.z() +

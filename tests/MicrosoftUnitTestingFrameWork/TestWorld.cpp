@@ -36,7 +36,7 @@ namespace TestProject
 			Assert::IsTrue(w.get_lights().size() == 1);
 			Assert::IsTrue(w.get_objects().size() == 2);
 
-			Assert::IsTrue(w.get_lights().at(0) == light);
+			Assert::IsTrue(*w.get_lights().at(0).get() == light);
 			Assert::IsTrue(*w.get_objects().at(0).get() == s1);
 			Assert::IsTrue(*w.get_objects().at(1).get() == s2);
 		}
@@ -61,7 +61,7 @@ namespace TestProject
 			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
 			auto shape = w.get_objects().at(0);
 
-			Assert::IsTrue(w.get_lights().at(0) == rt::PointLight({ -10,10,-10 }, { 1,1,1 }));
+			Assert::IsTrue(*w.get_lights().at(0).get() == rt::PointLight({ -10,10,-10 }, { 1,1,1 }));
 
 			rt::Intersection i(4, shape.get());
 			rt::Computations comps = rt::prepare_computations(i, r);
@@ -84,7 +84,8 @@ namespace TestProject
 		TEST_METHOD(Shading_an_intersection_from_the_inside)
 		{
 			rt::World w = rt::get_default_world();
-			w.set_light(rt::PointLight({ 0,0.25f,0 }, { 1,1,1 }), true); // if true, remove already existing lights
+			auto l = std::make_shared<rt::PointLight>(rt::Point(0, 0.25f, 0), rt::Vector(1, 1, 1));
+			w.set_light(l, true); // if true, remove already existing lights
 			rt::Ray r({ 0,0,0 }, { 0,0,1 });
 			auto shape = w.get_objects().at(1);
 			rt::Intersection i(0.5f, shape.get());

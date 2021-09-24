@@ -5,8 +5,8 @@
 
 namespace rt {
 	class Matrix;
-	class Point;
-	class Vector;
+	struct Point;
+	struct Vector;
 
 	Matrix translation(f32 x, f32 y, f32 z);
 	Matrix scaling(f32 x, f32 y, f32 z);

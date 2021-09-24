@@ -50,7 +50,7 @@ namespace rt {
 			auto object_point = transform_inverse.value() * world_point;
 			auto object_normal = object_point - Point(0, 0, 0);
 			world_normal = transform_inverse.value().transpose() * object_normal;
-			world_normal.w(0);
+			world_normal.w = 0;
 			return world_normal.normalize();
 		}
 		return world_normal;

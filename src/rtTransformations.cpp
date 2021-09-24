@@ -67,12 +67,12 @@ namespace rt {
 		auto left = fwd.cross(upn);
 		auto true_up = left.cross(fwd);
 
-		Matrix4 orientation({ left.x(),			left.y(),		left.z(),		0,
-							  true_up.x(),		true_up.y(),	true_up.z(),	0,
-							  -fwd.x(),			-fwd.y(),		-fwd.z(),		0,
-							  0,				0,				0,				1});
+		Matrix4 orientation({ left.x,		left.y,		left.z,		0,
+							  true_up.x,	true_up.y,	true_up.z,	0,
+							  -fwd.x,		-fwd.y,		-fwd.z,		0,
+							  0,			0,			0,			1});
 
-		return orientation * translation(-from.x(), -from.y(), -from.z());
+		return orientation * translation(-from.x, -from.y, -from.z);
 	}
 
 }

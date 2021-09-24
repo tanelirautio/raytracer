@@ -26,8 +26,8 @@ namespace app {
 		auto radius = (3.f / 8.f) * canvas.width();
 
 		for (auto& p : points) {
-			auto x = p.x() * radius + 400;
-			auto y = p.z() * radius + 400;
+			auto x = p.x * radius + 400;
+			auto y = p.z * radius + 400;
 			LOG("x: %f y: %f", x, y);
 			canvas.write_pixel((i32)x, (i32)y, rt::get_color_white());
 		}

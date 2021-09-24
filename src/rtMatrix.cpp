@@ -186,10 +186,10 @@ namespace rt {
 		f32 v = 0;
 
 		for (i32 r = 0; r < lhs.size().rows(); r++) {
-				v = lhs.at(r, 0) * rhs.x() +
-					lhs.at(r, 1) * rhs.y() +
-					lhs.at(r, 2) * rhs.z() +
-					lhs.at(r, 3) * rhs.w();
+				v = lhs.at(r, 0) * rhs.x +
+					lhs.at(r, 1) * rhs.y +
+					lhs.at(r, 2) * rhs.z +
+					lhs.at(r, 3) * rhs.w;
 				values.push_back(v);
 			
 		}

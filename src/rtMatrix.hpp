@@ -41,19 +41,16 @@ namespace rt {
 			Size m_size;
 	};
 
-	class Matrix4 : public Matrix {
-		public:
-			Matrix4(const std::vector<f32>& values) : Matrix(4, 4, values) {}
+	struct Matrix4 : public Matrix {
+		Matrix4(const std::vector<f32>& values) : Matrix(4, 4, values) {}
 	};
 
-	class Matrix3 : public Matrix {
-		public:
-			Matrix3(const std::vector<f32>& values) : Matrix(3, 3, values) {}
+	struct Matrix3 : public Matrix {
+		Matrix3(const std::vector<f32>& values) : Matrix(3, 3, values) {}
 	};
 
-	class Matrix2 : public Matrix {
-		public:
-			Matrix2(const std::vector<f32>& values) : Matrix(2, 2, values) {}
+	struct Matrix2 : public Matrix {
+		Matrix2(const std::vector<f32>& values) : Matrix(2, 2, values) {}
 	};
 
 	Matrix get_identity_matrix(i32 dimension);

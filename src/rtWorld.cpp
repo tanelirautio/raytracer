@@ -11,7 +11,7 @@
 
 namespace rt {
 	
-	void World::set_light(const PointLight& light, bool reset) {
+	void World::set_light(const std::shared_ptr<PointLight>& light, bool reset) {
 		if (reset) {
 			m_lights.clear();
 		}
@@ -59,7 +59,7 @@ namespace rt {
 
 	Color World::shade_hit(const Computations& comps) const {
 		// TODO: support multiple light sources by calling lighting() for each light and adding the colors together
-		return lighting(comps.object->material(), get_lights()[0], comps.point, comps.eyev, comps.normalv);
+		return lighting(comps.object->material(), *get_lights()[0].get(), comps.point, comps.eyev, comps.normalv);
 	}
 
 	Color World::color_at(const Ray& ray) const {
@@ -77,7 +77,8 @@ namespace rt {
 	
 
 	void World::create_default() {
-		m_lights.push_back(PointLight({ -10,10,-10 }, { 1,1,1 }));
+		auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Vector(1, 1, 1));
+		m_lights.push_back(light);
 
 		rt::Material m1;
 		m1.color = { 0.8f, 1.0f, 0.6f };

@@ -8,34 +8,48 @@
 namespace rt {
 
 	bool operator==(const Tuple& lhs, const Tuple& rhs) {
-		return equal(lhs.x(), rhs.x()) &&
-			equal(lhs.y(), rhs.y()) &&
-			equal(lhs.z(), rhs.z()) &&
-			equal(lhs.w(), rhs.w());
+		return equal(lhs.x, rhs.x) &&
+			equal(lhs.y, rhs.y) &&
+			equal(lhs.z, rhs.z) &&
+			equal(lhs.w, rhs.w);
 	}
 
 	Tuple operator+(const Tuple& lhs, const Tuple& rhs) {
-		return Tuple(lhs.x() + rhs.x(), lhs.y() + rhs.y(), lhs.z() + rhs.z(), lhs.w() + rhs.w());
+		return Tuple(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
 	}
 
 	Tuple operator-(const Tuple& lhs, const Tuple& rhs) {
-		return Tuple(lhs.x() - rhs.x(), lhs.y() - rhs.y(), lhs.z() - rhs.z(), lhs.w() - rhs.w());
+		return Tuple(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w);
 	}
 
 	Tuple operator-(const Tuple& t) {
-		return Tuple(-t.x(), -t.y(), -t.z(), -t.w());
+		return Tuple(-t.x, -t.y, -t.z, -t.w);
 	}
 
 	Tuple operator*(const Tuple& t, f32 s) {
-		return Tuple(t.x() * s, t.y() * s, t.z() * s, t.w() * s);
+		return Tuple(t.x * s, t.y * s, t.z * s, t.w * s);
 	}
 
 	Tuple operator/(const Tuple& t, f32 s) {
-		return Tuple(t.x() / s, t.y() / s, t.z() / s, t.w() / s);
+		return Tuple(t.x / s, t.y / s, t.z / s, t.w / s);
 	}
 
+	/*
+	Color::Color() : Tuple(0, 0, 0, 0), r(x), g(y), b(z)  {
+
+	}
+
+	Color::Color(f32 x, f32 y, f32 z) : Tuple(x, y, z, 0) {
+
+	}
+
+	Color::Color(const Tuple& t) : Tuple(t) {
+
+	}
+	*/
+
 	Color operator*(const Color& lhs, const Color& rhs) {
-		return Color(lhs.r() * rhs.r(), lhs.g() * rhs.g(), lhs.b() * rhs.b());
+		return Color(lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b);
 	}
 
 	Color get_color_white() {
@@ -46,39 +60,32 @@ namespace rt {
 		return Color(0,0,0);
 	}
 
-	Tuple::Tuple(f32 x, f32 y, f32 z, f32 w) {
-		m_x = x;
-		m_y = y;
-		m_z = z;
-		m_w = w;
-	}
-
 	f32 Tuple::magnitude() const {
-		return std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z + m_w * m_w);
+		return std::sqrt(x * x + y * y + z * z + w * w);
 	}
 
 	Tuple Tuple::normalize() const {
 		f32 m = magnitude();
-		return Tuple(m_x / m, m_y / m, m_z / m, m_w / m);
+		return Tuple(x / m, y / m, z / m, w / m);
 	}
 
 	void Tuple::debug_print() {
-		LOG("[%f, %f, %f, %f]", m_x, m_y, m_z, m_w);
+		LOG("[%f, %f, %f, %f]", x, y, z, w);
 	}
 
 	Vector Vector::normalize() const {
 		f32 m = magnitude();
-		return Vector(x() / m, y() / m, z() / m);
+		return Vector(x / m, y / m, z / m);
 	}
 
 	f32 Vector::dot(Vector b) const {
-		return (x() * b.x() + y() * b.y() + z() * b.z());
+		return (x * b.x + y * b.y + z * b.z);
 	}
 
 	Vector Vector::cross(Vector b) const {
-		return Vector(y() * b.z() - z() * b.y(), 
-			          z() * b.x() - x() * b.z(),
-					  x() * b.y() - y() * b.x());
+		return Vector(y * b.z - z * b.y, 
+			          z * b.x - x * b.z,
+					  x * b.y - y * b.x);
 	}
 
 	Vector Vector::reflect(Vector normal) const {
@@ -87,6 +94,6 @@ namespace rt {
 
 	Vector normalize(const Tuple& t) {
 		f32 m = t.magnitude();
-		return Tuple(t.x() / m, t.y() / m, t.z() / m, t.w() / m);
+		return Tuple(t.x / m, t.y / m, t.z / m, t.w / m);
 	}
 }

@@ -41,9 +41,9 @@ namespace rt {
 		for (i32 y = 0; y < m_height; y++) {
 			for (i32 x = 0; x < m_width; x++) {
 				auto c = pixel_at(x, y);
-				auto r = static_cast<i32>(std::round(c.r() * 255.f));
-				auto g = static_cast<i32>(std::round(c.g() * 255.f));
-				auto b = static_cast<i32>(std::round(c.b() * 255.f));
+				auto r = static_cast<i32>(std::round(c.r * 255.f));
+				auto g = static_cast<i32>(std::round(c.g * 255.f));
+				auto b = static_cast<i32>(std::round(c.b * 255.f));
 
 				r = std::clamp(r, 0, 255);
 				g = std::clamp(g, 0, 255);

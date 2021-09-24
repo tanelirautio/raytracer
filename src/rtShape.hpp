@@ -10,8 +10,8 @@
 namespace rt {
 	struct Intersection;
 	class Ray;
-	class Vector;
-	class Point;
+	struct Vector;
+	struct Point;
 
 	class IShape {
 		public:

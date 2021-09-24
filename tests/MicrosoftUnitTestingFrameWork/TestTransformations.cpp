@@ -170,5 +170,54 @@ namespace TestProject
 			auto t = c * b * a;
 			Assert::IsTrue(t * p == rt::Point(15, 0, 7));
 		}
+
+		TEST_METHOD(The_transformation_matrix_for_the_default_orientation)
+		{
+			rt::Point from(0, 0, 0);
+			rt::Point to(0, 0, -1);
+			rt::Vector up(0, 1, 0);
+
+			auto t = rt::view_transform(from, to, up);
+			Assert::IsTrue(t == rt::get_identity_matrix(4));
+		}
+
+		TEST_METHOD(A_view_transformation_matrix_looking_in_positive_z_direction)
+		{
+			rt::Point from(0, 0, 0);
+			rt::Point to(0, 0, 1);
+			rt::Vector up(0, 1, 0);
+
+			auto t = rt::view_transform(from, to, up);
+			Assert::IsTrue(t == rt::scaling(-1, 1, -1));
+		}
+
+		TEST_METHOD(The_view_transformation_moves_the_world)
+		{
+			rt::Point from(0, 0, 8);
+			rt::Point to(0, 0, 0);
+			rt::Vector up(0, 1, 0);
+
+			auto t = rt::view_transform(from, to, up);
+			Assert::IsTrue(t == rt::translation(0, 0, -8));
+		}
+
+		TEST_METHOD(An_arbitrary_view_transformation)
+		{
+			rt::Point from(1, 3, 2);
+			rt::Point to(4, -2, 8);
+			rt::Vector up(1, 1, 0);
+
+			auto t = rt::view_transform(from, to, up);
+
+			std::vector<float> values = { -0.50709f,  0.50709f,  0.67612f, -2.36643f,
+										  0.76772f,  0.60609f,  0.12122f,  -2.82843f,
+										  -0.35857f,  0.59761f,  -0.71714f,  0.0f,
+										  0.0f, 0.0f, 0.0f, 1.0f };
+			rt::Matrix4 m(values);
+
+			Assert::IsTrue(t == m);
+		}
+
+
 	};
 }

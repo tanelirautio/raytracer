@@ -1,6 +1,7 @@
 #include "rtTransformations.hpp"
 
 #include "rtMatrix.hpp"
+#include "rtTuple.hpp"
 
 #include <cmath>
 
@@ -58,6 +59,20 @@ namespace rt {
 		m.set(2, 0, zx);
 		m.set(2, 1, zy);
 		return m;
+	}
+
+	Matrix view_transform(const Point& from, const Point& to, const Vector& up) {
+		auto fwd = normalize(to - from);
+		auto upn = up.normalize();
+		auto left = fwd.cross(upn);
+		auto true_up = left.cross(fwd);
+
+		Matrix4 orientation({ left.x(),			left.y(),		left.z(),		0,
+							  true_up.x(),		true_up.y(),	true_up.z(),	0,
+							  -fwd.x(),			-fwd.y(),		-fwd.z(),		0,
+							  0,				0,				0,				1});
+
+		return orientation * translation(-from.x(), -from.y(), -from.z());
 	}
 
 }

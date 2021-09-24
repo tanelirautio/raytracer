@@ -55,6 +55,8 @@ namespace rt {
 			Vector reflect(Vector normal) const;
 	};
 
+	Vector normalize(const Tuple& t);
+
 	class Color : public Tuple {
 		public:
 			Color() : Tuple(0, 0, 0, 0) {}

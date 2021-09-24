@@ -6,6 +6,7 @@
 #include <string>
 
 namespace rt {
+
 	bool operator==(const Tuple& lhs, const Tuple& rhs) {
 		return equal(lhs.x(), rhs.x()) &&
 			equal(lhs.y(), rhs.y()) &&
@@ -82,5 +83,10 @@ namespace rt {
 
 	Vector Vector::reflect(Vector normal) const {
 		return *this - (normal * 2 * dot(normal));
+	}
+
+	Vector normalize(const Tuple& t) {
+		f32 m = t.magnitude();
+		return Tuple(t.x() / m, t.y() / m, t.z() / m, t.w() / m);
 	}
 }

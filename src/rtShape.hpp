@@ -35,16 +35,13 @@ namespace rt {
 
 			i32 id() const { return ID; }
 
-			//Matrix get_transform() const;
 			const Matrix& transform() const { return m_transform; }
 			Matrix& transform() { return m_transform; }
-
-			//void set_transform(const Matrix & m);
 
 			const Material& material() const { return m_material; }
 			Material& material() { return m_material; }
 
-			Type get_type() const { return m_type; }
+			Type type() const { return m_type; }
 
 			virtual std::vector<Intersection> intersect(const Ray& ray) const;
 			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) const;

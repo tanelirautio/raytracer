@@ -4,13 +4,7 @@
 #include <string>
 
 namespace rt {
-	class File {
-		public:
-			static std::string read(const std::string& filename);
-			static void write(const std::string& filename, const std::string& data);
-		private:
-			File() = delete;
-	};
-
+	std::string read_file(const std::string& filename);
+	void write_file(const std::string& filename, const std::string& data);
 }
 #endif

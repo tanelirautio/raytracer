@@ -30,7 +30,7 @@ namespace rt {
 		std::vector<Intersection> xs;
 
 		for (const auto& shape : m_objects) {
-			switch (shape->get_type()) {
+			switch (shape->type()) {
 				case Shape::Type::Sphere: {
 					LOG("Sphere!");
 

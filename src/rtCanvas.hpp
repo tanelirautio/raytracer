@@ -12,8 +12,8 @@ namespace rt {
 	class Canvas {
 		public:
 			Canvas(i32 width, i32 height);
-			i32 get_width() const { return m_width;  }
-			i32 get_height() const { return m_height; }
+			i32 width() const { return m_width;  }
+			i32 height() const { return m_height; }
 
 			void write_pixel(i32 x, i32 y, const Color& c);
 			Color pixel_at(i32 x, i32 y) const;

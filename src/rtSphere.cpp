@@ -60,7 +60,7 @@ namespace rt {
 		return lhs.origin() == rhs.origin() &&
 			lhs.material() == rhs.material() &&
 			lhs.transform() == rhs.transform() &&
-			lhs.get_type() == rhs.get_type() &&
+			lhs.type() == rhs.type() &&
 			equal(lhs.radius(), rhs.radius());
 	}
 }

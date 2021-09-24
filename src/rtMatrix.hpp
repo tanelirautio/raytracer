@@ -22,7 +22,7 @@ namespace rt {
 
 			Matrix() : Matrix(4, 4) {}
 			Matrix(i32 w, i32 h);
-			Matrix(i32 w, i32 h, std::vector<f32> values);
+			Matrix(i32 w, i32 h, const std::vector<f32>& values);
 			f32 at(i32 row, i32 col) const;
 			void set(i32 row, i32 col, f32 value);
 			Size get_size() const;
@@ -36,9 +36,24 @@ namespace rt {
 
 			void debug_print();
 
-		private:
+		protected:
 			std::vector<std::vector<f32>> m_matrix;
 			Size m_size;
+	};
+
+	class Matrix4 : public Matrix {
+		public:
+			Matrix4(const std::vector<f32>& values) : Matrix(4, 4, values) {}
+	};
+
+	class Matrix3 : public Matrix {
+		public:
+			Matrix3(const std::vector<f32>& values) : Matrix(3, 3, values) {}
+	};
+
+	class Matrix2 : public Matrix {
+		public:
+			Matrix2(const std::vector<f32>& values) : Matrix(2, 2, values) {}
 	};
 
 	Matrix get_identity_matrix(i32 dimension);

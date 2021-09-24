@@ -53,7 +53,7 @@ namespace app {
 			}
 		}
 
-		rt::File::write("sphere2.ppm", canvas.canvas_to_ppm());
+		rt::write_file("sphere2.ppm", canvas.canvas_to_ppm());
 
 	}
 }

@@ -4,6 +4,7 @@
 #include "rtLog.hpp"
 
 namespace rt {
+
 	Matrix::Matrix(i32 rows, i32 cols) {
 		m_size = Size(std::pair<i32,i32>(std::make_pair(rows, cols)));
 
@@ -13,7 +14,7 @@ namespace rt {
 		}
 	}
 
-	Matrix::Matrix(i32 rows, i32 cols, std::vector<f32> values) : Matrix(rows, cols) {
+	Matrix::Matrix(i32 rows, i32 cols, const std::vector<f32>& values) : Matrix(rows, cols) {
 		i32 i = 0;
 		for (i32 r = 0; r < m_size.rows(); r++) {
 			for (i32 c = 0; c < m_size.cols(); c++) {
@@ -195,7 +196,4 @@ namespace rt {
 
 		return Tuple(values[0], values[1], values[2], values[3]);
 	}
-
-
-
 }

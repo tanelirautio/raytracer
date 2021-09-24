@@ -13,10 +13,10 @@ namespace TestProject
 		TEST_METHOD(Canvas_Create)
 		{
 			rt::Canvas c(10, 20);
-			Assert::AreEqual(c.get_width(), 10);
-			Assert::AreEqual(c.get_height(), 20);
-			for (int y = 0; y < c.get_height(); y++) {
-				for (int x = 0; x < c.get_width(); x++) {
+			Assert::AreEqual(c.width(), 10);
+			Assert::AreEqual(c.height(), 20);
+			for (int y = 0; y < c.height(); y++) {
+				for (int x = 0; x < c.width(); x++) {
 					Assert::IsTrue(c.pixel_at(x, y) == rt::Color(0, 0, 0));
 				}
 			}
@@ -76,8 +76,8 @@ namespace TestProject
 			rt::Canvas c(10, 2);
 			rt::Color c1(1.0f, 0.8f, 0.6f);
 
-			for (int y = 0; y < c.get_height(); y++) {
-				for (int x = 0; x < c.get_width(); x++) {
+			for (int y = 0; y < c.height(); y++) {
+				for (int x = 0; x < c.width(); x++) {
 					c.write_pixel(x, y, c1);
 				}
 			}

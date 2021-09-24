@@ -23,7 +23,7 @@ namespace app {
 		}
 
 		rt::Canvas canvas(800, 800);
-		auto radius = (3.f / 8.f) * canvas.get_width();
+		auto radius = (3.f / 8.f) * canvas.width();
 
 		for (auto& p : points) {
 			auto x = p.x() * radius + 400;
@@ -32,7 +32,7 @@ namespace app {
 			canvas.write_pixel((i32)x, (i32)y, rt::get_color_white());
 		}
 
-		rt::File::write("clock.ppm", canvas.canvas_to_ppm());
+		rt::write_file("clock.ppm", canvas.canvas_to_ppm());
 	}
 
 }

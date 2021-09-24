@@ -22,9 +22,7 @@ namespace rt {
 			void set_object(const std::shared_ptr<Shape>& shape, bool reset = false);
 
 			std::vector<Intersection> intersect(const Ray& ray) const;
-
 			Color shade_hit(const Computations& comps) const;
-			
 			Color color_at(const Ray& ray) const;
 
 			const std::vector<PointLight>& get_lights() const { return m_lights; }

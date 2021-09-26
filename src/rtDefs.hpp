@@ -32,4 +32,6 @@ constexpr f32 EPSILON = 0.00001f;
 constexpr f32 M_PI = 3.14159265358979323846f;
 #endif
 
+constexpr f32 HALF_PI = (f32)M_PI / 2.f;
+
 #endif

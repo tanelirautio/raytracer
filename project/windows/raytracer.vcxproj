@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\rtCamera.hpp" />
     <ClInclude Include="..\..\src\rtCanvas.hpp" />
     <ClInclude Include="..\..\src\rtDefs.hpp" />
     <ClInclude Include="..\..\src\rtFile.hpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="..\..\src\rtWorld.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\rtCamera.cpp" />
     <ClCompile Include="..\..\src\rtCanvas.cpp" />
     <ClCompile Include="..\..\src\rtFile.cpp" />
     <ClCompile Include="..\..\src\rtIntersection.cpp" />

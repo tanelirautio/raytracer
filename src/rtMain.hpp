@@ -18,5 +18,6 @@
 #include "rtLight.hpp"
 #include "rtMaterial.hpp"
 #include "rtWorld.hpp"
+#include "rtCamera.hpp"
 
 #endif

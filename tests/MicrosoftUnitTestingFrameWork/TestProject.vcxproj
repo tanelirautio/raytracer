@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TestCamera.cpp" />
     <ClCompile Include="TestCanvas.cpp" />
     <ClCompile Include="TestIntersections.cpp" />
     <ClCompile Include="TestLights.cpp" />

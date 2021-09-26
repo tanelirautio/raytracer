@@ -34,20 +34,6 @@ namespace rt {
 		return Tuple(t.x / s, t.y / s, t.z / s, t.w / s);
 	}
 
-	/*
-	Color::Color() : Tuple(0, 0, 0, 0), r(x), g(y), b(z)  {
-
-	}
-
-	Color::Color(f32 x, f32 y, f32 z) : Tuple(x, y, z, 0) {
-
-	}
-
-	Color::Color(const Tuple& t) : Tuple(t) {
-
-	}
-	*/
-
 	Color operator*(const Color& lhs, const Color& rhs) {
 		return Color(lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b);
 	}
@@ -69,7 +55,7 @@ namespace rt {
 		return Tuple(x / m, y / m, z / m, w / m);
 	}
 
-	void Tuple::debug_print() {
+	void Tuple::debug_print() const {
 		LOG("[%f, %f, %f, %f]", x, y, z, w);
 	}
 

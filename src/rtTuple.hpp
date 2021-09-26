@@ -20,27 +20,12 @@ namespace rt {
 			bool is_point() const { return w == 1; }
 			bool is_vector() const { return w == 0; }
 
-			/*
-			f32 x() const { return m_x; }
-			f32 y() const { return m_y; }
-			f32 z() const { return m_z; }
-			f32 w() const { return m_w; }
-
-			void x(f32 v) { m_x = v; }
-			void y(f32 v) { m_y = v; }
-			void z(f32 v) { m_z = v; }
-			void w(f32 v) { m_w = v; }
-			*/
-
 			f32 x;
 			f32 y;
 			f32 z;
 			f32 w;
 
-			void debug_print();
-		/*private:
-			f32 m_x, m_y, m_z, m_w;
-			*/
+			void debug_print() const;
 	};
 
 	bool operator==(const Tuple& lhs, const Tuple& rhs);

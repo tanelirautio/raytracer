@@ -15,6 +15,8 @@ namespace rt {
 			Vector direction() const { return m_direction; }
 			Ray transform(const Matrix& m) const;
 
+			void debug_print() const;
+
 		private:
 			Point m_origin;
 			Vector m_direction;

@@ -54,6 +54,10 @@ namespace rt {
 	};
 
 	Matrix get_identity_matrix(i32 dimension);
+	Matrix get_identity_matrix4();
+	Matrix get_identity_matrix3();
+	Matrix get_identity_matrix2();
+
 	std::optional<Matrix> inverse(const Matrix& m);
 
 	bool operator==(const Matrix& lhs, const Matrix& rhs);

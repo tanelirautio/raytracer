@@ -126,6 +126,18 @@ namespace rt {
 		return identity;
 	}
 
+	Matrix get_identity_matrix4() { 
+		return get_identity_matrix(4); 
+	}
+
+	Matrix get_identity_matrix3() { 
+		return get_identity_matrix(3); 
+	}
+
+	Matrix get_identity_matrix2() { 
+		return get_identity_matrix(2); 
+	}
+
 	std::optional<Matrix> inverse(const Matrix& m) {
 		if (m.determinant() == 0) {
 			return std::nullopt;

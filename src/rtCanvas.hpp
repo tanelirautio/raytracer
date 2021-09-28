@@ -7,6 +7,9 @@
 #include <string>
 #include <vector>
 
+//TODO: add png support with stb_image_write:
+//http://chanhaeng.blogspot.com/2018/12/how-to-use-stbimagewrite.html
+
 namespace rt {
 
 	class Canvas {

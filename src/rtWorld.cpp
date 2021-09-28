@@ -32,7 +32,7 @@ namespace rt {
 		for (const auto& shape : m_objects) {
 			switch (shape->type()) {
 				case Shape::Type::Sphere: {
-					LOG("Sphere!");
+					//LOG("Sphere!");
 
 					auto sphere = dynamic_cast<Sphere*>(shape.get());
 					if (sphere) {
@@ -42,11 +42,11 @@ namespace rt {
 					break;
 				}
 				case Shape::Type::Cube: {
-					LOG("Cube!");
+					//LOG("Cube!");
 					break;
 				}
 				default: {
-					LOG("Unknown!");
+					//LOG("Unknown!");
 					assert(false);
 					break;
 				}

@@ -75,6 +75,19 @@ namespace TestProject
 			Assert::IsTrue(result == rt::Color(0.1f, 0.1f, 0.1f));
 		}
 
+		TEST_METHOD(Lighting_with_the_surface_in_shadow)
+		{
+			rt::Point position(0, 0, 0);
+			rt::Material m;
+			auto eyev = rt::Vector(0, 0, -1);
+			auto normalv = rt::Vector(0, 0, -1);
+			auto light = rt::PointLight({ 0, 0, -10 }, { 1, 1, 1 });
+			bool in_shadow = true;
+
+			auto result = rt::lighting(m, light, position, eyev, normalv, in_shadow);
+			Assert::IsTrue(result == rt::Color(0.1f, 0.1f, 0.1f));
+		}
+
 
 	};
 }

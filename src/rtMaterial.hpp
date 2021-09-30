@@ -22,7 +22,7 @@ namespace rt {
 		f32 shininess;
 	};
 
-	Color lighting(const Material& material, const PointLight& light, const Point& position, const Vector& eyev, const Vector& normalv);
+	Color lighting(const Material& material, const PointLight& light, const Point& position, const Vector& eyev, const Vector& normalv, bool in_shadow = false);
 
 	bool operator==(const Material& lhs, const Material& rhs);
 }

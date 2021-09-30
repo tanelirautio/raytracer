@@ -14,20 +14,7 @@ namespace rt {
 		return false;
 	}
 
-	/*
-	bool operator==(const Material& lhs, const Material& rhs) {
-		if (lhs.color() == rhs.color() &&
-			lhs.ambient() == rhs.ambient() &&
-			lhs.diffuse() == rhs.diffuse() &&
-			lhs.specular() == rhs.specular() &&
-			lhs.shininess() == rhs.shininess()) {
-			return true;
-		}
-		return false;
-	}
-	*/
-
-	Color lighting(const Material& material, const PointLight& light, const Point& point, const Vector& eyev, const Vector& normalv) {
+	Color lighting(const Material& material, const PointLight& light, const Point& point, const Vector& eyev, const Vector& normalv, bool in_shadow) {
 		// initialize the three different contibutions
 		Color ambient;
 		Color diffuse;
@@ -41,6 +28,11 @@ namespace rt {
 
 		// compute the ambient contribution
 		ambient = effective_color * material.ambient;
+
+		// if in shadow, just return ambient color
+		if (in_shadow) {
+			return ambient;
+		}
 
 		// light_dot_normal represents the cosine of the angle between the
 		// light vector and the normal vector. A negative number means the

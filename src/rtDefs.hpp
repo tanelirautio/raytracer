@@ -3,13 +3,6 @@
 
 #include <cstdint>
 
-// ignore warning "conversion from <sometype> to <othertype>: possible loss of data"
-//#pragma warning( disable : 4244 ) 
-
-// ignore warning "fopen might be unsafe"
-//#pragma warning( disable : 4996 )
-
-
 typedef int8_t		i8;
 typedef int16_t		i16;
 typedef int32_t		i32;

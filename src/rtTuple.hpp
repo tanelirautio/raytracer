@@ -5,27 +5,26 @@
 
 namespace rt {
 	struct Tuple {
-		//public:
-			Tuple() : x(0), y(0), z(0), w(0) {}
-			Tuple(f32 _x, f32 _y, f32 _z, f32 _w) {
-				x = _x;
-				y = _y;
-				z = _z;
-				w = _w;
-			}
+		Tuple() : x(0), y(0), z(0), w(0) {}
+		Tuple(f32 _x, f32 _y, f32 _z, f32 _w) {
+			x = _x;
+			y = _y;
+			z = _z;
+			w = _w;
+		}
 
-			f32 magnitude() const;
-			Tuple normalize() const;
+		f32 magnitude() const;
+		Tuple normalize() const;
 
-			bool is_point() const { return w == 1; }
-			bool is_vector() const { return w == 0; }
+		bool is_point() const { return w == 1; }
+		bool is_vector() const { return w == 0; }
 
-			f32 x;
-			f32 y;
-			f32 z;
-			f32 w;
+		f32 x;
+		f32 y;
+		f32 z;
+		f32 w;
 
-			void debug_print() const;
+		void debug_print() const;
 	};
 
 	bool operator==(const Tuple& lhs, const Tuple& rhs);
@@ -63,17 +62,10 @@ namespace rt {
 			z = c.z;
 			return *this; 
 		}
-		//A& operator=(const A& rhs) { /* ... */ };
 		
 		f32& r = x;
 		f32& g = y;
-		f32& b = z;
-		
-		/*
-		f32 r() const { return x; }
-		f32 g() const { return y; }
-		f32 b() const { return z; }
-		*/
+		f32& b = z;		
 	};
 
 	Color operator*(const Color& lhs, const Color& rhs);

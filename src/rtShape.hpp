@@ -16,7 +16,6 @@ namespace rt {
 	class IShape {
 		public:
 			virtual std::vector<Intersection> intersect(const Ray& ray) const = 0;
-			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) const = 0;
 			virtual Vector normal_at(const Point& world_point) const = 0;
 	};
 	
@@ -44,7 +43,6 @@ namespace rt {
 			Type type() const { return m_type; }
 
 			virtual std::vector<Intersection> intersect(const Ray& ray) const;
-			virtual std::optional<Intersection> hit(std::vector<Intersection>& intersections) const;
 			virtual Vector normal_at(const Point& world_point) const;
 		protected:
 			Material m_material;

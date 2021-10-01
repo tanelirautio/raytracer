@@ -45,7 +45,7 @@ namespace TestProject
 			rt::Intersection i1(1, &s);
 			rt::Intersection i2(2, &s);
 			auto xs = rt::intersections(i2, i1);
-			auto hit = s.hit(xs);
+			auto hit = rt::hit(xs);
 			Assert::AreEqual(hit.has_value(), true);
 			Assert::IsTrue(hit.value() == i1);
 		}
@@ -56,7 +56,7 @@ namespace TestProject
 			rt::Intersection i1(-1, &s);
 			rt::Intersection i2(1, &s);
 			auto xs = rt::intersections(i2, i1);
-			auto hit = s.hit(xs);
+			auto hit = rt::hit(xs);
 			Assert::AreEqual(hit.has_value(), true);
 			Assert::IsTrue(hit.value() == i2);
 		}
@@ -67,7 +67,7 @@ namespace TestProject
 			rt::Intersection i1(-2, &s);
 			rt::Intersection i2(-1, &s);
 			auto xs = rt::intersections(i2, i1);
-			auto hit = s.hit(xs);
+			auto hit = rt::hit(xs);
 			Assert::AreEqual(hit.has_value(), false);
 		}
 
@@ -79,7 +79,7 @@ namespace TestProject
 			rt::Intersection i3(-3, &s);
 			rt::Intersection i4(2, &s);
 			auto xs = rt::intersections(i1, i2, i3, i4);
-			auto hit = s.hit(xs);
+			auto hit = rt::hit(xs);
 			Assert::AreEqual(hit.has_value(), true);
 			Assert::IsTrue(hit.value() == i4);
 		}

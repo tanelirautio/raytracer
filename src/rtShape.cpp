@@ -6,23 +6,8 @@
 namespace rt {
 	i32 Shape::ID = 0;
 
-	/*
-	Matrix Shape::get_transform() const { 
-		return m_transform; 
-	}
-	*/
-	/*
-	void Shape::set_transform(const Matrix& m) { 
-		m_transform = m; 
-	}
-	*/
-
 	std::vector<Intersection> Shape::intersect(const Ray& ray) const {
 		return std::vector<Intersection>(); 
-	}
-
-	std::optional<Intersection> Shape::hit(std::vector<Intersection>& intersections) const { 
-		return std::nullopt; 
 	}
 
 	Vector Shape::normal_at(const Point& world_point) const { 

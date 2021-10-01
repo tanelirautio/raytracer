@@ -20,7 +20,6 @@ namespace rt {
 			f32 radius() const { return m_radius; }
 
 			std::vector<Intersection> intersect(const Ray& r) const override;
-			std::optional<Intersection> hit(std::vector<Intersection>& intersections) const override;
 			Vector normal_at(const rt::Point& point) const override;
 		private:
 			Point m_origin;

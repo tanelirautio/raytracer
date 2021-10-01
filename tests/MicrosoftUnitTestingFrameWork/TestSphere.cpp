@@ -83,7 +83,7 @@ namespace TestProject
 			s.transform() = rt::scaling(2, 2, 2);
 
 			auto xs = s.intersect(r);
-			auto hit = s.hit(xs);
+			auto hit = rt::hit(xs);
 			Assert::AreEqual(hit.has_value(), true);
 			Assert::IsTrue(xs.size() == 2);
 			Assert::IsTrue(xs[0].t = 3);

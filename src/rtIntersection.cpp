@@ -2,6 +2,15 @@
 
 namespace rt {
 
+	std::optional<Intersection> hit(std::vector<Intersection>& xs) {
+		xs.erase(std::remove_if(xs.begin(), xs.end(), [](Intersection& i) { return i.t <= 0; }), xs.end());
+		std::sort(xs.begin(), xs.end());
+		if (xs.size() > 0) {
+			return xs[0];
+		}
+		return std::nullopt;
+	}
+
 	Computations prepare_computations(Intersection i, Ray r) {
 		Computations comps;
 		comps.t = i.t;

@@ -42,7 +42,7 @@ namespace app {
 
 				auto ray = rt::Ray(ray_origin, dir);
 				auto xs = shape.intersect(ray);
-				auto hit = shape.hit(xs);
+				auto hit = rt::hit(xs);
 				if (hit.has_value()) {
 					auto point = ray.position(hit.value().t);
 					auto normal = shape.normal_at(point);

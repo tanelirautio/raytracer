@@ -33,15 +33,6 @@ namespace rt {
 		return { Intersection(t1, this), Intersection(t2, this) };
 	}
 
-	std::optional<Intersection> Sphere::hit(std::vector<Intersection>& xs) const {
-		std::sort(xs.begin(), xs.end());
-		auto lowest = std::lower_bound(xs.begin(), xs.end(), Intersection(0, this));
-		if (lowest != xs.end()) {
-			return *lowest;
-		}
-		return std::nullopt;
-	}
-
 	Vector Sphere::normal_at(const Point& world_point) const {
 		Vector world_normal;
 

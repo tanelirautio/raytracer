@@ -26,6 +26,8 @@ namespace rt {
 		}
 	};
 
+	std::optional<Intersection> hit(std::vector<Intersection>& intersections);
+
 	struct Computations {
 		f32 t = 0;
 		const Shape* object = nullptr;

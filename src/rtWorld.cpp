@@ -74,8 +74,23 @@ namespace rt {
 		}
 		return get_color_black();
 	}
-	
 
+	bool World::is_shadowed(const Point& point) const {
+		auto v = m_lights[0].get()->position() - point;
+		auto distance = v.magnitude();
+		auto direction = v.normalize();
+
+		auto r = Ray(point, direction);
+		auto intersections = intersect(r);
+
+		auto h = hit(intersections);
+		if (h.has_value() && h.value().t < distance) {
+			return true;
+		}
+
+		return false;
+	}
+	
 	void World::create_default() {
 		auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Vector(1, 1, 1));
 		m_lights.push_back(light);

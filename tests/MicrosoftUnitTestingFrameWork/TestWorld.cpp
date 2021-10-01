@@ -124,5 +124,33 @@ namespace TestProject
 			Assert::IsTrue(c == inner.get()->material().color);
 		}
 
+		TEST_METHOD(There_is_no_shadow_when_nothing_is_collinear_with_point_and_light)
+		{
+			rt::World w = rt::get_default_world();
+			auto p = rt::Point(0, 10, 0);
+			Assert::IsTrue(w.is_shadowed(p) == false);
+		}
+
+		TEST_METHOD(The_shadow_when_an_object_is_between_the_point_and_the_light)
+		{
+			rt::World w = rt::get_default_world();
+			auto p = rt::Point(10, -10, 10);
+			Assert::IsTrue(w.is_shadowed(p) == true);
+		}
+
+		TEST_METHOD(There_is_no_shadow_when_an_object_is_behind_the_light)
+		{
+			rt::World w = rt::get_default_world();
+			auto p = rt::Point(-20, 20, -20);
+			Assert::IsTrue(w.is_shadowed(p) == false);
+		}
+
+		TEST_METHOD(There_is_no_shadow_when_an_object_is_behind_the_point)
+		{
+			rt::World w = rt::get_default_world();
+			auto p = rt::Point(-2, 2, -2);
+			Assert::IsTrue(w.is_shadowed(p) == false);
+		}
+
 	};
 }

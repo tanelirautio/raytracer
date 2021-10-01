@@ -24,6 +24,7 @@ namespace rt {
 			std::vector<Intersection> intersect(const Ray& ray) const;
 			Color shade_hit(const Computations& comps) const;
 			Color color_at(const Ray& ray) const;
+			bool is_shadowed(const Point& point) const;
 
 			const std::vector<std::shared_ptr<PointLight>>& get_lights() const { return m_lights; }
 			const std::vector<std::shared_ptr<Shape>>& get_objects() const { return m_objects; }

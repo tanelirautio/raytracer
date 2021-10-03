@@ -32,6 +32,7 @@ namespace rt {
 		f32 t = 0;
 		const Shape* object = nullptr;
 		Point point;
+		Point over_point;
 		Vector eyev;
 		Vector normalv;
 		bool inside = false;

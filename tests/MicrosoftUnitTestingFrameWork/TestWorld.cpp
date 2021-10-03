@@ -152,5 +152,25 @@ namespace TestProject
 			Assert::IsTrue(w.is_shadowed(p) == false);
 		}
 
+		TEST_METHOD(Shade_hit_function_is_given_an_intersection_in_shadow)
+		{
+			rt::World w;
+			w.set_light(std::make_shared<rt::PointLight>(rt::Point(0, 0, -10), rt::Vector(1, 1, 1)));
+
+			auto s1 = std::make_shared<rt::Sphere>();
+			w.set_object(s1);
+
+			auto s2 = std::make_shared<rt::Sphere>();
+			s2->transform() = rt::translation(0, 0, 10);
+			w.set_object(s2);
+
+			auto r = rt::Ray({ 0,0,5 }, { 0,0,1 });
+			rt::Intersection i(4, s2.get());
+
+			auto comps = rt::prepare_computations(i, r);
+			auto c = w.shade_hit(comps);
+
+			Assert::IsTrue(c == rt::Color(0.1f, 0.1f, 0.1f));
+		}
 	};
 }

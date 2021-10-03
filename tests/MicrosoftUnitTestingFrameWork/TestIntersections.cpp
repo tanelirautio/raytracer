@@ -119,6 +119,17 @@ namespace TestProject
 			Assert::AreEqual(comps.inside, true);
 		}
 
+		TEST_METHOD(The_hit_should_offset_the_point)
+		{
+			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
+			rt::Sphere s;
+			s.transform() = rt::translation(0, 0, 1);
+			rt::Intersection i(5, &s);
+			rt::Computations comps = rt::prepare_computations(i, r);
+			Assert::IsTrue(comps.over_point.z < -EPSILON/2.f);
+			Assert::IsTrue(comps.point.z > comps.over_point.z);
+		}
+
 
 	};
 }

@@ -58,8 +58,9 @@ namespace rt {
 	}
 
 	Color World::shade_hit(const Computations& comps) const {
+		auto shadowed = is_shadowed(comps.over_point);
 		// TODO: support multiple light sources by calling lighting() for each light and adding the colors together
-		return lighting(comps.object->material(), *get_lights()[0].get(), comps.point, comps.eyev, comps.normalv);
+		return lighting(comps.object->material(), *get_lights()[0].get(), comps.point, comps.eyev, comps.normalv, shadowed);
 	}
 
 	Color World::color_at(const Ray& ray) const {

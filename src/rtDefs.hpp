@@ -16,7 +16,9 @@ typedef uint64_t	u64;
 typedef float		f32;
 typedef double		d64;
 
-constexpr f32 EPSILON = 0.00001f;
+//constexpr f32 EPSILON = 0.00001f;
+constexpr f32 EPSILON = 0.0001f;
+
 
 #define _USE_MATH_DEFINES
 #include <cmath>

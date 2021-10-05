@@ -14,11 +14,12 @@ namespace app {
 		floor.material().specular = 0;
 
 		auto left_wall = rt::Sphere();
-		left_wall.transform() = rt::translation(0, 0, 5) * rt::rotation_y(-M_PI / 4.f) * rt::rotation_x(HALF_PI) * rt::scaling(10, 0.01, 10);
-		left_wall.material() = floor.material();		
-		
+		left_wall.transform() = rt::translation(0, 0, 5) * rt::rotation_y(-M_PI / 4.f) * rt::rotation_x(HALF_PI) * rt::scaling(10, 0.1f, 10);
+		//left_wall.transform() = rt::scaling(10, 0.01f, 10) * rt::rotation_x(HALF_PI) * rt::rotation_y(-M_PI / 4.f) * rt::translation(0, 0, 5);
+		left_wall.material() = floor.material();
+
 		auto right_wall = rt::Sphere();
-		right_wall.transform() = rt::translation(0, 0, 5) * rt::rotation_y(M_PI / 4.f) * rt::rotation_x(HALF_PI) * rt::scaling(10, 0.01, 10);
+		right_wall.transform() = rt::translation(0, 0, 5) * rt::rotation_y(M_PI / 4.f) * rt::rotation_x(HALF_PI) * rt::scaling(10, 0.1f, 10);
 		right_wall.material() = floor.material();
 
 		auto middle = rt::Sphere();

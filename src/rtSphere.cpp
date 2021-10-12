@@ -3,20 +3,12 @@
 #include <algorithm>
 
 namespace rt {
-	Sphere::Sphere(Point origin, f32 radius) : Shape(Type::Sphere) {
+	Sphere::Sphere(Point origin, f32 radius) : Shape(Type::SPHERE) {
 		m_origin = origin;
 		m_radius = radius;
-		m_transform = get_identity_matrix(4);
 	}
 
-	std::vector<Intersection> Sphere::intersect(const Ray& ray) const {
-
-		auto inv = inverse(transform());
-		if(!inv.has_value()) {
-			return {};
-		}
-		Ray r = ray.transform(inv.value());
-
+	std::vector<Intersection> Sphere::local_intersect(const Ray& r) const {
 		Vector sphere_to_ray = (Vector)(r.origin() - m_origin);		
 		f32 a = r.direction().dot(r.direction());
 		f32 b = 2 * r.direction().dot(sphere_to_ray);

@@ -31,7 +31,7 @@ namespace rt {
 
 		for (const auto& shape : m_objects) {
 			switch (shape->type()) {
-				case Shape::Type::Sphere: {
+				case Shape::Type::SPHERE: {
 					//LOG("Sphere!");
 
 					auto sphere = dynamic_cast<Sphere*>(shape.get());
@@ -41,7 +41,7 @@ namespace rt {
 					}
 					break;
 				}
-				case Shape::Type::Cube: {
+				case Shape::Type::CUBE: {
 					//LOG("Cube!");
 					break;
 				}

@@ -169,6 +169,7 @@
     <ClCompile Include="TestMaterials.cpp" />
     <ClCompile Include="TestMatrix.cpp" />
     <ClCompile Include="TestRay.cpp" />
+    <ClCompile Include="TestShapes.cpp" />
     <ClCompile Include="TestSphere.cpp" />
     <ClCompile Include="TestTransformations.cpp" />
     <ClCompile Include="TestTuple.cpp" />

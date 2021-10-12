@@ -19,6 +19,5 @@ int main() {
 	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
 	auto time_str = rt::format_duration(ms);
 	std::cout << time_str << std::endl;
-	//std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
 	return 0;
 }

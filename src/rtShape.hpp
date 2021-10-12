@@ -4,31 +4,34 @@
 #include "rtDefs.hpp"
 #include "rtMaterial.hpp"
 #include "rtMatrix.hpp"
+#include "rtRay.hpp"
 #include <optional>
 #include <vector>
 
 namespace rt {
 	struct Intersection;
-	class Ray;
 	struct Vector;
 	struct Point;
 
+	/*
 	class IShape {
 		public:
 			virtual std::vector<Intersection> intersect(const Ray& ray) const = 0;
-			virtual Vector normal_at(const Point& world_point) const = 0;
+
 	};
-	
-	class Shape : public IShape {
+	*/
+
+	class Shape {
 		public:
 			enum class Type {
-				Sphere,
-				Cube,
-				Unknown
+				SPHERE,
+				CUBE,
+				UNKNOWN
 			};
 			Shape(Type type) { 
 				ID++;
 				m_type = type;
+				m_transform = get_identity_matrix4();
 			}
 			virtual ~Shape() = default;
 
@@ -40,20 +43,34 @@ namespace rt {
 			const Material& material() const { return m_material; }
 			Material& material() { return m_material; }
 
-			Type type() const { return m_type; }
+			const Type& type() const { return m_type; }
+			Type& type() { return m_type; }
 
 			virtual std::vector<Intersection> intersect(const Ray& ray) const;
-			virtual Vector normal_at(const Point& world_point) const;
+
+			virtual Vector normal_at(const Point& world_point) const = 0;
+			virtual std::vector<Intersection> local_intersect(const Ray& local_ray) const = 0;
 		protected:
 			Material m_material;
 			Matrix m_transform;
 		private:
-			Type m_type = Type::Unknown;
+			Type m_type = Type::UNKNOWN;
 
 			static i32 ID;
 	};
 
 	bool operator==(const Shape& lhs, const Shape& rhs);
+
+	// Dummy class for unit testing purposes
+	class TestShape : public Shape {
+		public:
+			TestShape() : Shape(Type::UNKNOWN) {}
+			Vector normal_at(const Point& world_point) const override;
+			std::vector<Intersection> local_intersect(const Ray& local_ray) const override;
+		private:
+			Ray m_saved_ray;
+
+	};
 }
 
 #endif

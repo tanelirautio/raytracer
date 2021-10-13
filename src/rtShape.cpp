@@ -26,6 +26,8 @@ namespace rt {
 	}
 
 	std::vector<Intersection> TestShape::local_intersect(const Ray& local_ray) const {
+		m_saved_ray = local_ray;
 		return {};
 	}
+
 }

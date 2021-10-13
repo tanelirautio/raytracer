@@ -67,9 +67,10 @@ namespace rt {
 			TestShape() : Shape(Type::UNKNOWN) {}
 			Vector normal_at(const Point& world_point) const override;
 			std::vector<Intersection> local_intersect(const Ray& local_ray) const override;
+		
+			Ray get_saved_ray() { return m_saved_ray; }
 		private:
-			Ray m_saved_ray;
-
+			mutable Ray m_saved_ray;
 	};
 }
 

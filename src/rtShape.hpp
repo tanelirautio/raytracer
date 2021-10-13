@@ -46,9 +46,10 @@ namespace rt {
 			const Type& type() const { return m_type; }
 			Type& type() { return m_type; }
 
-			virtual std::vector<Intersection> intersect(const Ray& ray) const;
+			std::vector<Intersection> intersect(const Ray& ray) const;
+			Vector normal_at(const Point& world_point) const;
 
-			virtual Vector normal_at(const Point& world_point) const = 0;
+			virtual Vector local_normal_at(const Point& world_point) const = 0;
 			virtual std::vector<Intersection> local_intersect(const Ray& local_ray) const = 0;
 		protected:
 			Material m_material;
@@ -65,7 +66,7 @@ namespace rt {
 	class TestShape : public Shape {
 		public:
 			TestShape() : Shape(Type::UNKNOWN) {}
-			Vector normal_at(const Point& world_point) const override;
+			Vector local_normal_at(const Point& world_point) const override;
 			std::vector<Intersection> local_intersect(const Ray& local_ray) const override;
 		
 			Ray get_saved_ray() { return m_saved_ray; }

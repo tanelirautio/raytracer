@@ -25,7 +25,11 @@ namespace rt {
 		return { Intersection(t1, this), Intersection(t2, this) };
 	}
 
-	Vector Sphere::normal_at(const Point& world_point) const {
+	Vector Sphere::local_normal_at(const Point& local_point) const {
+		Vector local_normal = local_point - Point(0, 0, 0);
+		return local_normal;
+
+		/*
 		Vector world_normal;
 
 		auto transform_inverse = transform().inverse();
@@ -37,6 +41,7 @@ namespace rt {
 			return world_normal.normalize();
 		}
 		return world_normal;
+		*/
 	}
 
 	bool operator==(const Sphere& lhs, const Sphere& rhs) {

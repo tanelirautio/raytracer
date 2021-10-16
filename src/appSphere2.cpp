@@ -7,12 +7,14 @@
 namespace app {
 	void Sphere2::create() {
 
-		auto floor = rt::Sphere();
-		floor.transform() = rt::scaling(10, 0.01f, 10);
+		auto floor = rt::Plane();
+		floor.transform() = rt::translation(0, 0.5f, 0);
+		//floor.transform() = rt::scaling(10, 0.01f, 10);
 		floor.material() = rt::Material();
 		floor.material().color = rt::Color(1, 0.9f, 0.9f);
 		floor.material().specular = 0;
 
+		/**
 		auto left_wall = rt::Sphere();
 		left_wall.transform() = rt::translation(0, 0, 5) * rt::rotation_y(-M_PI / 4.f) * rt::rotation_x(HALF_PI) * rt::scaling(10, 0.1f, 10);
 		//left_wall.transform() = rt::scaling(10, 0.01f, 10) * rt::rotation_x(HALF_PI) * rt::rotation_y(-M_PI / 4.f) * rt::translation(0, 0, 5);
@@ -21,11 +23,11 @@ namespace app {
 		auto right_wall = rt::Sphere();
 		right_wall.transform() = rt::translation(0, 0, 5) * rt::rotation_y(M_PI / 4.f) * rt::rotation_x(HALF_PI) * rt::scaling(10, 0.1f, 10);
 		right_wall.material() = floor.material();
+		*/
 
 		auto middle = rt::Sphere();
 		middle.transform() = rt::translation(-0.5f, 1, 0.5f);
 		middle.material() = rt::Material();
-		//middle.material().color = rt::Color(0.1f, 1, 0.5f);
 		middle.material().color = { 0.1f, 1, 0.5f };
 		middle.material().diffuse = 0.7f;
 		middle.material().specular = 0.3f;
@@ -44,9 +46,9 @@ namespace app {
 		left.material().specular = 0.3f;
 
 		rt::World w;
-		w.set_object(std::make_shared<rt::Sphere>(floor));
-		w.set_object(std::make_shared<rt::Sphere>(left_wall));
-		w.set_object(std::make_shared<rt::Sphere>(right_wall));
+		w.set_object(std::make_shared<rt::Plane>(floor));
+		//w.set_object(std::make_shared<rt::Sphere>(left_wall));
+		//w.set_object(std::make_shared<rt::Sphere>(right_wall));
 		w.set_object(std::make_shared<rt::Sphere>(middle));
 		w.set_object(std::make_shared<rt::Sphere>(right));
 		w.set_object(std::make_shared<rt::Sphere>(left));
@@ -58,7 +60,7 @@ namespace app {
 		camera.transform() = rt::view_transform({ 0, 1.5f, -5 }, { 0,1,0 }, { 0,1,0 });
 
 		auto canvas = camera.render(w);
-		rt::write_file("spheres.ppm", canvas.canvas_to_ppm());
+		rt::write_file("spheres_with_floor_plane.ppm", canvas.canvas_to_ppm());
 		
 	}
 }

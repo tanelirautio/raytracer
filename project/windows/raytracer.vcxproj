@@ -155,6 +155,7 @@
     <ClInclude Include="..\..\src\rtMain.hpp" />
     <ClInclude Include="..\..\src\rtMaterial.hpp" />
     <ClInclude Include="..\..\src\rtMatrix.hpp" />
+    <ClInclude Include="..\..\src\rtPlane.hpp" />
     <ClInclude Include="..\..\src\rtShape.hpp" />
     <ClInclude Include="..\..\src\rtRay.hpp" />
     <ClInclude Include="..\..\src\rtSphere.hpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="..\..\src\rtLight.cpp" />
     <ClCompile Include="..\..\src\rtMaterial.cpp" />
     <ClCompile Include="..\..\src\rtMatrix.cpp" />
+    <ClCompile Include="..\..\src\rtPlane.cpp" />
     <ClCompile Include="..\..\src\rtRay.cpp" />
     <ClCompile Include="..\..\src\rtShape.cpp" />
     <ClCompile Include="..\..\src\rtSphere.cpp" />

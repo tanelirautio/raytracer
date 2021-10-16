@@ -19,5 +19,6 @@
 #include "rtMaterial.hpp"
 #include "rtWorld.hpp"
 #include "rtCamera.hpp"
+#include "rtPlane.hpp"
 
 #endif

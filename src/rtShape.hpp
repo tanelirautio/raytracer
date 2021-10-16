@@ -1,5 +1,5 @@
-#ifndef __RT_PRIMITIVE_HPP__
-#define __RT_PRIMITIVE_HPP__
+#ifndef __RT_SHAPE_HPP__
+#define __RT_SHAPE_HPP__
 
 #include "rtDefs.hpp"
 #include "rtMaterial.hpp"
@@ -13,18 +13,11 @@ namespace rt {
 	struct Vector;
 	struct Point;
 
-	/*
-	class IShape {
-		public:
-			virtual std::vector<Intersection> intersect(const Ray& ray) const = 0;
-
-	};
-	*/
-
 	class Shape {
 		public:
 			enum class Type {
 				SPHERE,
+				PLANE,
 				CUBE,
 				UNKNOWN
 			};

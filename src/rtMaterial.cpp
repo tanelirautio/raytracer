@@ -39,8 +39,8 @@ namespace rt {
 		// light is on the other side of the surface.
 		auto light_dot_normal = lightv.dot(normalv);
 		if (light_dot_normal < 0) {
-			diffuse = get_color_black();
-			specular = get_color_black();
+			diffuse = rt::BLACK;
+			specular = rt::BLACK;
 		}
 		else {
 			// compute the diffuse contribution
@@ -52,7 +52,7 @@ namespace rt {
 			Vector reflectv = -lightv.reflect(normalv);
 			auto reflect_dot_eye = reflectv.dot(eyev);
 			if (reflect_dot_eye <= 0) {
-				specular = get_color_black();
+				specular = rt::BLACK;
 			}
 			else {
 				// compute the specular contribution

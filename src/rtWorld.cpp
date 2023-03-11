@@ -1,6 +1,7 @@
 #include "rtWorld.hpp"
 
 #include "rtSphere.hpp"
+#include "rtPlane.hpp"
 #include "rtTransformations.hpp"
 #include "rtIntersection.hpp"
 #include "rtTuple.hpp"
@@ -33,7 +34,6 @@ namespace rt {
 			switch (shape->type()) {
 				case Shape::Type::SPHERE: {
 					//LOG("Sphere!");
-
 					auto sphere = dynamic_cast<Sphere*>(shape.get());
 					if (sphere) {
 						auto v = sphere->intersect(ray);
@@ -43,6 +43,15 @@ namespace rt {
 				}
 				case Shape::Type::CUBE: {
 					//LOG("Cube!");
+					break;
+				}
+				case Shape::Type::PLANE: {
+					//LOG("Plane!");
+					auto plane = dynamic_cast<Plane*>(shape.get());
+					if (plane) {
+						auto v = plane->intersect(ray);
+						xs.insert(xs.end(), v.begin(), v.end());
+					}
 					break;
 				}
 				default: {
@@ -73,7 +82,7 @@ namespace rt {
 				}
 			}
 		}
-		return get_color_black();
+		return rt::BLACK;
 	}
 
 	bool World::is_shadowed(const Point& point) const {

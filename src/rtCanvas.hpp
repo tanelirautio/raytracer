@@ -21,6 +21,7 @@ namespace rt {
 			void write_pixel(i32 x, i32 y, const Color& c);
 			Color pixel_at(i32 x, i32 y) const;
 			std::string canvas_to_ppm() const;
+			std::vector<u8> to_bytearray() const;
 		private:
 			i32 m_width;
 			i32 m_height;

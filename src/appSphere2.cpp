@@ -5,33 +5,26 @@
 #include <iostream>
 
 namespace app {
-	void Sphere2::create() {
+	rt::Canvas Sphere2::create(const std::string& image_name, int width, int height) {
+
+		this->width = width;
+		this->height = height;
 
 		auto floor = rt::Plane();
 		floor.transform() = rt::translation(0, 0.5f, 0);
-		//floor.transform() = rt::scaling(10, 0.01f, 10);
+		floor.transform() = rt::scaling(10, 0.01f, 10);
 		floor.material() = rt::Material();
-		floor.material().color = rt::Color(1, 0.9f, 0.9f);
+		floor.material().color = rt::Color(0.8f, 0.1f, 0.1f);
 		floor.material().specular = 0;
-
-		/**
-		auto left_wall = rt::Sphere();
-		left_wall.transform() = rt::translation(0, 0, 5) * rt::rotation_y(-M_PI / 4.f) * rt::rotation_x(HALF_PI) * rt::scaling(10, 0.1f, 10);
-		//left_wall.transform() = rt::scaling(10, 0.01f, 10) * rt::rotation_x(HALF_PI) * rt::rotation_y(-M_PI / 4.f) * rt::translation(0, 0, 5);
-		left_wall.material() = floor.material();
-
-		auto right_wall = rt::Sphere();
-		right_wall.transform() = rt::translation(0, 0, 5) * rt::rotation_y(M_PI / 4.f) * rt::rotation_x(HALF_PI) * rt::scaling(10, 0.1f, 10);
-		right_wall.material() = floor.material();
-		*/
-
+		
 		auto middle = rt::Sphere();
 		middle.transform() = rt::translation(-0.5f, 1, 0.5f);
 		middle.material() = rt::Material();
-		middle.material().color = { 0.1f, 1, 0.5f };
+		middle.material().color = { 0.1f, 0.2f, 0.5f };
 		middle.material().diffuse = 0.7f;
-		middle.material().specular = 0.3f;
+		middle.material().specular = 1.0f;
 
+		
 		auto right = rt::Sphere();
 		right.transform() = rt::translation(1.5f, 0.5f, -0.5f) * rt::scaling(0.5f, 0.5f, 0.5f);
 		right.material().color = { 0.5f, 1, 0.1f };
@@ -44,11 +37,10 @@ namespace app {
 		left.material().color = { 1, 0.8f, 0.1f };
 		left.material().diffuse = 0.7f;
 		left.material().specular = 0.3f;
+		
 
 		rt::World w;
 		w.set_object(std::make_shared<rt::Plane>(floor));
-		//w.set_object(std::make_shared<rt::Sphere>(left_wall));
-		//w.set_object(std::make_shared<rt::Sphere>(right_wall));
 		w.set_object(std::make_shared<rt::Sphere>(middle));
 		w.set_object(std::make_shared<rt::Sphere>(right));
 		w.set_object(std::make_shared<rt::Sphere>(left));
@@ -56,11 +48,13 @@ namespace app {
 		rt::PointLight light({ -10, 10, -10 }, { 1,1,1 });
 		w.set_light(std::make_shared<rt::PointLight>(light));
 
-		rt::Camera camera(100, 50, M_PI / 3.f);
+		rt::Camera camera(width, height, M_PI / 3.f);
 		camera.transform() = rt::view_transform({ 0, 1.5f, -5 }, { 0,1,0 }, { 0,1,0 });
 
 		auto canvas = camera.render(w);
-		rt::write_file("spheres_with_floor_plane.ppm", canvas.canvas_to_ppm());
+		std::string name = image_name + ".ppm";
+		rt::write_file(name, canvas.canvas_to_ppm());
 		
+		return canvas;
 	}
 }

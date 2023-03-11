@@ -70,9 +70,8 @@ namespace rt {
 
 	Color operator*(const Color& lhs, const Color& rhs);
 
-	Color get_color_white();
-	Color get_color_black();
-
+	const Color BLACK = Color(0, 0, 0);
+	const Color WHITE = Color(1, 1, 1);
 }
 
 #endif

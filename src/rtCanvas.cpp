@@ -27,7 +27,7 @@ namespace rt {
 	Color Canvas::pixel_at(i32 x, i32 y) const {
 		i32 v = x + y * m_width;
 		if (v < 0 || v > m_data.size()) {
-			return get_color_black();
+			return rt::BLACK;
 		}
 		return m_data[v];
 	}
@@ -79,6 +79,30 @@ namespace rt {
 		std::copy(data.begin(), data.end(), std::ostream_iterator<std::string>(imploded, delim));
 
 		return header + imploded.str();
+	}
+
+	std::vector<u8> Canvas::to_bytearray() const {
+		std::vector<u8> byte_array;
+
+		for (i32 y = 0; y < m_height; y++) {
+			for (i32 x = 0; x < m_width; x++) {
+				auto c = pixel_at(x, y);
+				auto r = static_cast<u8>(std::round(c.r * 255.f));
+				auto g = static_cast<u8>(std::round(c.g * 255.f));
+				auto b = static_cast<u8>(std::round(c.b * 255.f));
+
+				r = std::clamp(r, (u8)0, (u8)255);
+				g = std::clamp(g, (u8)0, (u8)255);
+				b = std::clamp(b, (u8)0, (u8)255);
+
+				//SDL_PIXELFORMAT_RGBA888
+				byte_array.emplace_back(r);
+				byte_array.emplace_back(g);
+				byte_array.emplace_back(b);
+
+			}
+		}
+		return byte_array;
 	}
 
 }

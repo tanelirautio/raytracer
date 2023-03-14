@@ -72,6 +72,28 @@ namespace rt {
 
 	const Color BLACK = Color(0, 0, 0);
 	const Color WHITE = Color(1, 1, 1);
+	const Color RED = Color(1, 0, 0);
+	const Color LIME_GREEN = Color(0, 1, 0);
+	const Color BLUE = Color(0, 0, 1);
+	const Color CYAN = Color(0, 1, 1);
+	const Color YELLOW = Color(1, 1, 0);
+	const Color MAGENTA = Color(1, 0, 1);
+	const Color GRAY = Color(0.5f, 0.5f, 0.5f);
+	const Color ORANGE = Color(1, 0.4f, 0);
+	const Color GREEN = Color(0, 0.5f, 0);
+	const Color PURPLE = Color(0.5f, 0, 0.5f);
+	const Color NAVY_BLUE = Color(0, 0, 0.5f);
+	const Color OLIVE = Color(0.5f, 0.5f, 0);
+
+	const Color SILVER = Color(192.f / 255.f, 192.f / 255.f, 192.f / 255.f);
+	const Color SKY_BLUE = Color(135.f / 255.f, 206.f / 255.f, 235.f / 255.f);
+	const Color LIGHT_BLUE = Color(173.f / 255.f, 216.f / 255.f, 230.f / 255.f);
+	const Color HOT_PINK = Color(1, 105.f / 255.f, 180.f / 255.f);
+	const Color DEEP_PINK = Color(1, 20.f / 255.f, 147.f / 255.f);
+	const Color DARK_GREEN = Color(0, 100.f / 255.f, 0);
+	const Color ORANGE_RED = Color(1, 69.f / 255.f, 0);
+
+
 }
 
 #endif

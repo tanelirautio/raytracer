@@ -47,7 +47,7 @@ namespace app {
 					auto point = ray.position(hit.value().t);
 					auto normal = shape.normal_at(point);
 					auto eye = -ray.direction();
-					auto color = rt::lighting(hit.value().object->material(), light, point, eye, normal);
+					auto color = rt::lighting(hit.value().object->material(), *hit.value().object, light, point, eye, normal);
 					canvas.write_pixel(x, y, color);
 				}				
 			}

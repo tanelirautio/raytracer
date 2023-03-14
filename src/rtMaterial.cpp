@@ -14,15 +14,24 @@ namespace rt {
 		return false;
 	}
 
-	Color lighting(const Material& material, const PointLight& light, const Point& point, const Vector& eyev, const Vector& normalv, bool in_shadow) {
-		// initialize the three different contibutions
+	Color lighting(const Material& material, const Shape& object, const PointLight& light, const Point& point, const Vector& eyev, const Vector& normalv, bool in_shadow) {
+		// initialize the three different contributions
 		Color ambient;
 		Color diffuse;
 		Color specular;
 
-		// combine the surface color with the light's color/intensity
-		auto effective_color = material.color * light.intensity();
+		// get the color depending if the material has pattern or not
+		Color material_color;
+		if(material.has_pattern()) {
+			material_color = material.pattern->stripe_at_object(object, point);
+		}
+		else {
+			material_color = material.color;
+		}
 
+		// combine the surface color with the light's color/intensity
+		auto effective_color = material_color * light.intensity();
+	
 		// find the direction to light source
 		Vector lightv = (light.position() - point).normalize();
 

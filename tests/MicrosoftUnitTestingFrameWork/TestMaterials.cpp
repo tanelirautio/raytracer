@@ -27,7 +27,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, 0, -1);
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0,0,-10 }, { 1,1,1 });
-			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, rt::Sphere(), light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(1.9f,1.9f,1.9f));
 		}
 
@@ -38,7 +38,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, sqrt(2.f)/2.f, -sqrt(2.f)/2.f);
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0, 0, -10 }, { 1, 1, 1 });
-			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, rt::Sphere(), light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(1.0f,1.0f,1.0f));
 		}
 
@@ -49,7 +49,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, 0, -1); 
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0, 10, -10 }, { 1, 1, 1 });
-			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, rt::Sphere(), light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(0.7364f, 0.7364f, 0.7364f));
 		}
 
@@ -60,7 +60,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, -sqrt(2.f) / 2.f, -sqrt(2.f) / 2.f);
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0, 10, -10 }, { 1, 1, 1 });
-			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, rt::Sphere(), light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(1.63638f, 1.63638f, 1.63638f));
 		}
 
@@ -71,7 +71,7 @@ namespace TestProject
 			rt::Vector eyev = rt::Vector(0, 0, -1);
 			rt::Vector normalv = rt::Vector(0, 0, -1);
 			rt::PointLight light({ 0, 0, 10 }, { 1, 1, 1 });
-			rt::Color result = rt::lighting(m, light, position, eyev, normalv);
+			rt::Color result = rt::lighting(m, rt::Sphere(), light, position, eyev, normalv);
 			Assert::IsTrue(result == rt::Color(0.1f, 0.1f, 0.1f));
 		}
 
@@ -84,10 +84,27 @@ namespace TestProject
 			auto light = rt::PointLight({ 0, 0, -10 }, { 1, 1, 1 });
 			bool in_shadow = true;
 
-			auto result = rt::lighting(m, light, position, eyev, normalv, in_shadow);
+			auto result = rt::lighting(m, rt::Sphere(), light, position, eyev, normalv, in_shadow);
 			Assert::IsTrue(result == rt::Color(0.1f, 0.1f, 0.1f));
 		}
 
+		TEST_METHOD(Lighting_with_a_pattern_applied)
+		{
+			rt::Material m;
+			m.pattern = rt::StripedPattern(rt::Color(1, 1, 1), rt::Color(0, 0, 0));
+			m.ambient = 1;
+			m.diffuse = 0;
+			m.specular = 0;
+			auto eyev = rt::Vector(0, 0, -1);
+			auto normalv = rt::Vector(0, 0, -1);
+			auto light = rt::PointLight({ 0, 0, -10 }, { 1, 1, 1 });
+
+			auto c1 = rt::lighting(m, rt::Sphere(), light, { 0.9f, 0, 0 }, eyev, normalv, false);
+			auto c2 = rt::lighting(m, rt::Sphere(), light, { 1.1f, 0, 0 }, eyev, normalv, false);
+
+			Assert::IsTrue(c1 == rt::Color(1, 1, 1));
+			Assert::IsTrue(c2 == rt::Color(0, 0, 0));
+		}
 
 	};
 }

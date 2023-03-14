@@ -1,11 +1,11 @@
-#include "appSphere2.hpp"
+#include "appSphere3.hpp"
 
 #include "rtMain.hpp"
 
 #include <iostream>
 
 namespace app {
-	rt::Canvas Sphere2::create(const std::string& image_name, int width, int height) {
+	rt::Canvas Sphere3::create(const std::string& image_name, int width, int height) {
 
 		this->width = width;
 		this->height = height;
@@ -16,20 +16,25 @@ namespace app {
 		floor.material() = rt::Material();
 		floor.material().color = rt::Color(0.8f, 0.1f, 0.1f);
 		floor.material().specular = 0;
-		
+		floor.material().pattern = rt::StripedPattern(rt::NAVY_BLUE, rt::SKY_BLUE);
+		floor.material().pattern.value().set_transform(rt::scaling(0.02f, 0.02f, 0.02f));
+
 		auto middle = rt::Sphere();
 		middle.transform() = rt::translation(-0.5f, 1, 0.5f);
 		middle.material() = rt::Material();
 		middle.material().color = { 0.1f, 0.2f, 0.5f };
 		middle.material().diffuse = 0.7f;
 		middle.material().specular = 1.0f;
+		middle.material().pattern = rt::StripedPattern(rt::RED, rt::DARK_GREEN);
+		middle.material().pattern.value().set_transform(rt::scaling(0.1f, 0.1f, 0.1f));
 
-		
 		auto right = rt::Sphere();
 		right.transform() = rt::translation(1.5f, 0.5f, -0.5f) * rt::scaling(0.5f, 0.5f, 0.5f);
 		right.material().color = { 0.5f, 1, 0.1f };
 		right.material().diffuse = 0.7f;
 		right.material().specular = 0.3f;
+		right.material().pattern = rt::StripedPattern(rt::SILVER, rt::OLIVE);
+		middle.material().pattern.value().set_transform(rt::scaling(0.25f, 0.25f, 0.25f) * rt::rotation_x(M_PI / 4.f));
 
 		auto left = rt::Sphere();
 		left.transform() = rt::translation(-1.5f, 0.33f, -0.75f) * rt::scaling(0.33f, 0.33f, 0.33f);
@@ -37,7 +42,7 @@ namespace app {
 		left.material().color = { 1, 0.8f, 0.1f };
 		left.material().diffuse = 0.7f;
 		left.material().specular = 0.3f;
-		
+		left.material().pattern = rt::StripedPattern(rt::PURPLE, rt::DEEP_PINK);
 
 		rt::World w;
 		w.set_object(std::make_shared<rt::Plane>(floor));
@@ -54,7 +59,7 @@ namespace app {
 		auto canvas = camera.render(w);
 		std::string name = image_name + ".ppm";
 		rt::write_file(name, canvas.canvas_to_ppm());
-		
+
 		return canvas;
 	}
 }

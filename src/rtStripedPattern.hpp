@@ -3,22 +3,22 @@
 
 #include "rtMatrix.hpp"
 #include "rtTuple.hpp"
+#include "rtPattern.hpp"
 
 namespace rt {
 	class Shape;
 	class Matrix;
-	class StripedPattern {
+	class StripedPattern : public Pattern {
 		public:
 			StripedPattern(const Color& a, const Color& b);
-			Color stripe_at(Point p) const;
-			Color stripe_at_object(const Shape& shape, const Point& world_point) const;
-			void set_transform(const Matrix& transform);
 			Color a() const { return m_a; }
 			Color b() const { return m_b; }
+
+			Color pattern_at(const Point& p) const final override;
 		private:
 			Color m_a;
 			Color m_b;
-			Matrix m_transform;
+
 	};
 }
 

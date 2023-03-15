@@ -20,6 +20,7 @@
 #include "rtWorld.hpp"
 #include "rtCamera.hpp"
 #include "rtPlane.hpp"
+#include "rtPattern.hpp"
 #include "rtStripedPattern.hpp"
 
 #endif

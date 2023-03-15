@@ -17,7 +17,7 @@ namespace app {
 		floor.material().color = rt::Color(0.8f, 0.1f, 0.1f);
 		floor.material().specular = 0;
 		floor.material().pattern = rt::StripedPattern(rt::NAVY_BLUE, rt::SKY_BLUE);
-		floor.material().pattern.value().set_transform(rt::scaling(0.02f, 0.02f, 0.02f));
+		floor.material().pattern.value().transform() = rt::scaling(0.02f, 0.02f, 0.02f);
 
 		auto middle = rt::Sphere();
 		middle.transform() = rt::translation(-0.5f, 1, 0.5f);
@@ -26,7 +26,7 @@ namespace app {
 		middle.material().diffuse = 0.7f;
 		middle.material().specular = 1.0f;
 		middle.material().pattern = rt::StripedPattern(rt::RED, rt::DARK_GREEN);
-		middle.material().pattern.value().set_transform(rt::scaling(0.1f, 0.1f, 0.1f));
+		middle.material().pattern.value().transform() = rt::scaling(0.1f, 0.1f, 0.1f);
 
 		auto right = rt::Sphere();
 		right.transform() = rt::translation(1.5f, 0.5f, -0.5f) * rt::scaling(0.5f, 0.5f, 0.5f);
@@ -34,7 +34,7 @@ namespace app {
 		right.material().diffuse = 0.7f;
 		right.material().specular = 0.3f;
 		right.material().pattern = rt::StripedPattern(rt::SILVER, rt::OLIVE);
-		middle.material().pattern.value().set_transform(rt::scaling(0.25f, 0.25f, 0.25f) * rt::rotation_x(M_PI / 4.f));
+		middle.material().pattern.value().transform() = rt::scaling(0.25f, 0.25f, 0.25f) * rt::rotation_x((f32)M_PI / 4.f);
 
 		auto left = rt::Sphere();
 		left.transform() = rt::translation(-1.5f, 0.33f, -0.75f) * rt::scaling(0.33f, 0.33f, 0.33f);

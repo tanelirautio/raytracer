@@ -87,5 +87,23 @@ namespace TestProject
 			Assert::IsTrue(c == rt::Color(0.75f, 0.5f, 0.25f));
 		}
 
+		TEST_METHOD(A_gradient_linearly_interpolates_between_colors)
+		{
+			rt::GradientPattern p(rt::WHITE, rt::BLACK);
+			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 0.25f,0,0 }) == rt::Color(0.75f, 0.75f, 0.75f));
+			Assert::IsTrue(p.pattern_at({ 0.5f,0,0 }) == rt::Color(0.5f, 0.5f, 0.5f));
+			Assert::IsTrue(p.pattern_at({ 0.75f,0,0 }) == rt::Color(0.25f, 0.25f, 0.25f));
+		}
+
+		TEST_METHOD(A_ring_should_extend_in_both_x_and_z)
+		{
+			rt::RingPattern p(rt::WHITE, rt::BLACK);
+			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 1,0,0 }) == rt::BLACK);
+			Assert::IsTrue(p.pattern_at({ 0,0,1 }) == rt::BLACK);
+			// 0.708f = just slightly more than sqrt(2)/2
+			Assert::IsTrue(p.pattern_at({ 0.708f, 0, 0.708f }) == rt::BLACK);
+		}
 	};
 }

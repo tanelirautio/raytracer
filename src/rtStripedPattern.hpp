@@ -15,6 +15,8 @@ namespace rt {
 			Color b() const { return m_b; }
 
 			Color pattern_at(const Point& p) const final override;
+		protected:
+			virtual StripedPattern* clone_impl() const override { return new StripedPattern(*this); };
 		private:
 			Color m_a;
 			Color m_b;

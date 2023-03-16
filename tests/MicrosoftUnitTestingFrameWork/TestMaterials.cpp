@@ -91,7 +91,7 @@ namespace TestProject
 		TEST_METHOD(Lighting_with_a_pattern_applied)
 		{
 			rt::Material m;
-			m.pattern = rt::StripedPattern(rt::Color(1, 1, 1), rt::Color(0, 0, 0));
+			m.pattern = std::make_unique<rt::StripedPattern>(rt::Color(1, 1, 1), rt::Color(0, 0, 0));
 			m.ambient = 1;
 			m.diffuse = 0;
 			m.specular = 0;

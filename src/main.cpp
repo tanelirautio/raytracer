@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 	app::Sphere3 s;
-	rt::Canvas canvas = s.create("spheres_with_striped_pattern", 320, 200);
+	rt::Canvas canvas = s.create("spheres_with_different_patterns", 150, 100);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 

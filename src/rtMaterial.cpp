@@ -22,8 +22,8 @@ namespace rt {
 
 		// get the color depending if the material has pattern or not
 		Color material_color;
-		if(material.has_pattern()) {
-			material_color = material.pattern->pattern_at_shape(object, point);
+		if(material.pattern) {
+			material_color = material.pattern.get()->pattern_at_shape(object, point);
 		}
 		else {
 			material_color = material.color;

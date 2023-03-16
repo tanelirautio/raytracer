@@ -3,6 +3,7 @@
 
 #include "rtMatrix.hpp"
 #include "rtTuple.hpp"
+#include <memory>
 
 namespace rt {
 	class Shape;
@@ -29,6 +30,10 @@ namespace rt {
 
 			Color pattern_at_shape(const Shape& shape, const Point& p) const;
 			virtual Color pattern_at(const Point& p) const = 0;
+
+			auto clone() const { return std::unique_ptr<Pattern>(clone_impl()); }
+		protected:
+			virtual Pattern* clone_impl() const = 0;
 		private:
 			Matrix m_transform;
 			Type m_type;
@@ -41,6 +46,8 @@ namespace rt {
 			Color pattern_at(const Point& p) const final override {
 				return Color(p.x, p.y, p.z);
 			}
+		protected:
+			virtual TestPattern* clone_impl() const override { return new TestPattern(*this); };
 	};
 }
 

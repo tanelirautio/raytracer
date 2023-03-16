@@ -109,6 +109,7 @@ namespace rt {
 		m1.color = { 0.8f, 1.0f, 0.6f };
 		m1.diffuse = 0.7f;
 		m1.specular = 0.2f;
+		m1.pattern = nullptr;
 
 		auto s1 = std::make_shared<Sphere>();
 		s1->material() = m1;

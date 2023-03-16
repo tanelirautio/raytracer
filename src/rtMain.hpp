@@ -22,5 +22,7 @@
 #include "rtPlane.hpp"
 #include "rtPattern.hpp"
 #include "rtStripedPattern.hpp"
+#include "rtGradientPattern.hpp"
+#include "rtRingPattern.hpp"
 
 #endif

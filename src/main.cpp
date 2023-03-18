@@ -3,40 +3,49 @@
 #include "appSphere3.hpp"
 
 #include "rtMain.hpp"
+#include "appWindow.hpp"
+
 #include <chrono>
 #include <iostream>
 #include <vector>
 #include <memory>
 #include <string>
+#include <thread>
 
-#define USE_SDL
+const i32 WIDTH = 320;
+const i32 HEIGHT = 200;
 
-#ifdef USE_SDL
-#include "appWindow.hpp"
-#endif
-
-
-int main(int argc, char** argv) {
+void render_thread_function(app::Window& w) {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-
-	app::Sphere3 s;
-	rt::Canvas canvas = s.create("spheres_with_different_patterns", 150, 100);
+	
+	app::Sphere3 s(WIDTH, HEIGHT);
+	s.set_window_callback(w);
+	rt::Canvas canvas = s.create();
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-#ifdef USE_SDL
+	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+	auto time_str = rt::format_duration(ms);
+	std::cout << "Time to render the image: " << time_str << std::endl;
+
+	//TODO: optional image writing
+	std::string name = "spheres_with_different_patterns.ppm";
+	rt::write_file(name, canvas.canvas_to_ppm());
+}
+
+
+int main(int argc, char** argv) {
+
 	try {
-		app::Window w(canvas.width(), canvas.height(), canvas.to_bytearray());
+		app::Window w(WIDTH, HEIGHT);
+		std::thread render_thread(render_thread_function, std::ref(w));
+		w.run();
+		render_thread.join();
 	}
 	catch (const std::exception& e) {
 		std::cout << "Error creating SDL window";
 		std::cout << e.what();
 	}
-#endif
 
-
-	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-	auto time_str = rt::format_duration(ms);
-	std::cout << "Time to render the image: " << time_str << std::endl;
 	return 0;
 }

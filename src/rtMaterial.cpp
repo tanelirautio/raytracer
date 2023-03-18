@@ -8,7 +8,8 @@ namespace rt {
 			lhs.ambient == rhs.ambient &&
 			lhs.diffuse == rhs.diffuse &&
 			lhs.specular == rhs.specular &&
-			lhs.shininess == rhs.shininess) {
+			lhs.shininess == rhs.shininess &&
+			lhs.pattern.get() == rhs.pattern.get()) {
 			return true;
 		}
 		return false;

@@ -1,6 +1,9 @@
 #include "rtCamera.hpp"
 #include "rtRay.hpp"
+#include "rtDefs.hpp"
 #include <cmath>
+#include <chrono>
+#include <thread>
 
 namespace rt {
 
@@ -40,6 +43,11 @@ namespace rt {
 				Ray ray = ray_for_pixel(x, y);
 				Color color = w.color_at(ray);
 				image.write_pixel(x, y, color);
+
+				if (m_pixel_callback) {
+					m_pixel_callback(x, y, color.r, color.g, color.b);
+					std::this_thread::sleep_for(std::chrono::milliseconds(1));
+				}
 			}
 		}
 
@@ -61,5 +69,9 @@ namespace rt {
 		}
 
 		m_pixel_size = (m_half_width * 2.f) / m_hsize;	
+	}
+
+	std::unique_ptr<Camera> make_camera(i32 width, i32 height, f32 fov) {
+		return std::make_unique<Camera>(width, height, fov);
 	}
 }

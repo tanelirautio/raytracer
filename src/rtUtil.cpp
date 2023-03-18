@@ -27,4 +27,16 @@ namespace rt {
         return ss.str();
     }
 
+    Color lerp_color(const Color& a, const Color& b, f32 t) {
+        t = clamp(t, 0.0f, 1.0f);
+        return a * (1 - t) + b * t;
+    }
+
+    float clamp(f32 x, f32 minval, f32 maxval) {
+        return std::min(std::max(x, minval), maxval);
+    }
+
+    f32 lerp(f32 a, f32 b, f32 t) {
+        return (1 - t) * a + t * b;
+    }
 }

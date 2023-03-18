@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\rtCamera.hpp" />
     <ClInclude Include="..\..\src\rtCanvas.hpp" />
+    <ClInclude Include="..\..\src\rtCheckerPattern.hpp" />
     <ClInclude Include="..\..\src\rtDefs.hpp" />
     <ClInclude Include="..\..\src\rtFile.hpp" />
     <ClInclude Include="..\..\src\rtGradientPattern.hpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="..\..\src\rtMaterial.hpp" />
     <ClInclude Include="..\..\src\rtMatrix.hpp" />
     <ClInclude Include="..\..\src\rtPattern.hpp" />
+    <ClInclude Include="..\..\src\rtPerlinPattern.hpp" />
     <ClInclude Include="..\..\src\rtPlane.hpp" />
     <ClInclude Include="..\..\src\rtRingPattern.hpp" />
     <ClInclude Include="..\..\src\rtShape.hpp" />
@@ -171,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\rtCamera.cpp" />
     <ClCompile Include="..\..\src\rtCanvas.cpp" />
+    <ClCompile Include="..\..\src\rtCheckerPattern.cpp" />
     <ClCompile Include="..\..\src\rtFile.cpp" />
     <ClCompile Include="..\..\src\rtGradientPattern.cpp" />
     <ClCompile Include="..\..\src\rtIntersection.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="..\..\src\rtMaterial.cpp" />
     <ClCompile Include="..\..\src\rtMatrix.cpp" />
     <ClCompile Include="..\..\src\rtPattern.cpp" />
+    <ClCompile Include="..\..\src\rtPerlinPattern.cpp" />
     <ClCompile Include="..\..\src\rtPlane.cpp" />
     <ClCompile Include="..\..\src\rtRay.cpp" />
     <ClCompile Include="..\..\src\rtRingPattern.cpp" />

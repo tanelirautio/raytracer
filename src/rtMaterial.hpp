@@ -12,29 +12,14 @@ namespace rt {
 
     struct Material {
         Material() : color({ 1,1,1 }), ambient(0.1f), diffuse(0.9f), specular(0.9f), shininess(200.f), pattern(nullptr) {}
-        
+        ~Material() = default;
+
         Color color;
         f32 ambient;
         f32 diffuse;
         f32 specular;
         f32 shininess;
-        std::unique_ptr<Pattern> pattern;
-
-        //https://stackoverflow.com/questions/16030081/copy-constructor-for-a-class-with-unique-ptr
-        ~Material() = default;
-        Material(Material const& other) : 
-            color(other.color), 
-            ambient(other.ambient), 
-            diffuse(other.diffuse), 
-            specular(other.specular), 
-            shininess(other.shininess),
-            pattern(other.pattern->clone()) {}
-        Material(Material&& other) = default;
-        Material& operator=(Material const& other) { 
-            pattern = other.pattern->clone(); 
-            return *this; 
-        }
-        Material& operator=(Material&& other) = default;
+        std::shared_ptr<Pattern> pattern;
     };
 
 	Color lighting(

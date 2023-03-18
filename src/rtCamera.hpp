@@ -6,6 +6,9 @@
 #include "rtCanvas.hpp"
 #include "rtWorld.hpp"
 
+#include <functional>
+#include <memory>
+
 namespace rt {
 	class Ray;
 	class Canvas;
@@ -29,6 +32,13 @@ namespace rt {
 			
 			const Matrix& transform() const { return m_transform; }
 			Matrix& transform() { return m_transform; }
+
+			using pixel_callback = std::function<void(i32, i32, f32, f32, f32)>;
+			void set_pixel_callback(pixel_callback callback) {
+				m_pixel_callback = std::move(callback);
+			}
+
+
 		private:
 			void calculate_pixel_size();
 
@@ -39,7 +49,11 @@ namespace rt {
 			f32 m_half_height = 0;
 			f32 m_pixel_size = 0;
 			Matrix m_transform;
+
+			pixel_callback m_pixel_callback;
 	};
+
+	std::unique_ptr<Camera> make_camera(i32 width, i32 height, f32 fov);
 }
 
 #endif

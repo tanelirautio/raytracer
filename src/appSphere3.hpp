@@ -2,16 +2,21 @@
 #define __APP_SPHERE_3_HPP__
 
 #include "rtCanvas.hpp"
+#include <memory>
+#include "appWindow.hpp"
+#include "rtCamera.hpp"
 
 namespace app {
 	class Sphere3 {
 	public:
-		Sphere3() : width(0), height(0) {};
+		Sphere3(i32 width, i32 height); 
 		~Sphere3() = default;
-		rt::Canvas create(const std::string& image_name, int width = 150, int height = 100);
+		rt::Canvas create();
+		void set_window_callback(app::Window& w);
 	private:
-		int width;
-		int height;
+		i32 m_width;
+		i32 m_height;
+		std::unique_ptr<rt::Camera> m_camera;
 	};
 }
 

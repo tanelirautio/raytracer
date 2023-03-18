@@ -24,5 +24,7 @@
 #include "rtStripedPattern.hpp"
 #include "rtGradientPattern.hpp"
 #include "rtRingPattern.hpp"
+#include "rtCheckerPattern.hpp"
+#include "rtPerlinPattern.hpp"
 
 #endif

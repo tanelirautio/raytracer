@@ -15,8 +15,6 @@ namespace rt {
 		Color b() const { return m_b; }
 
 		Color pattern_at(const Point& p) const final override;
-	protected:
-		virtual RingPattern* clone_impl() const override { return new RingPattern(*this); };
 	private:
 		Color m_a;
 		Color m_b;

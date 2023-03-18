@@ -10,4 +10,11 @@ namespace rt {
         Point pattern_point = rt::inverse(m_transform).value() * object_point;
         return pattern_at(pattern_point);
 	}
+
+	bool operator==(const Pattern& lhs, const Pattern& rhs) {
+		if (lhs.type() == rhs.type() && lhs.transform() == rhs.transform()) {
+			return true;
+		}
+		return false;
+	}
 }

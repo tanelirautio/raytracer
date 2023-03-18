@@ -38,6 +38,10 @@ namespace rt {
 		return Color(lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b);
 	}
 
+	Color operator*(const Color& color, f32 scalar) {
+		return Color(color.x * scalar, color.y * scalar, color.z * scalar);
+	}
+
 	f32 Tuple::magnitude() const {
 		return std::sqrt(x * x + y * y + z * z + w * w);
 	}

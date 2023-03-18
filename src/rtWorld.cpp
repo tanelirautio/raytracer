@@ -101,6 +101,7 @@ namespace rt {
 		return false;
 	}
 	
+	/*
 	void World::create_default() {
 		auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Vector(1, 1, 1));
 		m_lights.push_back(light);
@@ -110,6 +111,25 @@ namespace rt {
 		m1.diffuse = 0.7f;
 		m1.specular = 0.2f;
 		m1.pattern = nullptr;
+
+		auto s1 = std::make_shared<Sphere>();
+		s1->material() = m1;
+		m_objects.push_back(s1);
+
+		auto s2 = std::make_shared<Sphere>();
+		s2->transform() = scaling(0.5f, 0.5f, 0.5f);
+		m_objects.push_back(s2);
+	}
+	*/
+
+	void World::create_default() {
+		auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Vector(1, 1, 1));
+		m_lights.push_back(light);
+
+		rt::Material m1;
+		m1.color = { 0.8f, 1.0f, 0.6f };
+		m1.diffuse = 0.7f;
+		m1.specular = 0.2f;
 
 		auto s1 = std::make_shared<Sphere>();
 		s1->material() = m1;

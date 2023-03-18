@@ -105,5 +105,29 @@ namespace TestProject
 			// 0.708f = just slightly more than sqrt(2)/2
 			Assert::IsTrue(p.pattern_at({ 0.708f, 0, 0.708f }) == rt::BLACK);
 		}
+
+		TEST_METHOD(Checkers_should_repeat_in_x)
+		{
+			rt::CheckerPattern p(rt::WHITE, rt::BLACK);
+			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 0.99f,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 1.01f,0,0 }) == rt::BLACK);
+		}
+
+		TEST_METHOD(Checkers_should_repeat_in_y)
+		{
+			rt::CheckerPattern p(rt::WHITE, rt::BLACK);
+			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 0,0.99f,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 0,1.01f,0 }) == rt::BLACK);
+		}
+
+		TEST_METHOD(Checkers_should_repeat_in_z)
+		{
+			rt::CheckerPattern p(rt::WHITE, rt::BLACK);
+			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 0,0,0.99f }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 0,0,1.01f }) == rt::BLACK);
+		}
 	};
 }

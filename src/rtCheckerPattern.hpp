@@ -1,5 +1,5 @@
-#ifndef __RT_GRADIENT_PATTERN_HPP__
-#define __RT_GRADIENT_PATTERN_HPP__
+#ifndef __RT_CHECKER_PATTERN__
+#define __RT_CHECKER_PATTERN__
 
 #include "rtMatrix.hpp"
 #include "rtTuple.hpp"
@@ -8,9 +8,9 @@
 namespace rt {
 	class Shape;
 	class Matrix;
-	class GradientPattern : public Pattern {
+	class CheckerPattern : public Pattern {
 	public:
-		GradientPattern(const Color& a, const Color& b);
+		CheckerPattern(const Color& a, const Color& b);
 		Color a() const { return m_a; }
 		Color b() const { return m_b; }
 

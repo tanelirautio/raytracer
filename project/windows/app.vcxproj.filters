@@ -27,10 +27,10 @@
     <ClCompile Include="..\..\src\appSphere2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\appWindow.cpp">
+    <ClCompile Include="..\..\src\appSphere3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\appSphere3.cpp">
+    <ClCompile Include="..\..\src\appWIndowSDL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,6 +48,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\appSphere3.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\appWindowSDL.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\appDefs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

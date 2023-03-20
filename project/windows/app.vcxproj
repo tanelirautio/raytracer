@@ -161,7 +161,7 @@
     <ClCompile Include="..\..\src\appSphere.cpp" />
     <ClCompile Include="..\..\src\appSphere2.cpp" />
     <ClCompile Include="..\..\src\appSphere3.cpp" />
-    <ClCompile Include="..\..\src\appWindow.cpp" />
+    <ClCompile Include="..\..\src\appWIndowSDL.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,10 +171,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\appClock.hpp" />
+    <ClInclude Include="..\..\src\appDefs.hpp" />
     <ClInclude Include="..\..\src\appSphere.hpp" />
     <ClInclude Include="..\..\src\appSphere2.hpp" />
     <ClInclude Include="..\..\src\appSphere3.hpp" />
     <ClInclude Include="..\..\src\appWindow.hpp" />
+    <ClInclude Include="..\..\src\appWindowSDL.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

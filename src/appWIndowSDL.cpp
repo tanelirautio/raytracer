@@ -1,23 +1,23 @@
-#include "appWindow.hpp"
+#include "appWindowSDL.hpp"
 #include <stdexcept>
 
 namespace app {
-	Window::Window(i32 width, i32 height) {
+	WindowSDL::WindowSDL(i32 width, i32 height) : Window(Type::SDL) {
 		init(width, height, {});
 	}
 
-	Window::Window(i32 width, i32 height, const std::vector<u8>& byte_array) {
+	WindowSDL::WindowSDL(i32 width, i32 height, const std::vector<u8>& byte_array) : Window(Type::SDL) {
 		this->m_byte_array = byte_array;
 		init(width, height, byte_array);
 	}
 
-	Window::~Window() {
+	WindowSDL::~WindowSDL() {
 		SDL_FreeSurface(m_window_surface);
 		SDL_DestroyWindow(m_window);
 		SDL_Quit();
 	}
 
-	void Window::init(i32 width, i32 height, const std::vector<u8>& byte_array) {
+	void WindowSDL::init(i32 width, i32 height, const std::vector<u8>& byte_array) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 			std::string error = "SDL could not be initialized: ";
 			throw(std::runtime_error((error + SDL_GetError()).c_str()));
@@ -45,7 +45,7 @@ namespace app {
 		m_running = true;
 	}
 
-	void Window::run() {
+	void WindowSDL::run() {
 		if (m_byte_array.size() > 0) {
 			m_surface = SDL_CreateRGBSurfaceFrom(&m_byte_array[0],
 				m_width,
@@ -58,10 +58,10 @@ namespace app {
 				0);
 		}
 		else {
-			m_surface = SDL_CreateRGBSurface(0, 
-				m_width, 
-				m_height, 
-				32, 
+			m_surface = SDL_CreateRGBSurface(0,
+				m_width,
+				m_height,
+				32,
 				0x000000ff,
 				0x0000ff00,
 				0x00ff0000,
@@ -83,29 +83,10 @@ namespace app {
 			//SDL_BlitSurface(m_surface, NULL, m_window_surface, NULL);
 			SDL_Delay(10);
 		}
-		
-	}
-
-	/*
-	void Window::pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) {
-		std::lock_guard<std::mutex> lock(m_surface_mutex);
-		// Convert the color values to SDL-compatible format
-		Uint32 color = SDL_MapRGB(m_surface->format, r * 255, g * 255, b * 255);
-
-		// Get a pointer to the pixel at the specified coordinates
-		Uint32* pixel = (Uint32*)m_surface->pixels + y * m_surface->pitch / 4 + x;
-
-		// Set the pixel color
-		*pixel = color;
-
-		// Update the window display
-		SDL_UpdateWindowSurface(m_window);
-		SDL_BlitSurface(m_surface, NULL, m_window_surface, NULL);
 
 	}
-	*/
-	
-	void Window::pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) {
+
+	void WindowSDL::pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) {
 		std::lock_guard<std::mutex> lock(m_surface_mutex);
 
 		// Convert the color values to SDL-compatible format
@@ -125,21 +106,21 @@ namespace app {
 		event.user.data2 = nullptr;
 		SDL_PushEvent(&event);
 	}
-	
-	void Window::handle_events() {
+
+	void WindowSDL::handle_events() {
 		SDL_Event sdl_event;
 		while (SDL_PollEvent(&sdl_event) > 0) {
 			switch (sdl_event.type) {
-				case SDL_QUIT: {
-					m_running = false;
-					break;
-				}
-				case SDL_USEREVENT: {
-					// Update the window display
-					SDL_UpdateWindowSurface(m_window);
-					SDL_BlitSurface(m_surface, NULL, m_window_surface, NULL);
-					break;
-				}
+			case SDL_QUIT: {
+				m_running = false;
+				break;
+			}
+			case SDL_USEREVENT: {
+				// Update the window display
+				SDL_UpdateWindowSurface(m_window);
+				SDL_BlitSurface(m_surface, NULL, m_window_surface, NULL);
+				break;
+			}
 			}
 		}
 	}

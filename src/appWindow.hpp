@@ -3,42 +3,24 @@
 
 #include "rtDefs.hpp"
 
-#include <SDL.h>
-#include <string>
-#include <vector>
-#include <mutex>
-
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
 namespace app {
 
 	class Window {
 		public:
-			Window(i32 width, i32 height);
-			Window(i32 width, i32 height, const std::vector<u8>& byte_array);
-			~Window();
+			enum class Type {
+				SDL,
+				CLI,
+			};
+			Window(Type type) {
+				m_type = type;
+			}
+			virtual ~Window() {}
+			virtual void run() = 0;
+			virtual void pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) = 0;
 
-			void run();
-
-			void pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b);
+			Type type() const { return m_type; }
 		private:
-			void init(i32 width, i32 height, const std::vector<u8>& byte_array);
-			void handle_events();
-	
-
-			SDL_Window* m_window = nullptr;
-			SDL_Surface* m_window_surface = nullptr;
-			SDL_Surface* m_surface = nullptr;
-			SDL_Renderer* m_renderer = nullptr;
-
-			int m_width;
-			int m_height;
-			bool m_running;
-			std::vector<u8> m_byte_array;
-
-			std::mutex m_surface_mutex;
+			Type m_type;
 	};
 
 }

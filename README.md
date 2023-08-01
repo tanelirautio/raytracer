@@ -9,4 +9,12 @@ Only addition I have done is to use SDL for showing the rendered image in a wind
 
 At the moment this is targeted only to Windows and Visual Studio 2022.
 
-This is still very much work in progress.
+This is still very much work in progress. Currently the ray tracer contains everything described in the book up to chapter 10.
+
+## Example images 
+
+![Spheres with shadows](https://github.com/tanelirautio/raytracer/blob/main/bin/spheres_with_shadows.png "Spheres with shadows")
+
+![Spheres with striped pattern](https://github.com/tanelirautio/raytracer/blob/main/bin/spheres_with_striped_pattern.png "Spheres with striped pattern")
+
+![Spheres with different patterns](https://github.com/tanelirautio/raytracer/blob/main/bin/spheres_with_different_patterns.png "Spheres with different patterns")

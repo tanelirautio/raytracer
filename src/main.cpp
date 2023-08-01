@@ -13,8 +13,8 @@
 #include <string>
 #include <thread>
 
-const i32 WIDTH = 320;
-const i32 HEIGHT = 200;
+const i32 WIDTH = 160;
+const i32 HEIGHT = 100;
 
 void render_thread_function(app::Window* w) {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
@@ -29,21 +29,22 @@ void render_thread_function(app::Window* w) {
 	auto time_str = rt::format_duration(ms);
 	std::cout << "Time to render the image: " << time_str << std::endl;
 
-	/*
+	
 	//TODO: optional image writing
+	/*
 	std::string name = "spheres_with_different_patterns.ppm";
 	rt::write_file(name, canvas.canvas_to_ppm());
 	*/
+	
 }
 
 
 int main(int argc, char** argv) {
 
 	try {
-		std::unique_ptr<app::Window> w = std::make_unique<app::WindowSDL>(WIDTH, HEIGHT);
-		app::Window* w_p = w.get();
-		std::thread render_thread(render_thread_function, w_p);
-		w.get()->run();
+		app::WindowSDL w(WIDTH, HEIGHT);
+		std::thread render_thread(render_thread_function, &w);
+		w.run();
 		render_thread.join();
 	}
 	catch (const std::exception& e) {

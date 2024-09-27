@@ -30,7 +30,10 @@
     <ClCompile Include="..\..\src\appSphere3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\appWIndowSDL.cpp">
+    <ClCompile Include="..\..\src\appWindowSDL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\appState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\appDefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\appState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

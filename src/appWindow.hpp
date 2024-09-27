@@ -2,6 +2,7 @@
 #define __APP_WINDOW_HPP__
 
 #include "rtDefs.hpp"
+#include <string>
 
 namespace app {
 
@@ -17,6 +18,7 @@ namespace app {
 			virtual ~Window() {}
 			virtual void run() = 0;
 			virtual void pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) = 0;
+			virtual void set_render_time(const std::string& render_time) = 0;
 
 			Type type() const { return m_type; }
 		private:

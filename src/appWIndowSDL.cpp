@@ -1,29 +1,38 @@
+#include "appState.hpp"
 #include "appWindowSDL.hpp"
 #include <stdexcept>
 
 namespace app {
 	WindowSDL::WindowSDL(i32 width, i32 height) : Window(Type::SDL) {
-		init(width, height, {});
-	}
-
-	WindowSDL::WindowSDL(i32 width, i32 height, const std::vector<u8>& byte_array) : Window(Type::SDL) {
-		this->m_byte_array = byte_array;
-		init(width, height, byte_array);
+		m_width = std::max(width, 320);
+		m_height = std::max(height, 200);
+		init();
 	}
 
 	WindowSDL::~WindowSDL() {
-		SDL_FreeSurface(m_window_surface);
-		SDL_DestroyWindow(m_window);
+		if (m_renderer) {
+			SDL_DestroyRenderer(m_renderer);
+		}
+		if (m_window) {
+			SDL_DestroyWindow(m_window);
+		}
+		if (m_time_surface) {
+			SDL_FreeSurface(m_time_surface);
+		}
+		if (m_font) {
+			TTF_CloseFont(m_font);
+		}
+		TTF_Quit();
 		SDL_Quit();
 	}
 
-	void WindowSDL::init(i32 width, i32 height, const std::vector<u8>& byte_array) {
+	void WindowSDL::init() {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 			std::string error = "SDL could not be initialized: ";
 			throw(std::runtime_error((error + SDL_GetError()).c_str()));
 		}
 
-		m_window = SDL_CreateWindow("Raytracer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+		m_window = SDL_CreateWindow("Raytracer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_width, m_height, 0);
 		if (!m_window) {
 			throw(std::runtime_error("Cannot initialize SDL window"));
 		}
@@ -34,97 +43,105 @@ namespace app {
 			throw(std::runtime_error((error + SDL_GetError()).c_str()));
 		}
 
-		m_window_surface = SDL_GetWindowSurface(m_window);
-		if (!m_window_surface) {
-			throw(std::runtime_error("Failed to get window surface"));
+		if (TTF_Init() == -1) {
+			throw(std::runtime_error("SDL_ttf could not be initialized"));
 		}
 
-		m_width = width;
-		m_height = height;
-		m_byte_array = byte_array;
-		m_running = true;
+		m_font = TTF_OpenFont("assets/OpenSans-Regular.ttf", 16);
+		if (!m_font) {
+			throw(std::runtime_error("Failed to load font"));
+		}
+
+		m_surface = SDL_CreateRGBSurface(0, m_width, m_height, 32,
+			0x00FF0000,  // Red mask (bits 16–23)
+			0x0000FF00,  // Green mask (bits 8–15)
+			0x000000FF,  // Blue mask (bits 0–7)
+			0xFF000000); // Alpha mask (bits 24–31)
+		if (!m_surface) {
+			throw(std::runtime_error("Failed to create surface"));
+		}
+		SDL_SetSurfaceBlendMode(m_surface, SDL_BLENDMODE_BLEND);
+
+		Uint32 blue_color = SDL_MapRGB(m_surface->format, 0, 0, 255);
+		SDL_FillRect(m_surface, NULL, blue_color);  
+
+		m_texture = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, m_width, m_height);
+		if (!m_texture) {
+			throw(std::runtime_error("Failed to create texture"));
+		}
 	}
 
 	void WindowSDL::run() {
-		if (m_byte_array.size() > 0) {
-			m_surface = SDL_CreateRGBSurfaceFrom(&m_byte_array[0],
-				m_width,
-				m_height,
-				24,
-				m_width * 3,
-				0x000000ff,
-				0x0000ff00,
-				0x00ff0000,
-				0);
-		}
-		else {
-			m_surface = SDL_CreateRGBSurface(0,
-				m_width,
-				m_height,
-				32,
-				0x000000ff,
-				0x0000ff00,
-				0x00ff0000,
-				0);
-		}
-		if (!m_surface) {
-			throw(std::runtime_error("Failed to create RGB surface"));
-		}
-
-		SDL_FillRect(m_surface, NULL, SDL_MapRGB(m_surface->format, 255, 0, 0));
-
-		// The window is open: enter program loop (see SDL_PollEvent)
-		while (m_running) {
+		while (g_app_running) {
 			handle_events();
 
-			// Lock the mutex before accessing the surface
-			//std::lock_guard<std::mutex> lock(m_surface_mutex);
-			//SDL_UpdateWindowSurface(m_window);
-			//SDL_BlitSurface(m_surface, NULL, m_window_surface, NULL);
-			SDL_Delay(10);
-		}
+			std::lock_guard<std::mutex> lock(m_surface_mutex);
 
+			SDL_UpdateTexture(m_texture, NULL, m_surface->pixels, m_surface->pitch);
+			SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);  
+			SDL_RenderClear(m_renderer);
+			SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
+
+			if (m_time_surface) {
+				SDL_Rect dst_rect = { 10, m_height - 30, m_time_surface->w, m_time_surface->h }; 
+				SDL_BlitSurface(m_time_surface, NULL, m_surface, &dst_rect); 
+			}
+
+			SDL_RenderPresent(m_renderer);
+
+			SDL_Delay(0);
+		}
 	}
 
 	void WindowSDL::pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) {
 		std::lock_guard<std::mutex> lock(m_surface_mutex);
 
-		// Convert the color values to SDL-compatible format
-		Uint32 color = SDL_MapRGB(m_surface->format, r * 255, g * 255, b * 255);
+		Uint8 red = static_cast<Uint8>(r * 255);
+		Uint8 green = static_cast<Uint8>(g * 255);
+		Uint8 blue = static_cast<Uint8>(b * 255);
 
-		// Get a pointer to the pixel at the specified coordinates
-		Uint32* pixel = (Uint32*)m_surface->pixels + y * m_surface->pitch / 4 + x;
+		Uint32 pixel_color = SDL_MapRGB(m_surface->format, red, green, blue);
 
-		// Set the pixel color
-		*pixel = color;
-
-		// Send an update event to the main thread
-		SDL_Event event;
-		event.type = SDL_USEREVENT;
-		event.user.code = 0;
-		event.user.data1 = nullptr;
-		event.user.data2 = nullptr;
-		SDL_PushEvent(&event);
+		Uint32* pixels = (Uint32*)m_surface->pixels;
+		pixels[(y * m_width) + x] = pixel_color;
 	}
 
 	void WindowSDL::handle_events() {
 		SDL_Event sdl_event;
 		while (SDL_PollEvent(&sdl_event) > 0) {
 			switch (sdl_event.type) {
-			case SDL_QUIT: {
-				m_running = false;
-				break;
-			}
-			case SDL_USEREVENT: {
-				// Update the window display
-				SDL_UpdateWindowSurface(m_window);
-				SDL_BlitSurface(m_surface, NULL, m_window_surface, NULL);
-				break;
-			}
+				case SDL_QUIT: {
+					g_app_running = false;
+					break;
+				}
+				case SDL_KEYDOWN: {
+					if (sdl_event.key.keysym.sym == SDLK_ESCAPE) {
+						g_app_running = false;
+					}
+					else if (sdl_event.key.keysym.sym == SDLK_t) {
+						m_show_time = !m_show_time; 
+					}
+					break;
+				}
 			}
 		}
 	}
 
+	void WindowSDL::set_render_time(const std::string& render_time) {
+		if (render_time != m_last_render_time) {
+			if (m_time_surface) {
+				SDL_FreeSurface(m_time_surface);
+				m_time_surface = nullptr; 
+			}
 
+			SDL_Color color = { 255, 255, 255 }; // White color
+			m_time_surface = TTF_RenderText_Blended(m_font, render_time.c_str(), color);
+			if (!m_time_surface) {
+				throw(std::runtime_error("Failed to create text surface"));
+			}
+
+			m_last_render_time = render_time;
+		}
+	}
 }
 

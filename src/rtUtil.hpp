@@ -9,6 +9,7 @@
 namespace rt {
 	bool equal(f32 a, f32 b);
 	std::string format_duration(std::chrono::milliseconds ms);
+	std::string format_minute_seconds(std::chrono::milliseconds ms);
 
 	Color lerp_color(const Color& a, const Color& b, f32 t);
 	float clamp(f32 x, f32 minval, f32 maxval);

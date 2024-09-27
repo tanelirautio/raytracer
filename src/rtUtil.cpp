@@ -27,6 +27,18 @@ namespace rt {
         return ss.str();
     }
 
+    std::string format_minute_seconds(std::chrono::milliseconds ms) {
+        using namespace std::chrono;
+        auto secs = duration_cast<seconds>(ms);   // Get total seconds
+        ms -= duration_cast<milliseconds>(secs);  // Remove milliseconds from ms
+        auto mins = duration_cast<minutes>(secs); // Get total minutes
+        secs -= duration_cast<seconds>(mins);     // Get remaining seconds
+
+        std::stringstream ss;
+        ss << mins.count() << " Minutes : " << secs.count() << " Seconds";
+        return ss.str();
+    }
+
     Color lerp_color(const Color& a, const Color& b, f32 t) {
         t = clamp(t, 0.0f, 1.0f);
         return a * (1 - t) + b * t;

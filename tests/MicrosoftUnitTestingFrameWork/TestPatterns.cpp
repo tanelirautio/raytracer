@@ -1,6 +1,7 @@
 #include "CppUnitTest.h"
 
 #include "../../src/rtMain.hpp"
+#include <stdexcept>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -128,6 +129,32 @@ namespace TestProject
 			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
 			Assert::IsTrue(p.pattern_at({ 0,0,0.99f }) == rt::WHITE);
 			Assert::IsTrue(p.pattern_at({ 0,0,1.01f }) == rt::BLACK);
+		}
+
+		TEST_METHOD(A_perturbed_pattern_with_zero_scale_matches_the_wrapped_pattern)
+		{
+			auto ring_pattern = std::make_shared<rt::RingPattern>(rt::WHITE, rt::BLACK);
+			rt::PerturbedPattern p(ring_pattern, 0.0f);
+
+			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 1,0,0 }) == rt::BLACK);
+			Assert::IsTrue(p.pattern_at({ 0,0,1 }) == rt::BLACK);
+		}
+
+		TEST_METHOD(A_perturbed_pattern_applies_the_wrapped_pattern_transformation)
+		{
+			auto wrapped_pattern = std::make_shared<rt::TestPattern>();
+			wrapped_pattern->transform() = rt::scaling(2, 2, 2);
+			rt::PerturbedPattern p(wrapped_pattern, 0.0f);
+
+			Assert::IsTrue(p.pattern_at({ 2,3,4 }) == rt::Color(1, 1.5f, 2));
+		}
+
+		TEST_METHOD(A_perturbed_pattern_requires_a_wrapped_pattern)
+		{
+			Assert::ExpectException<std::invalid_argument>([] {
+				rt::PerturbedPattern p(std::shared_ptr<rt::Pattern>());
+			});
 		}
 	};
 }

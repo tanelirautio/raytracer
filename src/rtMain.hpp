@@ -26,5 +26,6 @@
 #include "rtRingPattern.hpp"
 #include "rtCheckerPattern.hpp"
 #include "rtPerlinPattern.hpp"
+#include "rtPerturbedPattern.hpp"
 
 #endif

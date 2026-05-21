@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Libs\FastNoiseLite">
+      <UniqueIdentifier>{adc01442-db23-44a5-99ce-f5d92c2621e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\rtDefs.hpp">
@@ -87,6 +90,12 @@
     <ClInclude Include="..\..\src\rtPerlinPattern.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\rtPerturbedPattern.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\fastnoiselite\FastNoiseLite.h">
+      <Filter>Libs\FastNoiseLite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\rtTuple.cpp">
@@ -150,6 +159,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\rtPerlinPattern.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rtPerturbedPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

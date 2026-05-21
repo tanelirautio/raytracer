@@ -17,6 +17,7 @@ namespace rt {
 				RING,
 				CHECKER,
 				PERLIN,
+				PERTURBED,
 				UNKNOWN
 			};
 

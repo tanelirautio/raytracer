@@ -53,7 +53,7 @@ namespace rt {
 				image.write_pixel(x, y, color);
 
 				if (m_pixel_callback) {
-					m_pixel_callback(x, y, color.r, color.g, color.b);
+					m_pixel_callback(x, y, color.r(), color.g(), color.b());
 					//std::this_thread::sleep_for(std::chrono::milliseconds(1));
 				}
 			}

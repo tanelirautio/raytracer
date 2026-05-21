@@ -56,16 +56,13 @@ namespace rt {
 		Color() : Tuple(0, 0, 0, 0) {}
 		Color(f32 x, f32 y, f32 z) : Tuple(x, y, z, 0) {}
 		Color(const Tuple& t) : Tuple(t) {}
-		Color& operator=(const Color& c) { 
-			x = c.x;
-			y = c.y;
-			z = c.z;
-			return *this; 
-		}
-		
-		f32& r = x;
-		f32& g = y;
-		f32& b = z;		
+
+		f32& r() { return x; }
+		const f32& r() const { return x; }
+		f32& g() { return y; }
+		const f32& g() const { return y; }
+		f32& b() { return z; }
+		const f32& b() const { return z; }
 	};
 
 	Color operator*(const Color& lhs, const Color& rhs);

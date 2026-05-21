@@ -192,9 +192,23 @@ namespace TestProject
 		TEST_METHOD(Colors_are_red_green_blue_tuples)
 		{
 			rt::Color c(-0.5f, 0.4f, 1.7f);
-			Assert::AreEqual(c.r, -0.5f);
-			Assert::AreEqual(c.g, 0.4f);
-			Assert::AreEqual(c.b, 1.7f);
+			Assert::AreEqual(c.r(), -0.5f);
+			Assert::AreEqual(c.g(), 0.4f);
+			Assert::AreEqual(c.b(), 1.7f);
+		}
+
+		TEST_METHOD(Copied_colors_have_independent_channels)
+		{
+			rt::Color c1(1, 2, 3);
+			rt::Color c2 = c1;
+
+			c1.r() = 4;
+			c2.g() = 5;
+
+			Assert::AreEqual(c1.r(), 4.0f);
+			Assert::AreEqual(c1.g(), 2.0f);
+			Assert::AreEqual(c2.r(), 1.0f);
+			Assert::AreEqual(c2.g(), 5.0f);
 		}
 
 		TEST_METHOD(Adding_colors)

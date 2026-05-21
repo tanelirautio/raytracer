@@ -35,7 +35,7 @@ namespace rt {
 	}
 
 	Color operator*(const Color& lhs, const Color& rhs) {
-		return Color(lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b);
+		return Color(lhs.r() * rhs.r(), lhs.g() * rhs.g(), lhs.b() * rhs.b());
 	}
 
 	Color operator*(const Color& color, f32 scalar) {

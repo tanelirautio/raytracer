@@ -89,18 +89,18 @@ namespace rt {
 		for (i32 y = 0; y < m_height; y++) {
 			for (i32 x = 0; x < m_width; x++) {
 				auto c = pixel_at(x, y);
-				auto r = static_cast<u8>(std::round(c.r() * 255.f));
-				auto g = static_cast<u8>(std::round(c.g() * 255.f));
-				auto b = static_cast<u8>(std::round(c.b() * 255.f));
+				auto r = static_cast<i32>(std::round(c.r() * 255.f));
+				auto g = static_cast<i32>(std::round(c.g() * 255.f));
+				auto b = static_cast<i32>(std::round(c.b() * 255.f));
 
-				r = std::clamp(r, (u8)0, (u8)255);
-				g = std::clamp(g, (u8)0, (u8)255);
-				b = std::clamp(b, (u8)0, (u8)255);
+				r = std::clamp(r, 0, 255);
+				g = std::clamp(g, 0, 255);
+				b = std::clamp(b, 0, 255);
 
 				//SDL_PIXELFORMAT_RGBA888
-				byte_array.emplace_back(r);
-				byte_array.emplace_back(g);
-				byte_array.emplace_back(b);
+				byte_array.emplace_back(static_cast<u8>(r));
+				byte_array.emplace_back(static_cast<u8>(g));
+				byte_array.emplace_back(static_cast<u8>(b));
 
 			}
 		}

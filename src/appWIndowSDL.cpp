@@ -1,5 +1,7 @@
 #include "appState.hpp"
 #include "appWindowSDL.hpp"
+#include <algorithm>
+#include <cmath>
 #include <stdexcept>
 
 namespace app {
@@ -96,9 +98,9 @@ namespace app {
 	void WindowSDL::pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) {
 		std::lock_guard<std::mutex> lock(m_surface_mutex);
 
-		Uint8 red = static_cast<Uint8>(r * 255);
-		Uint8 green = static_cast<Uint8>(g * 255);
-		Uint8 blue = static_cast<Uint8>(b * 255);
+		Uint8 red = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(r * 255.f)), 0, 255));
+		Uint8 green = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(g * 255.f)), 0, 255));
+		Uint8 blue = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(b * 255.f)), 0, 255));
 
 		Uint32 pixel_color = SDL_MapRGB(m_surface->format, red, green, blue);
 

@@ -114,6 +114,19 @@ namespace TestProject
 			Assert::AreEqual(data.back(), '\n');
 		}
 
+		TEST_METHOD(Canvas_ByteArrayClampsColorChannels)
+		{
+			rt::Canvas c(1, 1);
+			c.write_pixel(0, 0, rt::Color(1.5f, -0.5f, 0.5f));
+
+			auto data = c.to_bytearray();
+
+			Assert::IsTrue(data.size() == 3);
+			Assert::AreEqual(255, static_cast<int>(data[0]));
+			Assert::AreEqual(0, static_cast<int>(data[1]));
+			Assert::AreEqual(128, static_cast<int>(data[2]));
+		}
+
 
 	};
 }

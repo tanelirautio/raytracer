@@ -2,9 +2,12 @@
 #include "rtCamera.hpp"
 #include "rtRay.hpp"
 #include "rtDefs.hpp"
+#include <algorithm>
 #include <cmath>
 #include <chrono>
 #include <thread>
+#include <vector>
+#include <functional>
 
 namespace rt {
 
@@ -36,6 +39,7 @@ namespace rt {
 		return Ray(origin, direction);	
 	}
 
+	/*
 	Canvas Camera::render(const World& w) const {
 		auto image = Canvas(m_hsize, m_vsize);
 
@@ -60,7 +64,57 @@ namespace rt {
 		}
 
 		return image;
+	}*/
+
+	Canvas Camera::render(const World& w) const {
+		auto image = Canvas(m_hsize, m_vsize);
+
+		// hardware_concurrency() may return 0 when the implementation cannot determine a value.
+		u32 num_threads = std::max(1u, std::thread::hardware_concurrency());
+
+		// To keep track of threads
+		std::vector<std::thread> threads;
+
+		// Split rendering work across threads
+		auto render_part = [&](i32 start_row, i32 end_row) {
+			for (i32 y = start_row; y < end_row && g_app_running; y++) {
+				for (i32 x = 0; x < m_hsize && g_app_running; x++) {
+					Ray ray = ray_for_pixel(x, y);
+					Color color = w.color_at(ray);
+					image.write_pixel(x, y, color);
+
+					// Thread-safe callback
+					if (m_pixel_callback) {
+						m_pixel_callback(x, y, color.r(), color.g(), color.b());
+						//std::this_thread::sleep_for(std::chrono::milliseconds(1));
+					}
+				}
+			}
+		};
+
+		// Divide the image into parts for each thread
+		i32 rows_per_thread = m_vsize / num_threads;
+		i32 remaining_rows = m_vsize % num_threads;
+
+		for (size_t i = 0; i < num_threads; ++i) {
+			// Calculate the start and end row for this thread
+			i32 start_row = i * rows_per_thread;
+			i32 end_row = (i == num_threads - 1) ? (start_row + rows_per_thread + remaining_rows) : (start_row + rows_per_thread);
+
+			// Launch a thread to render its part of the image
+			threads.emplace_back(render_part, start_row, end_row);
+		}
+
+		// Wait for all threads to complete
+		for (auto& t : threads) {
+			if (t.joinable()) {
+				t.join();
+			}
+		}
+
+		return image;
 	}
+
 
 	void Camera::calculate_pixel_size() {
 

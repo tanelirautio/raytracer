@@ -4,7 +4,7 @@
 #include <optional>
 
 namespace rt {
-	i32 Shape::ID = 0;
+	i32 Shape::NEXT_ID = 0;
 
 	std::vector<Intersection> Shape::intersect(const Ray& ray) const {		
 		auto inv = inverse(m_transform);

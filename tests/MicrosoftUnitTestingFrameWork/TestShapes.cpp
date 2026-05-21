@@ -15,6 +15,14 @@ namespace TestProject
 			Assert::IsTrue(s.transform() == rt::get_identity_matrix4());
 		}
 
+		TEST_METHOD(Shapes_have_unique_ids)
+		{
+			rt::TestShape s1;
+			rt::TestShape s2;
+
+			Assert::IsFalse(s1 == s2);
+		}
+
 		TEST_METHOD(Assigning_a_transformation)
 		{
 			rt::TestShape s;

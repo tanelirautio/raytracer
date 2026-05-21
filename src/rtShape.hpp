@@ -21,14 +21,28 @@ namespace rt {
 				CUBE,
 				UNKNOWN
 			};
-			Shape(Type type) { 
-				ID++;
+			Shape(Type type) {
+				m_id = ++NEXT_ID;
 				m_type = type;
 				m_transform = get_identity_matrix4();
 			}
+			Shape(const Shape& other) {
+				m_id = ++NEXT_ID;
+				m_material = other.m_material;
+				m_transform = other.m_transform;
+				m_type = other.m_type;
+			}
+			Shape& operator=(const Shape& other) {
+				if (this != &other) {
+					m_material = other.m_material;
+					m_transform = other.m_transform;
+					m_type = other.m_type;
+				}
+				return *this;
+			}
 			virtual ~Shape() = default;
 
-			i32 id() const { return ID; }
+			i32 id() const { return m_id; }
 
 			const Matrix& transform() const { return m_transform; }
 			Matrix& transform() { return m_transform; }
@@ -49,8 +63,9 @@ namespace rt {
 			Matrix m_transform;
 		private:
 			Type m_type = Type::UNKNOWN;
+			i32 m_id = 0;
 
-			static i32 ID;
+			static i32 NEXT_ID;
 	};
 
 	bool operator==(const Shape& lhs, const Shape& rhs);

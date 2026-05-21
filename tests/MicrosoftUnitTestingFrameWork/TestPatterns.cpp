@@ -153,7 +153,8 @@ namespace TestProject
 		TEST_METHOD(A_perturbed_pattern_requires_a_wrapped_pattern)
 		{
 			Assert::ExpectException<std::invalid_argument>([] {
-				rt::PerturbedPattern p(std::shared_ptr<rt::Pattern>());
+				std::shared_ptr<rt::Pattern> pattern;
+				rt::PerturbedPattern p(pattern);
 			});
 		}
 	};

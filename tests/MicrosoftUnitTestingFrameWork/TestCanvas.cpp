@@ -30,6 +30,21 @@ namespace TestProject
 			Assert::IsTrue(c.pixel_at(2, 3) == rt::Color(1, 0, 0));
 		}
 
+		TEST_METHOD(Canvas_IgnoresOutOfBoundsWrites)
+		{
+			rt::Canvas c(2, 2);
+			rt::Color red(1, 0, 0);
+
+			c.write_pixel(2, 0, red);
+			c.write_pixel(-1, 1, red);
+			c.write_pixel(0, 2, red);
+
+			Assert::IsTrue(c.pixel_at(0, 0) == rt::BLACK);
+			Assert::IsTrue(c.pixel_at(1, 0) == rt::BLACK);
+			Assert::IsTrue(c.pixel_at(0, 1) == rt::BLACK);
+			Assert::IsTrue(c.pixel_at(1, 1) == rt::BLACK);
+		}
+
 		std::vector<std::string> split_string_by_newline(const std::string& str)
 		{
 			auto result = std::vector<std::string>{};

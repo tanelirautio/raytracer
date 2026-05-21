@@ -17,18 +17,20 @@ namespace rt {
 	}
 
 	void Canvas::write_pixel(i32 x, i32 y, const Color& c)  {
-		i32 v = x + y * m_width;
-		if (v < 0 || v > m_data.size()) {
+		if (x < 0 || x >= m_width || y < 0 || y >= m_height) {
 			return;
 		}
+
+		i32 v = x + y * m_width;
 		m_data[v] = c;
 	}
 
 	Color Canvas::pixel_at(i32 x, i32 y) const {
-		i32 v = x + y * m_width;
-		if (v < 0 || v > m_data.size()) {
+		if (x < 0 || x >= m_width || y < 0 || y >= m_height) {
 			return rt::BLACK;
 		}
+
+		i32 v = x + y * m_width;
 		return m_data[v];
 	}
 

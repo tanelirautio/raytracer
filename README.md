@@ -13,8 +13,8 @@ This is still very much work in progress. Currently the ray tracer contains ever
 
 ## Example images 
 
-![Spheres with shadows](https://github.com/tanelirautio/raytracer/blob/main/bin/spheres_with_shadows.png "Spheres with shadows")
+![Spheres with shadows](docs/images/spheres_with_shadows.png "Spheres with shadows")
 
-![Spheres with striped pattern](https://github.com/tanelirautio/raytracer/blob/main/bin/spheres_with_striped_pattern.png "Spheres with striped pattern")
+![Spheres with striped pattern](docs/images/spheres_with_striped_pattern.png "Spheres with striped pattern")
 
-![Spheres with different patterns](https://github.com/tanelirautio/raytracer/blob/main/bin/spheres_with_different_patterns.png "Spheres with different patterns")
+![Spheres with different patterns](docs/images/spheres_with_different_patterns.png "Spheres with different patterns")

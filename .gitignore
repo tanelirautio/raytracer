@@ -31,7 +31,19 @@
 *.out
 *.app
 
+# Build output directories
+build/
+[Bb]in/
+[Dd]ebug/
+[Rr]elease/
+x64/
+Win32/
+TestResults/
+
 # Other VS stuff
+.vs/
+**/.vs/
+*.vcxproj.user
 *.recipe
 *.ilk
 *.log
@@ -51,3 +63,4 @@
 *.FileListAbsolute.txt
 *.iobj
 *.ipdb
+*.trx

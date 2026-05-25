@@ -5,6 +5,11 @@
 #include <stdexcept>
 
 namespace app {
+	WindowSDL::SdlContext::~SdlContext() {
+		TTF_Quit();
+		SDL_Quit();
+	}
+
 	WindowSDL::WindowSDL(i32 width, i32 height) : Window(Type::SDL) {
 		m_width = std::max(width, 320);
 		m_height = std::max(height, 200);
@@ -12,23 +17,7 @@ namespace app {
 	}
 
 	WindowSDL::~WindowSDL() {
-		if (m_time_texture) {
-			SDL_DestroyTexture(m_time_texture);
-		}
-		if (m_texture) {
-			SDL_DestroyTexture(m_texture);
-		}
-		if (m_renderer) {
-			SDL_DestroyRenderer(m_renderer);
-		}
-		if (m_window) {
-			SDL_DestroyWindow(m_window);
-		}
-		if (m_font) {
-			TTF_CloseFont(m_font);
-		}
-		TTF_Quit();
-		SDL_Quit();
+		// SDL resources are owned by unique_ptr members and destroyed before m_sdl_context.
 	}
 
 	void WindowSDL::init() {
@@ -37,12 +26,12 @@ namespace app {
 			throw(std::runtime_error((error + SDL_GetError()).c_str()));
 		}
 
-		m_window = SDL_CreateWindow("Raytracer", m_width, m_height, 0);
+		m_window.reset(SDL_CreateWindow("Raytracer", m_width, m_height, 0));
 		if (!m_window) {
 			throw(std::runtime_error("Cannot initialize SDL window"));
 		}
 
-		m_renderer = SDL_CreateRenderer(m_window, nullptr);
+		m_renderer.reset(SDL_CreateRenderer(m_window.get(), nullptr));
 		if (!m_renderer) {
 			std::string error = "Renderer could not be created: ";
 			throw(std::runtime_error((error + SDL_GetError()).c_str()));
@@ -52,7 +41,7 @@ namespace app {
 			throw(std::runtime_error("SDL_ttf could not be initialized"));
 		}
 
-		m_font = TTF_OpenFont("assets/OpenSans-Regular.ttf", 16.0f);
+		m_font.reset(TTF_OpenFont("assets/OpenSans-Regular.ttf", 16.0f));
 		if (!m_font) {
 			throw(std::runtime_error("Failed to load font"));
 		}
@@ -62,7 +51,7 @@ namespace app {
 			m_pixels[i + 2] = 255;
 		}
 
-		m_texture = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, m_width, m_height);
+		m_texture.reset(SDL_CreateTexture(m_renderer.get(), SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, m_width, m_height));
 		if (!m_texture) {
 			throw(std::runtime_error("Failed to create texture"));
 		}
@@ -76,17 +65,17 @@ namespace app {
 
 			update_render_time_texture();
 
-			SDL_UpdateTexture(m_texture, nullptr, m_pixels.data(), m_width * 3);
-			SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
-			SDL_RenderClear(m_renderer);
-			SDL_RenderTexture(m_renderer, m_texture, nullptr, nullptr);
+			SDL_UpdateTexture(m_texture.get(), nullptr, m_pixels.data(), m_width * 3);
+			SDL_SetRenderDrawColor(m_renderer.get(), 0, 0, 0, 255);
+			SDL_RenderClear(m_renderer.get());
+			SDL_RenderTexture(m_renderer.get(), m_texture.get(), nullptr, nullptr);
 
 			if (m_show_time && m_time_texture) {
 				SDL_FRect dst_rect = { 10.0f, static_cast<float>(m_height - 30), static_cast<float>(m_time_width), static_cast<float>(m_time_height) };
-				SDL_RenderTexture(m_renderer, m_time_texture, nullptr, &dst_rect);
+				SDL_RenderTexture(m_renderer.get(), m_time_texture.get(), nullptr, &dst_rect);
 			}
 
-			SDL_RenderPresent(m_renderer);
+			SDL_RenderPresent(m_renderer.get());
 
 			SDL_Delay(0);
 		}
@@ -141,17 +130,16 @@ namespace app {
 		}
 
 		if (m_time_texture) {
-			SDL_DestroyTexture(m_time_texture);
-			m_time_texture = nullptr;
+			m_time_texture.reset();
 		}
 
 		SDL_Color color = { 255, 255, 255, 255 };
-		SDL_Surface* time_surface = TTF_RenderText_Blended(m_font, m_render_time_str.c_str(), m_render_time_str.size(), color);
+		SDL_Surface* time_surface = TTF_RenderText_Blended(m_font.get(), m_render_time_str.c_str(), m_render_time_str.size(), color);
 		if (!time_surface) {
 			throw(std::runtime_error("Failed to create text surface"));
 		}
 
-		m_time_texture = SDL_CreateTextureFromSurface(m_renderer, time_surface);
+		m_time_texture.reset(SDL_CreateTextureFromSurface(m_renderer.get(), time_surface));
 		if (!m_time_texture) {
 			SDL_DestroySurface(time_surface);
 			throw(std::runtime_error("Failed to create text texture"));

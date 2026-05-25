@@ -8,6 +8,7 @@
 
 #include <functional>
 #include <memory>
+#include <utility>
 
 namespace rt {
 	class Ray;
@@ -20,7 +21,8 @@ namespace rt {
 			}
 
 			Ray ray_for_pixel(i32 px, i32 py) const;
-			Canvas render(const World& w) const;
+			using cancel_callback = std::function<bool()>;
+			Canvas render(const World& w, cancel_callback should_cancel = {}) const;
 
 			i32 hsize() const { return m_hsize; }
 			i32 vsize() const { return m_vsize; }

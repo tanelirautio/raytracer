@@ -23,7 +23,9 @@ void render_thread_function(app::Window* w) {
 	
 	app::Sphere3 s(WIDTH, HEIGHT);
 	s.set_window_callback(*w);
-	rt::Canvas canvas = s.create();
+	rt::Canvas canvas = s.create([] {
+		return !g_app_running.load();
+	});
 	
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 

@@ -1,4 +1,3 @@
-#include "appState.hpp"
 #include "rtCamera.hpp"
 #include "rtRay.hpp"
 #include "rtDefs.hpp"
@@ -39,34 +38,7 @@ namespace rt {
 		return Ray(origin, direction);	
 	}
 
-	/*
-	Canvas Camera::render(const World& w) const {
-		auto image = Canvas(m_hsize, m_vsize);
-
-		bool keep_running = true;
-
-		for (i32 y = 0; y < m_vsize && keep_running; y++) {
-			for (i32 x = 0; x < m_hsize; x++) {
-				if (!g_app_running) {
-					keep_running = false;
-					break;
-				}
-
-				Ray ray = ray_for_pixel(x, y);
-				Color color = w.color_at(ray);
-				image.write_pixel(x, y, color);
-
-				if (m_pixel_callback) {
-					m_pixel_callback(x, y, color.r(), color.g(), color.b());
-					//std::this_thread::sleep_for(std::chrono::milliseconds(1));
-				}
-			}
-		}
-
-		return image;
-	}*/
-
-	Canvas Camera::render(const World& w) const {
+	Canvas Camera::render(const World& w, cancel_callback should_cancel) const {
 		auto image = Canvas(m_hsize, m_vsize);
 
 		// hardware_concurrency() may return 0 when the implementation cannot determine a value.
@@ -75,10 +47,14 @@ namespace rt {
 		// To keep track of threads
 		std::vector<std::thread> threads;
 
+		auto is_cancelled = [&should_cancel]() {
+			return should_cancel && should_cancel();
+		};
+
 		// Split rendering work across threads
 		auto render_part = [&](i32 start_row, i32 end_row) {
-			for (i32 y = start_row; y < end_row && g_app_running; y++) {
-				for (i32 x = 0; x < m_hsize && g_app_running; x++) {
+			for (i32 y = start_row; y < end_row && !is_cancelled(); y++) {
+				for (i32 x = 0; x < m_hsize && !is_cancelled(); x++) {
 					Ray ray = ray_for_pixel(x, y);
 					Color color = w.color_at(ray);
 					image.write_pixel(x, y, color);

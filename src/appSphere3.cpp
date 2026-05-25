@@ -3,6 +3,7 @@
 #include "rtMain.hpp"
 
 #include <iostream>
+#include <utility>
 
 namespace app {
 	Sphere3::Sphere3(i32 width, i32 height)
@@ -12,7 +13,7 @@ namespace app {
 		m_camera = rt::make_camera(width, height, (f32)(M_PI / 3.f));
 	}
 
-	rt::Canvas Sphere3::create() {
+	rt::Canvas Sphere3::create(rt::Camera::cancel_callback should_cancel) {
 
 		rt::World w;
 
@@ -56,7 +57,7 @@ namespace app {
 
 		m_camera.get()->transform() = rt::view_transform({ 0, 1.5f, -5 }, { 0,1,0 }, { 0,1,0 });
 
-		auto canvas = m_camera.get()->render(w);
+		auto canvas = m_camera.get()->render(w, std::move(should_cancel));
 		return canvas;
 	}
 

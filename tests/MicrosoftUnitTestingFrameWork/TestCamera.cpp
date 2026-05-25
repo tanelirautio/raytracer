@@ -1,11 +1,8 @@
 #include "CppUnitTest.h"
 
 #include "../../src/rtMain.hpp"
-#include <atomic>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
-std::atomic<bool> g_app_running = true;
 
 namespace TestProject
 {
@@ -71,6 +68,17 @@ namespace TestProject
 			Assert::IsTrue(image.pixel_at(5, 5) == rt::Color(0.38066f, 0.47583f, 0.2855f));
 		}
 
+		TEST_METHOD(Rendering_can_be_cancelled)
+		{
+			rt::World w = rt::get_default_world();
+			rt::Camera c(11, 11, HALF_PI);
+
+			auto image = c.render(w, [] {
+				return true;
+			});
+
+			Assert::IsTrue(image.pixel_at(5, 5) == rt::BLACK);
+		}
 
 	};
 }

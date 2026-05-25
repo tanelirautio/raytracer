@@ -11,7 +11,7 @@ namespace app {
 	public:
 		Sphere3(i32 width, i32 height); 
 		~Sphere3() = default;
-		rt::Canvas create();
+		rt::Canvas create(rt::Camera::cancel_callback should_cancel = {});
 		void set_window_callback(app::Window& w);
 	private:
 		i32 m_width;

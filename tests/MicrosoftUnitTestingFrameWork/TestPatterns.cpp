@@ -101,6 +101,7 @@ namespace TestProject
 		{
 			rt::RingPattern p(rt::WHITE, rt::BLACK);
 			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 0.9f,0,0 }) == rt::WHITE);
 			Assert::IsTrue(p.pattern_at({ 1,0,0 }) == rt::BLACK);
 			Assert::IsTrue(p.pattern_at({ 0,0,1 }) == rt::BLACK);
 			// 0.708f = just slightly more than sqrt(2)/2
@@ -137,6 +138,7 @@ namespace TestProject
 			rt::PerturbedPattern p(ring_pattern, 0.0f);
 
 			Assert::IsTrue(p.pattern_at({ 0,0,0 }) == rt::WHITE);
+			Assert::IsTrue(p.pattern_at({ 0.9f,0,0 }) == rt::WHITE);
 			Assert::IsTrue(p.pattern_at({ 1,0,0 }) == rt::BLACK);
 			Assert::IsTrue(p.pattern_at({ 0,0,1 }) == rt::BLACK);
 		}

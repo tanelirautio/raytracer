@@ -9,11 +9,10 @@ namespace rt {
 	}
 
 	Color RingPattern::pattern_at(const Point& p) const {
-		if (static_cast<i32>(std::floor(std::sqrt(std::pow(p.x, 2) + std::pow(p.z, 2)) + 0.5)) % 2 == 0) {
+		auto distance = std::sqrt(p.x * p.x + p.z * p.z);
+		if (static_cast<i32>(std::floor(distance)) % 2 == 0) {
 			return m_a;
 		}
-		else {
-			return m_b;
-		}
+		return m_b;
 	}
 }

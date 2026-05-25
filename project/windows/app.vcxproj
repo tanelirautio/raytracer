@@ -156,7 +156,6 @@
     <ClCompile Include="..\..\src\appSphere.cpp" />
     <ClCompile Include="..\..\src\appSphere2.cpp" />
     <ClCompile Include="..\..\src\appSphere3.cpp" />
-    <ClCompile Include="..\..\src\appState.cpp" />
     <ClCompile Include="..\..\src\appWindow.cpp" />
     <ClCompile Include="..\..\src\appWindowSDL.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />

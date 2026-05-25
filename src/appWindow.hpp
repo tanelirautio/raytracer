@@ -1,6 +1,7 @@
 #ifndef __APP_WINDOW_HPP__
 #define __APP_WINDOW_HPP__
 
+#include "appState.hpp"
 #include "rtDefs.hpp"
 #include <memory>
 #include <string>
@@ -15,7 +16,7 @@ namespace app {
 			};
 			Window(Type type) : m_type(type) {}
 			virtual ~Window() {}
-			virtual void run() = 0;
+			virtual void run(AppState& state) = 0;
 			virtual void pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) = 0;
 			virtual void set_render_time(const std::string& render_time) = 0;
 
@@ -29,4 +30,3 @@ namespace app {
 }
 
 #endif
-

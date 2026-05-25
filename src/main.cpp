@@ -18,13 +18,13 @@
 const i32 WIDTH = 160;
 const i32 HEIGHT = 100;
 
-void render_thread_function(app::Window* w) {
+void render_thread_function(app::Window* w, app::AppState& state) {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	
 	app::Sphere3 s(WIDTH, HEIGHT);
 	s.set_window_callback(*w);
-	rt::Canvas canvas = s.create([] {
-		return !g_app_running.load();
+	rt::Canvas canvas = s.create([&state] {
+		return !state.running.load();
 	});
 	
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -52,12 +52,14 @@ void render_thread_function(app::Window* w) {
 
 
 int main(int argc, char** argv) {
-	g_app_running = true;
+	app::AppState state;
 
 	auto window = app::create_window(WIDTH, HEIGHT);
     
-    std::thread render_thread(render_thread_function, window.get());
-    window->run(); 
+    std::thread render_thread([&] {
+        render_thread_function(window.get(), state);
+    });
+    window->run(state);
     render_thread.join();
 
     return 0;

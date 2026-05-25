@@ -18,13 +18,13 @@ namespace app {
 		WindowSDL(i32 width, i32 height);
 		~WindowSDL();
 
-		void run();
+		void run(AppState& state);
 
 		void pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b);
 		void set_render_time(const std::string& render_time);
 	private:
 		void init();
-		void handle_events();
+		void handle_events(AppState& state);
 		void update_render_time_texture();
 
 		struct SdlContext {

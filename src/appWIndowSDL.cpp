@@ -1,4 +1,3 @@
-#include "appState.hpp"
 #include "appWindowSDL.hpp"
 #include <algorithm>
 #include <cmath>
@@ -56,9 +55,9 @@ namespace app {
 		}
 	}
 
-	void WindowSDL::run() {
-		while (g_app_running) {
-			handle_events();
+	void WindowSDL::run(AppState& state) {
+		while (state.running.load()) {
+			handle_events(state);
 
 			std::lock_guard<std::mutex> lock(m_surface_mutex);
 
@@ -97,17 +96,17 @@ namespace app {
 		m_pixels[offset + 2] = blue;
 	}
 
-	void WindowSDL::handle_events() {
+	void WindowSDL::handle_events(AppState& state) {
 		SDL_Event sdl_event;
 		while (SDL_PollEvent(&sdl_event)) {
 			switch (sdl_event.type) {
 				case SDL_EVENT_QUIT: {
-					g_app_running = false;
+					state.running.store(false);
 					break;
 				}
 				case SDL_EVENT_KEY_DOWN: {
 					if (sdl_event.key.scancode == SDL_SCANCODE_ESCAPE) {
-						g_app_running = false;
+						state.running.store(false);
 					}
 					else if (sdl_event.key.scancode == SDL_SCANCODE_T) {
 						m_show_time = !m_show_time;

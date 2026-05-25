@@ -67,6 +67,7 @@ namespace rt {
 
 	Color operator*(const Color& lhs, const Color& rhs);
 	Color operator*(const Color& color, f32 scalar);
+	bool operator!=(const Color& lhs, const Color& rhs);
 
 	const Color BLACK = Color(0, 0, 0);
 	const Color WHITE = Color(1, 1, 1);

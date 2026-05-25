@@ -106,5 +106,12 @@ namespace TestProject
 			Assert::IsTrue(c2 == rt::Color(0, 0, 0));
 		}
 
+		TEST_METHOD(Reflectivity_for_the_default_material)
+		{
+			rt::Material m;
+			Assert::IsTrue(m.reflective == 0.0f);
+		}
+
+
 	};
 }

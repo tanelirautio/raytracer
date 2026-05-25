@@ -42,6 +42,10 @@ namespace rt {
 		return Color(color.x * scalar, color.y * scalar, color.z * scalar);
 	}
 
+	bool operator!=(const Color& lhs, const Color& rhs) {
+		return lhs.r() != rhs.r() || lhs.g() != rhs.g() || lhs.b() != rhs.b();
+	}
+
 	f32 Tuple::magnitude() const {
 		return std::sqrt(x * x + y * y + z * z + w * w);
 	}

@@ -12,13 +12,13 @@ This file applies to the entire repository.
 
 - `src/`: core ray tracer code (`rt*`) and app/window code (`app*`).
 - `tests/MicrosoftUnitTestingFrameWork/`: native Visual Studio unit tests.
-- `project/windows/`: Visual Studio 2022 solution and project files.
+- `project/windows/`: Visual Studio 2026 solution and project files.
 - `bin/`: built binaries and sample rendered images.
 - `lib/`: vendored third-party dependencies. Do not modify unless the task specifically requires it.
 
 ## Build and test
 
-- Primary target is Windows with Visual Studio 2022 and MSVC (`PlatformToolset=v143`).
+- Primary target is Windows with Visual Studio 2026 and MSVC (`PlatformToolset=v145`).
 - Build the solution from the repo root with:
 
 ```powershell

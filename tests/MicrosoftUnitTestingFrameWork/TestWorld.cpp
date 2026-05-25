@@ -61,11 +61,11 @@ namespace TestProject
 		{
 			rt::World w = rt::get_default_world();
 			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
-			auto shape = w.get_objects().at(0);
+			auto shape = w.get_objects().at(0).get();
 
 			Assert::IsTrue(*w.get_lights().at(0).get() == rt::PointLight({ -10,10,-10 }, { 1,1,1 }));
 
-			rt::Intersection i(4, shape.get());
+			rt::Intersection i(4, shape);
 			rt::Computations comps = rt::prepare_computations(i, r);
 
 			Assert::IsTrue(comps.t == i.t);
@@ -89,8 +89,8 @@ namespace TestProject
 			auto l = std::make_shared<rt::PointLight>(rt::Point(0, 0.25f, 0), rt::Vector(1, 1, 1));
 			w.set_light(l, true); // if true, remove already existing lights
 			rt::Ray r({ 0,0,0 }, { 0,0,1 });
-			auto shape = w.get_objects().at(1);
-			rt::Intersection i(0.5f, shape.get());
+			auto shape = w.get_objects().at(1).get();
+			rt::Intersection i(0.5f, shape);
 			rt::Computations comps = rt::prepare_computations(i, r);
 			rt::Color c = w.shade_hit(comps);
 			Assert::IsTrue(c == rt::Color(0.90498f, 0.90498f, 0.90498f));
@@ -115,15 +115,15 @@ namespace TestProject
 		TEST_METHOD(The_color_with_an_intersection_behind_the_ray)
 		{
 			rt::World w = rt::get_default_world();
-			auto outer = w.get_objects().at(0);
-			outer.get()->material().ambient = 1;
+			auto outer = w.get_objects().at(0).get();
+			outer->material().ambient = 1;
 
-			auto inner = w.get_objects().at(1);
-			auto m2 = inner.get()->material().ambient = 1;
+			auto inner = w.get_objects().at(1).get();
+			auto m2 = inner->material().ambient = 1;
 
 			rt::Ray r({ 0,0,0.75f }, { 0,0,-1 });
 			rt::Color c = w.color_at(r);
-			Assert::IsTrue(c == inner.get()->material().color);
+			Assert::IsTrue(c == inner->material().color);
 		}
 
 		TEST_METHOD(There_is_no_shadow_when_nothing_is_collinear_with_point_and_light)
@@ -159,15 +159,13 @@ namespace TestProject
 			rt::World w;
 			w.set_light(std::make_shared<rt::PointLight>(rt::Point(0, 0, -10), rt::Vector(1, 1, 1)));
 
-			auto s1 = std::make_shared<rt::Sphere>();
-			w.set_object(s1);
+			w.emplace_object<rt::Sphere>();
 
-			auto s2 = std::make_shared<rt::Sphere>();
-			s2->transform() = rt::translation(0, 0, 10);
-			w.set_object(s2);
+			auto& s2 = w.emplace_object<rt::Sphere>();
+			s2.transform() = rt::translation(0, 0, 10);
 
 			auto r = rt::Ray({ 0,0,5 }, { 0,0,1 });
-			rt::Intersection i(4, s2.get());
+			rt::Intersection i(4, &s2);
 
 			auto comps = rt::prepare_computations(i, r);
 			auto c = w.shade_hit(comps);

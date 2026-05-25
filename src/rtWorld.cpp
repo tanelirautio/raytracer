@@ -19,11 +19,11 @@ namespace rt {
 		m_lights.push_back(light);
 	}
 
-	void World::set_object(const std::shared_ptr<Shape>& shape, bool reset) {
+	void World::set_object(std::unique_ptr<Shape> shape, bool reset) {
 		if (reset) {
 			m_objects.clear();
 		}
-		m_objects.push_back(shape);
+		m_objects.push_back(std::move(shape));
 	}
 
 	std::vector<Intersection> World::intersect(const Ray& ray) const {
@@ -31,35 +31,8 @@ namespace rt {
 		std::vector<Intersection> xs;
 
 		for (const auto& shape : m_objects) {
-			switch (shape->type()) {
-				case Shape::Type::SPHERE: {
-					//LOG("Sphere!");
-					auto sphere = dynamic_cast<Sphere*>(shape.get());
-					if (sphere) {
-						auto v = sphere->intersect(ray);
-						xs.insert(xs.end(), v.begin(), v.end());
-					}
-					break;
-				}
-				case Shape::Type::CUBE: {
-					//LOG("Cube!");
-					break;
-				}
-				case Shape::Type::PLANE: {
-					//LOG("Plane!");
-					auto plane = dynamic_cast<Plane*>(shape.get());
-					if (plane) {
-						auto v = plane->intersect(ray);
-						xs.insert(xs.end(), v.begin(), v.end());
-					}
-					break;
-				}
-				default: {
-					//LOG("Unknown!");
-					assert(false);
-					break;
-				}
-			}
+			auto v = shape->intersect(ray);
+			xs.insert(xs.end(), v.begin(), v.end());
 		}
 
 		std::sort(xs.begin(), xs.end());
@@ -101,27 +74,6 @@ namespace rt {
 		return false;
 	}
 	
-	/*
-	void World::create_default() {
-		auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Vector(1, 1, 1));
-		m_lights.push_back(light);
-
-		rt::Material m1;
-		m1.color = { 0.8f, 1.0f, 0.6f };
-		m1.diffuse = 0.7f;
-		m1.specular = 0.2f;
-		m1.pattern = nullptr;
-
-		auto s1 = std::make_shared<Sphere>();
-		s1->material() = m1;
-		m_objects.push_back(s1);
-
-		auto s2 = std::make_shared<Sphere>();
-		s2->transform() = scaling(0.5f, 0.5f, 0.5f);
-		m_objects.push_back(s2);
-	}
-	*/
-
 	void World::create_default() {
 		auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Vector(1, 1, 1));
 		m_lights.push_back(light);
@@ -131,13 +83,11 @@ namespace rt {
 		m1.diffuse = 0.7f;
 		m1.specular = 0.2f;
 
-		auto s1 = std::make_shared<Sphere>();
-		s1->material() = m1;
-		m_objects.push_back(s1);
+		auto& s1 = emplace_object<Sphere>();
+		s1.material() = m1;
 
-		auto s2 = std::make_shared<Sphere>();
-		s2->transform() = scaling(0.5f, 0.5f, 0.5f);
-		m_objects.push_back(s2);
+		auto& s2 = emplace_object<Sphere>();
+		s2.transform() = scaling(0.5f, 0.5f, 0.5f);
 	}
 
 	World get_default_world() {

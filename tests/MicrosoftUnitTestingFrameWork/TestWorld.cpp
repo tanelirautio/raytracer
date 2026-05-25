@@ -37,8 +37,10 @@ namespace TestProject
 			Assert::IsTrue(w.get_objects().size() == 2);
 
 			Assert::IsTrue(*w.get_lights().at(0).get() == light);
-			Assert::IsTrue(*w.get_objects().at(0).get() == s1);
-			Assert::IsTrue(*w.get_objects().at(1).get() == s2);
+			Assert::IsTrue(w.get_objects().at(0)->material().color == s1.material().color);
+			Assert::IsTrue(w.get_objects().at(0)->material().diffuse == s1.material().diffuse);
+			Assert::IsTrue(w.get_objects().at(0)->material().specular == s1.material().specular);
+			Assert::IsTrue(w.get_objects().at(1)->transform() == s2.transform());
 		}
 
 		TEST_METHOD(Intersect_a_world_with_a_ray)

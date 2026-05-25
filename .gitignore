@@ -39,6 +39,7 @@ build/
 x64/
 Win32/
 TestResults/
+vcpkg_installed/
 
 # Other VS stuff
 .vs/

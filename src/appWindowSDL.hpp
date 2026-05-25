@@ -4,8 +4,8 @@
 #include "rtDefs.hpp"
 #include "appWindow.hpp"
 
-#include <SDL.h>
-#include <SDL_ttf.h>
+#include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 #include <string>
 #include <vector>
 #include <mutex>
@@ -24,22 +24,24 @@ namespace app {
 	private:
 		void init();
 		void handle_events();
+		void update_render_time_texture();
 
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;
-		SDL_Surface* m_surface = nullptr;
 		SDL_Texture* m_texture = nullptr;
 
 		int m_width;
 		int m_height;
 
 		std::mutex m_surface_mutex;
+		std::vector<u8> m_pixels;
 
 		bool m_show_time = true; 
 		std::string m_render_time_str; 
-		TTF_Font* m_font;
-		SDL_Surface* m_time_surface = nullptr;
-		SDL_Rect m_time_rect;
+		TTF_Font* m_font = nullptr;
+		SDL_Texture* m_time_texture = nullptr;
+		int m_time_width = 0;
+		int m_time_height = 0;
 		std::string m_last_render_time;
 	};
 

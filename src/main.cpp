@@ -5,7 +5,7 @@
 #include "appState.hpp"
 #include "rtMain.hpp"
 #include "appWindow.hpp"
-#include "appWindowSDL.hpp"
+#include <SDL3/SDL_main.h>
 
 
 #include <chrono>
@@ -52,15 +52,11 @@ void render_thread_function(app::Window* w) {
 int main(int argc, char** argv) {
 	g_app_running = true;
 
-    app::Window* window = nullptr;
-    window = new app::WindowSDL(WIDTH, HEIGHT);
+	auto window = app::create_window(WIDTH, HEIGHT);
     
-    std::thread render_thread(render_thread_function, window);
+    std::thread render_thread(render_thread_function, window.get());
     window->run(); 
     render_thread.join();
 
-    if (window) {
-        delete window; 
-    }
     return 0;
 }

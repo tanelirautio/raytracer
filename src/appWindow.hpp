@@ -2,6 +2,7 @@
 #define __APP_WINDOW_HPP__
 
 #include "rtDefs.hpp"
+#include <memory>
 #include <string>
 
 namespace app {
@@ -24,6 +25,8 @@ namespace app {
 		private:
 			Type m_type;
 	};
+
+	std::unique_ptr<Window> create_window(i32 width, i32 height);
 
 }
 

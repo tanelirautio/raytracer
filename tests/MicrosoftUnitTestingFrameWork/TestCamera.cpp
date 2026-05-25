@@ -1,8 +1,11 @@
 #include "CppUnitTest.h"
 
 #include "../../src/rtMain.hpp"
+#include <atomic>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+std::atomic<bool> g_app_running = true;
 
 namespace TestProject
 {

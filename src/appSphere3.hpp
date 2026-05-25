@@ -9,13 +9,13 @@
 namespace app {
 	class Sphere3 {
 	public:
-		Sphere3(i32 width, i32 height); 
+		Sphere3(i32 width, i32 height);
 		~Sphere3() = default;
 		rt::Canvas create(rt::Camera::cancel_callback should_cancel = {});
 		void set_window_callback(app::Window& w);
 	private:
-		i32 m_width;
-		i32 m_height;
+		i32 m_width = 0;
+		i32 m_height = 0;
 		std::unique_ptr<rt::Camera> m_camera;
 	};
 }

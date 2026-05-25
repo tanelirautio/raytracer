@@ -5,13 +5,8 @@
 
 namespace rt {
 	struct Tuple {
-		Tuple() : x(0), y(0), z(0), w(0) {}
-		Tuple(f32 _x, f32 _y, f32 _z, f32 _w) {
-			x = _x;
-			y = _y;
-			z = _z;
-			w = _w;
-		}
+		Tuple() = default;
+		Tuple(f32 _x, f32 _y, f32 _z, f32 _w) : x(_x), y(_y), z(_z), w(_w) {}
 
 		f32 magnitude() const;
 		Tuple normalize() const;
@@ -19,10 +14,10 @@ namespace rt {
 		bool is_point() const { return w == 1; }
 		bool is_vector() const { return w == 0; }
 
-		f32 x;
-		f32 y;
-		f32 z;
-		f32 w;
+		f32 x = 0;
+		f32 y = 0;
+		f32 z = 0;
+		f32 w = 0;
 
 		void debug_print() const;
 	};

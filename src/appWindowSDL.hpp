@@ -41,8 +41,8 @@ namespace app {
 		RendererPtr m_renderer{ nullptr, SDL_DestroyRenderer };
 		TexturePtr m_texture{ nullptr, SDL_DestroyTexture };
 
-		int m_width;
-		int m_height;
+		int m_width = 0;
+		int m_height = 0;
 
 		std::mutex m_surface_mutex;
 		std::vector<u8> m_pixels;
@@ -59,4 +59,3 @@ namespace app {
 }
 
 #endif
-

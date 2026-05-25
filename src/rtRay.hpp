@@ -22,8 +22,8 @@ namespace rt {
 
 			void debug_print() const;
 		private:
-			Point m_origin;
-			Vector m_direction;
+			Point m_origin = {};
+			Vector m_direction = {};
 	};
 
 	bool operator==(const Ray& lhs, const Ray& rhs);

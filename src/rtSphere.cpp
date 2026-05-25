@@ -3,10 +3,7 @@
 #include <algorithm>
 
 namespace rt {
-	Sphere::Sphere(Point origin, f32 radius) : Shape(Type::SPHERE) {
-		m_origin = origin;
-		m_radius = radius;
-	}
+	Sphere::Sphere(Point origin, f32 radius) : Shape(Type::SPHERE), m_origin(origin), m_radius(radius) {}
 
 	std::vector<Intersection> Sphere::local_intersect(const Ray& r) const {
 		Vector sphere_to_ray = (Vector)(r.origin() - m_origin);		

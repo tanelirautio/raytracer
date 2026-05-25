@@ -22,8 +22,8 @@ namespace rt {
 			std::vector<Intersection> local_intersect(const Ray& r) const override;
 			Vector local_normal_at(const rt::Point& point) const override;
 		private:
-			Point m_origin;
-			f32 m_radius;
+			Point m_origin = {};
+			f32 m_radius = 1.0f;
 	};
 
 	bool operator==(const Sphere& lhs, const Sphere& rhs);

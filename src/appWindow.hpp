@@ -13,9 +13,7 @@ namespace app {
 				SDL,
 				CLI,
 			};
-			Window(Type type) {
-				m_type = type;
-			}
+			Window(Type type) : m_type(type) {}
 			virtual ~Window() {}
 			virtual void run() = 0;
 			virtual void pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) = 0;
@@ -23,7 +21,7 @@ namespace app {
 
 			Type type() const { return m_type; }
 		private:
-			Type m_type;
+			Type m_type = Type::CLI;
 	};
 
 	std::unique_ptr<Window> create_window(i32 width, i32 height);
@@ -31,5 +29,4 @@ namespace app {
 }
 
 #endif
-
 

@@ -6,13 +6,14 @@
 namespace rt {
 
     PerturbedPattern::PerturbedPattern(const std::shared_ptr<Pattern>& sub_pattern, float perturbation_scale)
-        : Pattern(Type::PERTURBED), m_sub_pattern(sub_pattern), m_perturbation_scale(perturbation_scale)
+        : Pattern(Type::PERTURBED),
+          m_sub_pattern(sub_pattern),
+          m_noise(std::make_unique<FastNoiseLite>()),
+          m_perturbation_scale(perturbation_scale)
     {
         if (!m_sub_pattern) {
             throw std::invalid_argument("PerturbedPattern requires a sub-pattern");
         }
-
-        m_noise = std::make_unique<FastNoiseLite>();
 
         m_noise->SetNoiseType(FastNoiseLite::NoiseType_Perlin);
         m_noise->SetFrequency(10.f);

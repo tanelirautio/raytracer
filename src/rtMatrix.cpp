@@ -5,9 +5,7 @@
 
 namespace rt {
 
-	Matrix::Matrix(i32 rows, i32 cols) {
-		m_size = Size(std::pair<i32,i32>(std::make_pair(rows, cols)));
-
+	Matrix::Matrix(i32 rows, i32 cols) : m_size(Size(std::make_pair(rows, cols))) {
 		m_matrix.resize(rows);
 		for (auto& col : m_matrix) {
 			col.resize(cols);

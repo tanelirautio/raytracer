@@ -21,10 +21,7 @@ namespace rt {
 				UNKNOWN
 			};
 
-			Pattern(Type type) {
-				m_type = type;
-				m_transform = get_identity_matrix4();
-			}
+			Pattern(Type type) : m_transform(get_identity_matrix4()), m_type(type) {}
 			virtual ~Pattern() = default;
 			
 			const Matrix& transform() const { return m_transform; }
@@ -36,7 +33,7 @@ namespace rt {
 			Type type() const { return m_type; }
 		private:
 			Matrix m_transform;
-			Type m_type;
+			Type m_type = Type::UNKNOWN;
 	};
 
 	bool operator==(const Pattern& lhs, const Pattern& rhs);

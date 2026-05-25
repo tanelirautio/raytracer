@@ -26,10 +26,10 @@ namespace rt {
         float noise(const Vector& p) const;
         Vector random_unit_vector() const;
 
-        Color m_a;
-        Color m_b;
-        i32 m_octaves;
-        f32 m_persistence;
+        Color m_a = {};
+        Color m_b = {};
+        i32 m_octaves = 0;
+        f32 m_persistence = 0;
     };
 }
 

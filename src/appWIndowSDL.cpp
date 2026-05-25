@@ -10,9 +10,8 @@ namespace app {
 		SDL_Quit();
 	}
 
-	WindowSDL::WindowSDL(i32 width, i32 height) : Window(Type::SDL) {
-		m_width = std::max(width, 320);
-		m_height = std::max(height, 200);
+	WindowSDL::WindowSDL(i32 width, i32 height)
+		: Window(Type::SDL), m_width(std::max(width, 320)), m_height(std::max(height, 200)) {
 		init();
 	}
 

@@ -13,11 +13,11 @@ namespace rt {
 	class Matrix {
 		public:
 			struct Size {
-				Size() {};
-				Size(const std::pair<i32, i32>& size) { m_size = size; }
+				Size() = default;
+				Size(const std::pair<i32, i32>& size) : m_size(size) {}
 				i32 rows() const { return m_size.first; }
 				i32 cols() const { return m_size.second; }
-				std::pair<i32, i32> m_size;
+				std::pair<i32, i32> m_size = {};
 			};
 
 			Matrix() : Matrix(4, 4) {}

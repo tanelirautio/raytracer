@@ -23,8 +23,8 @@ namespace rt {
 			std::string canvas_to_ppm() const;
 			std::vector<u8> to_bytearray() const;
 		private:
-			i32 m_width;
-			i32 m_height;
+			i32 m_width = 0;
+			i32 m_height = 0;
 			std::vector<Color> m_data;
 	};
 }

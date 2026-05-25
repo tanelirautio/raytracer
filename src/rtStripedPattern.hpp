@@ -16,8 +16,8 @@ namespace rt {
 
 			Color pattern_at(const Point& p) const final override;
 		private:
-			Color m_a;
-			Color m_b;
+			Color m_a = {};
+			Color m_b = {};
 
 	};
 }

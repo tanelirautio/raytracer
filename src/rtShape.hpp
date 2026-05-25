@@ -21,17 +21,9 @@ namespace rt {
 				CUBE,
 				UNKNOWN
 			};
-			Shape(Type type) {
-				m_id = ++NEXT_ID;
-				m_type = type;
-				m_transform = get_identity_matrix4();
-			}
-			Shape(const Shape& other) {
-				m_id = ++NEXT_ID;
-				m_material = other.m_material;
-				m_transform = other.m_transform;
-				m_type = other.m_type;
-			}
+			Shape(Type type) : m_transform(get_identity_matrix4()), m_type(type), m_id(++NEXT_ID) {}
+			Shape(const Shape& other)
+				: m_material(other.m_material), m_transform(other.m_transform), m_type(other.m_type), m_id(++NEXT_ID) {}
 			Shape& operator=(const Shape& other) {
 				if (this != &other) {
 					m_material = other.m_material;

@@ -19,7 +19,7 @@ namespace rt {
     private:
         std::shared_ptr<Pattern> m_sub_pattern;
         std::unique_ptr<FastNoiseLite> m_noise;
-        float m_perturbation_scale;
+        float m_perturbation_scale = 0.0f;
 
         Point perturb(const Point& p) const;
     };

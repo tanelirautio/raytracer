@@ -7,11 +7,7 @@
 
 namespace app {
 	Sphere3::Sphere3(i32 width, i32 height)
-	{
-		m_width = width;
-		m_height = height;
-		m_camera = rt::make_camera(width, height, (f32)(M_PI / 3.f));
-	}
+		: m_width(width), m_height(height), m_camera(rt::make_camera(width, height, (f32)(M_PI / 3.f))) {}
 
 	rt::Canvas Sphere3::create(rt::Camera::cancel_callback should_cancel) {
 

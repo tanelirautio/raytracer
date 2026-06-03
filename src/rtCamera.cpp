@@ -63,16 +63,17 @@ namespace rt {
 		// Split rendering work across threads
 		auto render_part = [&](i32 start_row, i32 end_row) {
 			for (i32 y = start_row; y < end_row && !is_cancelled(); y++) {
-				for (i32 x = 0; x < m_hsize && !is_cancelled(); x++) {
+				std::vector<Color> row(static_cast<size_t>(m_hsize));
+
+				for (i32 x = 0; x < m_hsize; x++) {
 					Ray ray = ray_for_pixel(x, y, cached_inverse_transform);
 					Color color = w.color_at(ray);
 					image.write_pixel(x, y, color);
+					row[static_cast<size_t>(x)] = color;
+				}
 
-					// Thread-safe callback
-					if (m_pixel_callback) {
-						m_pixel_callback(x, y, color.r(), color.g(), color.b());
-						//std::this_thread::sleep_for(std::chrono::milliseconds(1));
-					}
+				if (m_row_callback) {
+					m_row_callback(y, row);
 				}
 			}
 		};

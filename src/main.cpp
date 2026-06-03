@@ -19,8 +19,8 @@ void render_thread_function(app::Window* w, app::AppState& state, const std::str
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	
 	auto scene = app::make_scene(scene_name, WIDTH, HEIGHT);
-	scene.camera.set_pixel_callback([w](i32 x, i32 y, f32 r, f32 g, f32 b) {
-		w->pixel_changed(x, y, r, g, b);
+	scene.camera.set_row_callback([w](i32 y, const std::vector<rt::Color>& row) {
+		w->row_changed(y, row);
 	});
 
 	rt::Canvas canvas = scene.camera.render(scene.world, [&state] {

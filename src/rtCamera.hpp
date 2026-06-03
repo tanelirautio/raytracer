@@ -9,6 +9,7 @@
 #include <functional>
 #include <memory>
 #include <utility>
+#include <vector>
 
 namespace rt {
 	class Ray;
@@ -35,9 +36,9 @@ namespace rt {
 			const Matrix& transform() const { return m_transform; }
 			Matrix& transform() { return m_transform; }
 
-			using pixel_callback = std::function<void(i32, i32, f32, f32, f32)>;
-			void set_pixel_callback(pixel_callback callback) {
-				m_pixel_callback = std::move(callback);
+			using row_callback = std::function<void(i32, const std::vector<Color>&)>;
+			void set_row_callback(row_callback callback) {
+				m_row_callback = std::move(callback);
 			}
 
 
@@ -53,7 +54,7 @@ namespace rt {
 			f32 m_pixel_size = 0;
 			Matrix m_transform;
 
-			pixel_callback m_pixel_callback;
+			row_callback m_row_callback;
 	};
 
 	std::unique_ptr<Camera> make_camera(i32 width, i32 height, f32 fov);

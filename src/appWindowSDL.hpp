@@ -20,7 +20,7 @@ namespace app {
 
 		void run(AppState& state);
 
-		void pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b);
+		void row_changed(i32 y, const std::vector<rt::Color>& row);
 		void set_render_time(const std::string& render_time);
 	private:
 		void init();

@@ -79,21 +79,25 @@ namespace app {
 		}
 	}
 
-	void WindowSDL::pixel_changed(i32 x, i32 y, f32 r, f32 g, f32 b) {
-		if (x < 0 || x >= m_width || y < 0 || y >= m_height) {
+	void WindowSDL::row_changed(i32 y, const std::vector<rt::Color>& row) {
+		if (y < 0 || y >= m_height) {
 			return;
 		}
 
 		std::lock_guard<std::mutex> lock(m_surface_mutex);
+		const size_t pixel_count = std::min(row.size(), static_cast<size_t>(m_width));
 
-		Uint8 red = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(r * 255.f)), 0, 255));
-		Uint8 green = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(g * 255.f)), 0, 255));
-		Uint8 blue = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(b * 255.f)), 0, 255));
+		for (size_t x = 0; x < pixel_count; x++) {
+			const auto& color = row[x];
+			Uint8 red = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(color.r() * 255.f)), 0, 255));
+			Uint8 green = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(color.g() * 255.f)), 0, 255));
+			Uint8 blue = static_cast<Uint8>(std::clamp(static_cast<i32>(std::round(color.b() * 255.f)), 0, 255));
 
-		size_t offset = (static_cast<size_t>(y) * static_cast<size_t>(m_width) + static_cast<size_t>(x)) * 3;
-		m_pixels[offset] = red;
-		m_pixels[offset + 1] = green;
-		m_pixels[offset + 2] = blue;
+			size_t offset = (static_cast<size_t>(y) * static_cast<size_t>(m_width) + x) * 3;
+			m_pixels[offset] = red;
+			m_pixels[offset + 1] = green;
+			m_pixels[offset + 2] = blue;
+		}
 	}
 
 	void WindowSDL::handle_events(AppState& state) {

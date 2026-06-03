@@ -1,7 +1,4 @@
-//include "appSphere.hpp"
-//include "appSphere2.hpp"
-#include "appSphere3.hpp"
-
+#include "appScene.hpp"
 #include "appState.hpp"
 #include "rtMain.hpp"
 #include "appWindow.hpp"
@@ -18,12 +15,15 @@
 const i32 WIDTH = 160;
 const i32 HEIGHT = 100;
 
-void render_thread_function(app::Window* w, app::AppState& state) {
+void render_thread_function(app::Window* w, app::AppState& state, const std::string& scene_name) {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	
-	app::Sphere3 s(WIDTH, HEIGHT);
-	s.set_window_callback(*w);
-	rt::Canvas canvas = s.create([&state] {
+	auto scene = app::make_scene(scene_name, WIDTH, HEIGHT);
+	scene.camera.set_pixel_callback([w](i32 x, i32 y, f32 r, f32 g, f32 b) {
+		w->pixel_changed(x, y, r, g, b);
+	});
+
+	rt::Canvas canvas = scene.camera.render(scene.world, [&state] {
 		return !state.running.load();
 	});
 	
@@ -31,7 +31,7 @@ void render_thread_function(app::Window* w, app::AppState& state) {
 
 	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
 	auto time_str = rt::format_minute_seconds(ms);
-	LOG("Time to render the image: %s", time_str.c_str());
+	LOG("Time to render scene '%s': %s", scene.name.c_str(), time_str.c_str());
 
 	w->set_render_time(time_str);
 
@@ -53,11 +53,12 @@ void render_thread_function(app::Window* w, app::AppState& state) {
 
 int main(int argc, char** argv) {
 	app::AppState state;
+	std::string scene_name = argc > 1 ? argv[1] : std::string(app::default_scene_name());
 
 	auto window = app::create_window(WIDTH, HEIGHT);
     
     std::thread render_thread([&] {
-        render_thread_function(window.get(), state);
+        render_thread_function(window.get(), state, scene_name);
     });
     window->run(state);
     render_thread.join();

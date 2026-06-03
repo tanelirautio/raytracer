@@ -43,6 +43,7 @@ namespace rt {
 
 		private:
 			void calculate_pixel_size();
+			Ray ray_for_pixel(i32 px, i32 py, const Matrix& inverse_transform) const;
 
 			i32 m_hsize = 0;
 			i32 m_vsize = 0;

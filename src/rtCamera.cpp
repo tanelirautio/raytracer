@@ -11,7 +11,15 @@
 namespace rt {
 
 	Ray Camera::ray_for_pixel(i32 px, i32 py) const {
+		auto inv = inverse(m_transform);
+		if (!inv.has_value()) {
+			return Ray(Point(), Vector());
+		}
 
+		return ray_for_pixel(px, py, inv.value());
+	}
+
+	Ray Camera::ray_for_pixel(i32 px, i32 py, const Matrix& inverse_transform) const {
 		Point origin;
 		Vector direction;
 
@@ -27,19 +35,20 @@ namespace rt {
 		// Using the camera matrix, transform the canvas point and the origin,
 		// and then compute the ray's direction vector
 		// (remember that the canvas is at z = -1)
-		auto inv = inverse(m_transform);
-		if (inv.has_value()) {
-			auto inv_transform = inv.value();
-			auto pixel = inv_transform * Point(world_x, world_y, -1);
-			origin = inv_transform * Point(0, 0, 0);
-			direction = normalize(pixel - origin);
-		}
+		auto pixel = inverse_transform * Point(world_x, world_y, -1);
+		origin = inverse_transform * Point(0, 0, 0);
+		direction = normalize(pixel - origin);
 
 		return Ray(origin, direction);	
 	}
 
 	Canvas Camera::render(const World& w, cancel_callback should_cancel) const {
 		auto image = Canvas(m_hsize, m_vsize);
+		auto inverse_transform = inverse(m_transform);
+		if (!inverse_transform.has_value()) {
+			return image;
+		}
+		const Matrix cached_inverse_transform = inverse_transform.value();
 
 		// hardware_concurrency() may return 0 when the implementation cannot determine a value.
 		u32 num_threads = std::max(1u, std::thread::hardware_concurrency());
@@ -55,7 +64,7 @@ namespace rt {
 		auto render_part = [&](i32 start_row, i32 end_row) {
 			for (i32 y = start_row; y < end_row && !is_cancelled(); y++) {
 				for (i32 x = 0; x < m_hsize && !is_cancelled(); x++) {
-					Ray ray = ray_for_pixel(x, y);
+					Ray ray = ray_for_pixel(x, y, cached_inverse_transform);
 					Color color = w.color_at(ray);
 					image.write_pixel(x, y, color);
 
@@ -72,9 +81,9 @@ namespace rt {
 		i32 rows_per_thread = m_vsize / num_threads;
 		i32 remaining_rows = m_vsize % num_threads;
 
-		for (size_t i = 0; i < num_threads; ++i) {
+		for (u32 i = 0; i < num_threads; ++i) {
 			// Calculate the start and end row for this thread
-			i32 start_row = i * rows_per_thread;
+			i32 start_row = static_cast<i32>(i) * rows_per_thread;
 			i32 end_row = (i == num_threads - 1) ? (start_row + rows_per_thread + remaining_rows) : (start_row + rows_per_thread);
 
 			// Launch a thread to render its part of the image

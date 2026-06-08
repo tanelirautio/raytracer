@@ -14,11 +14,13 @@ namespace rt {
 
 	std::vector<Intersection> Plane::local_intersect(const Ray& r) const {
 		
-		if (abs(r.direction().y) < EPSILON) {
+		const f32 dy = r.direction().y;
+
+		if (std::abs(dy) < EPSILON) {
 			return {};
 		}
 
-		f32 t = -r.origin().y / r.direction().y;
+		f32 t = -r.origin().y / dy;
 		return{ Intersection(t, this) };
 	}
 

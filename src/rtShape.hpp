@@ -43,7 +43,7 @@ namespace rt {
 			Material& material() { return m_material; }
 
 			const Type& type() const { return m_type; }
-			Type& type() { return m_type; }
+			//Type& type() { return m_type; }
 
 			std::vector<Intersection> intersect(const Ray& ray) const;
 			Vector normal_at(const Point& world_point) const;

@@ -12,8 +12,8 @@
 #include <string>
 #include <thread>
 
-const i32 WIDTH = 160;
-const i32 HEIGHT = 100;
+const i32 WIDTH = 640;
+const i32 HEIGHT = 400;
 
 void render_thread_function(app::Window* w, app::AppState& state, const std::string& scene_name) {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();

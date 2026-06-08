@@ -32,6 +32,7 @@ namespace rt {
 		Point over_point;
 		Vector eyev;
 		Vector normalv;
+		Vector reflectv;
 		bool inside = false;
 	};
 

@@ -11,7 +11,7 @@ namespace rt {
     class Shape;
 
     struct Material {
-        Material() : color({ 1,1,1 }), ambient(0.1f), diffuse(0.9f), specular(0.9f), shininess(200.f), pattern(nullptr) {}
+        Material() : color({ 1,1,1 }), ambient(0.1f), diffuse(0.9f), specular(0.9f), shininess(200.f), reflective(0.f), pattern(nullptr) {}
         ~Material() = default;
 
         Color color;
@@ -19,6 +19,7 @@ namespace rt {
         f32 diffuse;
         f32 specular;
         f32 shininess;
+        f32 reflective;
         std::shared_ptr<Pattern> pattern;
     };
 

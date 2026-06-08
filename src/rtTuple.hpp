@@ -45,6 +45,8 @@ namespace rt {
 		Vector reflect(Vector normal) const;
 	};
 
+	Vector reflect(const Vector& v, const Vector& normal);
+
 	Vector normalize(const Tuple& t);
 
 	struct Color : public Tuple {

@@ -36,7 +36,7 @@ namespace TestProject
 			Assert::IsTrue(w.get_lights().size() == 1);
 			Assert::IsTrue(w.get_objects().size() == 2);
 
-			Assert::IsTrue(*w.get_lights().at(0).get() == light);
+			Assert::IsTrue(w.get_lights().at(0) == light);
 			Assert::IsTrue(w.get_objects().at(0)->material().color == s1.material().color);
 			Assert::IsTrue(w.get_objects().at(0)->material().diffuse == s1.material().diffuse);
 			Assert::IsTrue(w.get_objects().at(0)->material().specular == s1.material().specular);
@@ -63,7 +63,7 @@ namespace TestProject
 			rt::Ray r({ 0,0,-5 }, { 0,0,1 });
 			auto shape = w.get_objects().at(0).get();
 
-			Assert::IsTrue(*w.get_lights().at(0).get() == rt::PointLight({ -10,10,-10 }, { 1,1,1 }));
+			Assert::IsTrue(w.get_lights().at(0) == rt::PointLight({ -10,10,-10 }, { 1,1,1 }));
 
 			rt::Intersection i(4, shape);
 			rt::Computations comps = rt::prepare_computations(i, r);
@@ -86,7 +86,7 @@ namespace TestProject
 		TEST_METHOD(Shading_an_intersection_from_the_inside)
 		{
 			rt::World w = rt::get_default_world();
-			auto l = std::make_shared<rt::PointLight>(rt::Point(0, 0.25f, 0), rt::Vector(1, 1, 1));
+			rt::PointLight l(rt::Point(0, 0.25f, 0), rt::Vector(1, 1, 1));
 			w.set_light(l, true); // if true, remove already existing lights
 			rt::Ray r({ 0,0,0 }, { 0,0,1 });
 			auto shape = w.get_objects().at(1).get();
@@ -157,7 +157,7 @@ namespace TestProject
 		TEST_METHOD(Shade_hit_function_is_given_an_intersection_in_shadow)
 		{
 			rt::World w;
-			w.set_light(std::make_shared<rt::PointLight>(rt::Point(0, 0, -10), rt::Vector(1, 1, 1)));
+			w.set_light(rt::PointLight(rt::Point(0, 0, -10), rt::Vector(1, 1, 1)));
 
 			w.emplace_object<rt::Sphere>();
 
@@ -171,6 +171,31 @@ namespace TestProject
 			auto c = w.shade_hit(comps);
 
 			Assert::IsTrue(c == rt::Color(0.1f, 0.1f, 0.1f));
+		}
+
+		TEST_METHOD(The_reflected_color_for_a_nonreflective_material)
+		{
+			rt::World w = rt::get_default_world();
+			rt::Ray r({ 0,0,0 }, { 0,0,1 });
+			auto& s = w.get_objects().at(1);
+			s.get()->material().ambient = 1;
+			rt::Intersection i(1.f, s.get());
+			rt::Computations comps = rt::prepare_computations(i, r);
+			rt::Color c = w.reflected_color(comps);
+			Assert::IsTrue(c == rt::Color(0, 0, 0));
+		}
+
+		TEST_METHOD(The_reflected_color_for_a_reflective_material)
+		{
+			rt::World w = rt::get_default_world();
+			auto& p = w.emplace_object<rt::Plane>();
+			p.material().reflective = 0.5f;
+			p.transform() = rt::translation(0, -1, 0);
+			rt::Ray r({ 0,0,-3 }, { 0, -std::sqrt(2.f) / 2.f, std::sqrt(2.f) / 2.f });
+			rt::Intersection i(std::sqrt(2.f), &p);
+			rt::Computations comps = rt::prepare_computations(i, r);
+			rt::Color c = w.reflected_color(comps);
+			Assert::IsTrue(c == rt::Color(0.19032f, 0.2379f, 0.14274f));
 		}
 	};
 }

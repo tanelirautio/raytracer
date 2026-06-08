@@ -18,7 +18,7 @@ namespace app {
 			sphere.material().color = { 1, 0.2f, 1 };
 
 			rt::PointLight light({ -10, 10, -10 }, { 1, 1, 1 });
-			world.set_light(std::make_shared<rt::PointLight>(light));
+			world.set_light(light);
 
 			rt::Camera camera(width, height, (f32)(M_PI / 3.f));
 			camera.transform() = rt::view_transform({ 0, 0, -5 }, { 0, 0, 0 }, { 0, 1, 0 });
@@ -57,7 +57,7 @@ namespace app {
 			left.material().specular = 0.3f;
 
 			rt::PointLight light({ -10, 10, -10 }, { 1, 1, 1 });
-			world.set_light(std::make_shared<rt::PointLight>(light));
+			world.set_light(light);
 
 			rt::Camera camera(width, height, (f32)(M_PI / 3.f));
 			camera.transform() = rt::view_transform({ 0, 1.5f, -5 }, { 0, 1, 0 }, { 0, 1, 0 });
@@ -104,7 +104,7 @@ namespace app {
 			left.material().pattern.get()->transform() = rt::scaling(0.1f, 0.1f, 0.1f) * rt::rotation_x((f32)M_PI / 2.f);
 
 			rt::PointLight light({ -10, 10, -10 }, { 1, 1, 1 });
-			world.set_light(std::make_shared<rt::PointLight>(light));
+			world.set_light(light);
 
 			rt::Camera camera(width, height, (f32)(M_PI / 3.f));
 			camera.transform() = rt::view_transform({ 0, 1.5f, -5 }, { 0, 1, 0 }, { 0, 1, 0 });

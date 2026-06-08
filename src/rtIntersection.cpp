@@ -27,6 +27,7 @@ namespace rt {
 			comps.inside = false;
 		}
 
+		comps.reflectv = reflect(r.direction(), comps.normalv);
 		comps.over_point = comps.point + comps.normalv * EPSILON;
 
 		return comps;

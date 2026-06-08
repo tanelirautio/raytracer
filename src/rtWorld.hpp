@@ -19,7 +19,7 @@ namespace rt {
 
 			void create_default();
 
-			void set_light(const std::shared_ptr<PointLight>& light, bool reset = false);
+			void set_light(const PointLight& light, bool reset = false);
 			void set_object(std::unique_ptr<Shape> shape, bool reset = false);
 			template <typename T, typename... Args>
 			T& emplace_object(Args&&... args) {
@@ -33,11 +33,14 @@ namespace rt {
 			Color shade_hit(const Computations& comps) const;
 			Color color_at(const Ray& ray) const;
 			bool is_shadowed(const Point& point) const;
+			Color reflected_color(const Computations& comps) const;
 
-			const std::vector<std::shared_ptr<PointLight>>& get_lights() const { return m_lights; }
+			const std::vector<PointLight>& get_lights() const { return m_lights; }
 			const std::vector<std::unique_ptr<Shape>>& get_objects() const { return m_objects; }
 		private:
-			std::vector<std::shared_ptr<PointLight>> m_lights;
+			bool has_opaque_shadow_hit(const Ray& ray, f32 max_distance) const;
+
+			std::vector<PointLight> m_lights;
 			std::vector<std::unique_ptr<Shape>> m_objects;
 	};
 

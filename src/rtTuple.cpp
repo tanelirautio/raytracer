@@ -74,6 +74,10 @@ namespace rt {
 		return *this - (normal * 2 * dot(normal));
 	}
 
+	Vector reflect(const Vector& v, const Vector& normal) {
+		return v.reflect(normal);
+	}
+
 	Vector normalize(const Tuple& t) {
 		f32 m = t.magnitude();
 		return Tuple(t.x / m, t.y / m, t.z / m, t.w / m);

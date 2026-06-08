@@ -12,7 +12,7 @@
 
 namespace rt {
 	
-	void World::set_light(const std::shared_ptr<PointLight>& light, bool reset) {
+	void World::set_light(const PointLight& light, bool reset) {
 		if (reset) {
 			m_lights.clear();
 		}
@@ -42,7 +42,7 @@ namespace rt {
 	Color World::shade_hit(const Computations& comps) const {
 		auto shadowed = is_shadowed(comps.over_point);
 		// TODO: support multiple light sources by calling lighting() for each light and adding the colors together
-		return lighting(comps.object->material(), *comps.object, *get_lights()[0].get(), comps.over_point, comps.eyev, comps.normalv, shadowed);
+		return lighting(comps.object->material(), *comps.object, get_lights()[0], comps.over_point, comps.eyev, comps.normalv, shadowed);
 	}
 
 	Color World::color_at(const Ray& ray) const {
@@ -59,24 +59,43 @@ namespace rt {
 	}
 
 	bool World::is_shadowed(const Point& point) const {
-		auto v = m_lights[0].get()->position() - point;
+		auto v = m_lights[0].position() - point;
 		auto distance = v.magnitude();
 		auto direction = v.normalize();
 
 		auto r = Ray(point, direction);
-		auto intersections = intersect(r);
+		// Opaque-only shadow check: any positive hit before the light fully blocks it.
+		// When transparent materials are introduced, replace this with a light
+		// transmittance calculation that accumulates transparency across all blockers.
+		return has_opaque_shadow_hit(r, distance);
+	}
 
-		auto h = hit(intersections);
-		if (h.has_value() && h.value().t < distance) {
-			return true;
+	bool World::has_opaque_shadow_hit(const Ray& ray, f32 max_distance) const {
+		for (const auto& shape : m_objects) {
+			auto intersections = shape->intersect(ray);
+			for (const auto& intersection : intersections) {
+				if (intersection.t > 0 && intersection.t < max_distance) {
+					return true;
+				}
+			}
 		}
 
 		return false;
 	}
+
+	Color World::reflected_color(const Computations& comps) const {
+		if (comps.object->material().reflective == 0) {
+			return BLACK;
+		}
+
+		Ray reflect_ray(comps.over_point, comps.reflectv);
+		Color color = color_at(reflect_ray);
+
+		return color * comps.object->material().reflective;
+	}
 	
 	void World::create_default() {
-		auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Vector(1, 1, 1));
-		m_lights.push_back(light);
+		m_lights.push_back(PointLight(Point(-10, 10, -10), Vector(1, 1, 1)));
 
 		rt::Material m1;
 		m1.color = { 0.8f, 1.0f, 0.6f };

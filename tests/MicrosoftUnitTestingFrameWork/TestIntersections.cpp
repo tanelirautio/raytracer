@@ -130,6 +130,14 @@ namespace TestProject
 			Assert::IsTrue(comps.point.z > comps.over_point.z);
 		}
 
+		TEST_METHOD(Precomputing_the_reflection_vector)
+		{
+			rt::Plane p;
+			rt::Ray r({ 0, 1, -1 }, { 0, -std::sqrt(2.f) / 2.f, std::sqrt(2.f) / 2.f } );
+			rt::Intersection i(std::sqrt(2.f), &p);
+			rt::Computations comps = rt::prepare_computations(i, r);
+			Assert::IsTrue(comps.reflectv == rt::Vector(0, std::sqrt(2.f) / 2.f, std::sqrt(2.f) / 2.f));
+		}
 
 	};
 }

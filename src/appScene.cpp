@@ -10,6 +10,7 @@ namespace app {
 		constexpr std::string_view SIMPLE_SPHERE = "simple_sphere";
 		constexpr std::string_view BASIC_SPHERES = "basic_spheres";
 		constexpr std::string_view PATTERN_SPHERES = "pattern_spheres";
+		constexpr std::string_view REFLECTIVE_PLANE = "reflective_plane";
 
 		Scene make_simple_sphere(i32 width, i32 height) {
 			rt::World world;
@@ -112,6 +113,77 @@ namespace app {
 			return Scene(std::string(PATTERN_SPHERES), std::move(world), std::move(camera));
 		}
 
+		Scene make_reflective_plane(i32 width, i32 height) {
+			rt::World world;
+
+			auto& large_back = world.emplace_object<rt::Sphere>();
+			large_back.transform() = rt::translation(0.0f, 1.15f, 2.0f) * rt::scaling(1.15f, 1.15f, 1.15f);
+			large_back.material().diffuse = 0.65f;
+			large_back.material().specular = 0.6f;
+			large_back.material().pattern = std::make_shared<rt::RingPattern>(rt::WHITE, rt::NAVY_BLUE);
+			large_back.material().pattern->transform() = rt::scaling(0.18f, 0.18f, 0.18f) * rt::rotation_x((f32)M_PI / 2.f);
+
+			auto& left_front = world.emplace_object<rt::Sphere>();
+			left_front.transform() = rt::translation(-1.9f, 0.55f, -0.8f) * rt::scaling(0.55f, 0.55f, 0.55f);
+			left_front.material().diffuse = 0.7f;
+			left_front.material().specular = 0.4f;
+
+			auto left_front_stripes = std::make_shared<rt::StripedPattern>(rt::ORANGE_RED, rt::YELLOW);
+			left_front_stripes->transform() =
+				rt::scaling(0.18f, 0.18f, 0.18f) *
+				rt::rotation_z((f32)M_PI / 5.f);
+
+			left_front.material().pattern = std::make_shared<rt::PerturbedPattern>(
+				left_front_stripes,
+				0.12f);
+
+			auto& right_front = world.emplace_object<rt::Sphere>();
+			right_front.transform() = rt::translation(1.7f, 0.45f, -1.1f) * rt::scaling(0.45f, 0.45f, 0.45f);
+			right_front.material().diffuse = 0.7f;
+			right_front.material().specular = 0.7f;
+			right_front.material().pattern = std::make_shared<rt::CheckerPattern>(rt::SILVER, rt::DEEP_PINK);
+			right_front.material().pattern->transform() = rt::scaling(0.22f, 0.22f, 0.22f);
+
+			auto& left_mid = world.emplace_object<rt::Sphere>();
+			left_mid.transform() = rt::translation(-1.2f, 0.85f, 1.0f) * rt::scaling(0.85f, 0.85f, 0.85f);
+			left_mid.material().diffuse = 0.65f;
+			left_mid.material().specular = 0.5f;
+			left_mid.material().pattern = std::make_shared<rt::GradientPattern>(rt::SKY_BLUE, rt::DARK_GREEN);
+			left_mid.material().pattern->transform() = rt::scaling(1.4f, 1.4f, 1.4f);
+
+			auto& right_mid = world.emplace_object<rt::Sphere>();
+			right_mid.transform() = rt::translation(1.35f, 0.7f, 0.75f) * rt::scaling(0.7f, 0.7f, 0.7f);
+			right_mid.material().diffuse = 0.75f;
+			right_mid.material().specular = 0.35f;
+			right_mid.material().color = rt::HOT_PINK;
+
+			auto& tiny_center = world.emplace_object<rt::Sphere>();
+			tiny_center.transform() = rt::translation(0.15f, 0.28f, -1.65f) * rt::scaling(0.28f, 0.28f, 0.28f);
+			tiny_center.material().diffuse = 0.6f;
+			tiny_center.material().specular = 0.9f;
+			tiny_center.material().shininess = 300.f;
+			tiny_center.material().color = rt::YELLOW;
+
+			auto& floor = world.emplace_object<rt::Plane>();
+			floor.material().color = rt::Color(0.32f, 0.34f, 0.36f);
+			floor.material().ambient = 0.04f;
+			floor.material().diffuse = 0.35f;
+			floor.material().specular = 0.8f;
+			floor.material().shininess = 300.f;
+			floor.material().reflective = 0.45f;
+
+			rt::PointLight light({ -5, 8, -6 }, { 1, 1, 1 });
+			world.set_light(light);
+
+			rt::Camera camera(width, height, (f32)(M_PI / 3.2f));
+			camera.transform() = rt::view_transform(
+				{ 0, 2.2f, -6.5f },
+				{ 0, 0.75f, 0.35f },
+				{ 0, 1, 0 });
+
+			return Scene(std::string(REFLECTIVE_PLANE), std::move(world), std::move(camera));
+		}
+
 		struct SceneFactory {
 			std::string_view name;
 			Scene(*create)(i32 width, i32 height);
@@ -122,6 +194,7 @@ namespace app {
 				{ SIMPLE_SPHERE, make_simple_sphere },
 				{ BASIC_SPHERES, make_basic_spheres },
 				{ PATTERN_SPHERES, make_pattern_spheres },
+				{ REFLECTIVE_PLANE, make_reflective_plane }
 			};
 			return registry;
 		}
@@ -131,7 +204,7 @@ namespace app {
 		: name(std::move(scene_name)), world(std::move(scene_world)), camera(std::move(scene_camera)) {}
 
 	std::string_view default_scene_name() {
-		return PATTERN_SPHERES;
+		return REFLECTIVE_PLANE;
 	}
 
 	std::vector<std::string_view> scene_names() {

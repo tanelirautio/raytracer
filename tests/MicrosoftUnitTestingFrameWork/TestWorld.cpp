@@ -197,5 +197,19 @@ namespace TestProject
 			rt::Color c = w.reflected_color(comps);
 			Assert::IsTrue(c == rt::Color(0.19032f, 0.2379f, 0.14274f));
 		}
+
+		TEST_METHOD(Shade_hit_with_reflective_material)
+		{
+			rt::World w = rt::get_default_world();
+			auto& p = w.emplace_object<rt::Plane>();
+			p.material().reflective = 0.5f;
+			p.transform() = rt::translation(0, -1, 0);
+
+			rt::Ray r({ 0,0,-3 }, { 0, -std::sqrt(2.f) / 2.f, std::sqrt(2.f) / 2.f });
+			rt::Intersection i(std::sqrt(2.f), &p);
+			rt::Computations comps = rt::prepare_computations(i, r);
+			rt::Color c = w.shade_hit(comps);
+			Assert::IsTrue(c == rt::Color(0.87677f, 0.92436f, 0.82918f));
+		}
 	};
 }

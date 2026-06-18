@@ -39,23 +39,23 @@ namespace rt {
 		return xs;
 	}
 
-	Color World::shade_hit(const Computations& comps) const {
+	Color World::shade_hit(const Computations& comps, int remaining) const {
 		auto shadowed = is_shadowed(comps.over_point);
 		// TODO: support multiple light sources by calling lighting() for each light and adding the colors together
 		Color surface = lighting(comps.object->material(), *comps.object, get_lights()[0], comps.over_point, comps.eyev, comps.normalv, shadowed);
 
-		Color reflected = reflected_color(comps);
+		Color reflected = reflected_color(comps, remaining);
 
 		return surface + reflected;
 	}
 
-	Color World::color_at(const Ray& ray) const {
+	Color World::color_at(const Ray& ray, int remaining) const {
 		auto xs = intersect(ray);
 		if (xs.size() > 0) {
 			// Intersections have been already sorted - we just need to find the first intersection with the lowest non-negative value
 			for (i32 i = 0; i < xs.size(); i++) {
 				if (xs[i].t > 0) {
-					return shade_hit(prepare_computations(xs[i], ray));
+					return shade_hit(prepare_computations(xs[i], ray), remaining);
 				}
 			}
 		}
@@ -87,14 +87,19 @@ namespace rt {
 		return false;
 	}
 
-	Color World::reflected_color(const Computations& comps) const {
+	Color World::reflected_color(const Computations& comps, int remaining) const {
 		if (comps.object->material().reflective == 0) {
 			return BLACK;
 		}
 
 		Ray reflect_ray(comps.over_point, comps.reflectv);
-		Color color = color_at(reflect_ray);
 
+		remaining = remaining - 1;
+		if (remaining <= 0) {
+			return Color(0, 0, 0);
+		}
+
+		Color color = color_at(reflect_ray, remaining - 1);
 		return color * comps.object->material().reflective;
 	}
 	

@@ -10,6 +10,8 @@
 #include <utility>
 
 namespace rt {
+	constexpr int DEFAULT_RECURSIVE_RAY_DEPTH = 5;
+
 	struct Computations;
 	struct Color;
 	class Ray;
@@ -30,10 +32,10 @@ namespace rt {
 			}
 
 			std::vector<Intersection> intersect(const Ray& ray) const;
-			Color shade_hit(const Computations& comps) const;
-			Color color_at(const Ray& ray) const;
+			Color shade_hit(const Computations& comps, int remaining = DEFAULT_RECURSIVE_RAY_DEPTH) const;
+			Color color_at(const Ray& ray, int remaining = DEFAULT_RECURSIVE_RAY_DEPTH) const;
 			bool is_shadowed(const Point& point) const;
-			Color reflected_color(const Computations& comps) const;
+			Color reflected_color(const Computations& comps, int remaining = DEFAULT_RECURSIVE_RAY_DEPTH) const;
 
 			const std::vector<PointLight>& get_lights() const { return m_lights; }
 			const std::vector<std::unique_ptr<Shape>>& get_objects() const { return m_objects; }

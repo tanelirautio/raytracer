@@ -11,6 +11,7 @@ namespace app {
 		constexpr std::string_view BASIC_SPHERES = "basic_spheres";
 		constexpr std::string_view PATTERN_SPHERES = "pattern_spheres";
 		constexpr std::string_view REFLECTIVE_PLANE = "reflective_plane";
+		constexpr std::string_view MUTUALLY_REFLECTIVE_SURFACES = "mutually_reflective_surfaces";
 
 		Scene make_simple_sphere(i32 width, i32 height) {
 			rt::World world;
@@ -184,6 +185,61 @@ namespace app {
 			return Scene(std::string(REFLECTIVE_PLANE), std::move(world), std::move(camera));
 		}
 
+		Scene make_mutually_reflective_surfaces(i32 width, i32 height) {
+			rt::World world;
+
+			auto& center = world.emplace_object<rt::Sphere>();
+			center.transform() = rt::translation(0.f, 0.55f, 0.f) * rt::scaling(0.5f, 0.5f, 0.5f);
+			center.material().diffuse = 0.6f;
+			center.material().specular = 0.9f;
+			center.material().shininess = 300.f;
+			center.material().color = rt::HOT_PINK;
+
+			auto& left = world.emplace_object<rt::Sphere>();
+			left.transform() = rt::translation(-1.1f, 0.35f, -0.45f) * rt::scaling(0.35f, 0.35f, 0.35f);
+			left.material().diffuse = 0.7f;
+			left.material().specular = 0.5f;
+			left.material().shininess = 200.f;
+			left.material().color = rt::SKY_BLUE;
+
+			auto& right = world.emplace_object<rt::Sphere>();
+			right.transform() = rt::translation(0.95f, 0.28f, -1.15f) * rt::scaling(0.28f, 0.28f, 0.28f);
+			right.material().diffuse = 0.7f;
+			right.material().specular = 0.6f;
+			right.material().shininess = 250.f;
+			right.material().color = rt::YELLOW;
+
+			auto& floor = world.emplace_object<rt::Plane>();
+			floor.material().color = rt::Color(0.32f, 0.34f, 0.36f);
+			floor.material().ambient = 0.08f;
+			floor.material().diffuse = 0.35f;
+			floor.material().specular = 0.8f;
+			floor.material().shininess = 300.f;
+			floor.material().reflective = 0.65f;
+			floor.material().pattern = std::make_shared<rt::CheckerPattern>(rt::WHITE, rt::BLACK);
+			floor.material().pattern->transform() = rt::scaling(0.5f, 0.5f, 0.5f);
+
+			auto& ceiling = world.emplace_object<rt::Plane>();
+			ceiling.transform() = rt::translation(0, 1.8f, 0);
+			ceiling.material().color = rt::Color(0.26f, 0.28f, 0.30f);
+			ceiling.material().ambient = 0.08f;
+			ceiling.material().diffuse = 0.35f;
+			ceiling.material().specular = 0.8f;
+			ceiling.material().shininess = 300.f;
+			ceiling.material().reflective = 0.65f;
+
+			rt::PointLight light({ -3.5f, 1.35f, -4.0f }, { 1, 1, 1 });
+			world.set_light(light);
+
+			rt::Camera camera(width, height, (f32)(M_PI / 2.6f));
+			camera.transform() = rt::view_transform(
+				{ 0, 0.9f, -4.8f },
+				{ 0, 0.75f, 0.0f },
+				{ 0, 1, 0 });
+
+			return Scene(std::string(MUTUALLY_REFLECTIVE_SURFACES), std::move(world), std::move(camera));
+		}
+
 		struct SceneFactory {
 			std::string_view name;
 			Scene(*create)(i32 width, i32 height);
@@ -194,7 +250,8 @@ namespace app {
 				{ SIMPLE_SPHERE, make_simple_sphere },
 				{ BASIC_SPHERES, make_basic_spheres },
 				{ PATTERN_SPHERES, make_pattern_spheres },
-				{ REFLECTIVE_PLANE, make_reflective_plane }
+				{ REFLECTIVE_PLANE, make_reflective_plane },
+				{ MUTUALLY_REFLECTIVE_SURFACES, make_mutually_reflective_surfaces }
 			};
 			return registry;
 		}
@@ -204,7 +261,7 @@ namespace app {
 		: name(std::move(scene_name)), world(std::move(scene_world)), camera(std::move(scene_camera)) {}
 
 	std::string_view default_scene_name() {
-		return REFLECTIVE_PLANE;
+		return MUTUALLY_REFLECTIVE_SURFACES;
 	}
 
 	std::vector<std::string_view> scene_names() {

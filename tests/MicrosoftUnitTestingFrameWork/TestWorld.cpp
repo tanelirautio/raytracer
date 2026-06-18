@@ -211,5 +211,38 @@ namespace TestProject
 			rt::Color c = w.shade_hit(comps);
 			Assert::IsTrue(c == rt::Color(0.87677f, 0.92436f, 0.82918f));
 		}
+
+		TEST_METHOD(Color_at_with_mutually_reflective_surfaces)
+		{
+			rt::World w = rt::get_default_world();
+			rt::PointLight light({ 0,0,0 }, rt::Color(1, 1, 1));
+			w.set_light(light, true);
+
+			auto& lower = w.emplace_object<rt::Plane>();
+			lower.material().reflective = 1;
+			lower.transform() = rt::translation(0, -1, 0);
+
+			auto& upper = w.emplace_object<rt::Plane>();
+			upper.material().reflective = 1;
+			upper.transform() = rt::translation(0, 1, 0);
+
+			rt::Ray r({ 0,0,0 }, rt::Vector(0, 1, 0));
+
+			w.color_at(r); // should terminate successfully
+		}
+
+		TEST_METHOD(The_reflected_color_at_the_maximum_recursive_depth)
+		{
+			rt::World w = rt::get_default_world();
+			auto& shape = w.emplace_object<rt::Plane>();
+			shape.material().reflective = 0.5f;
+			shape.transform() = rt::translation(0, -1, 0);
+
+			rt::Ray r({ 0,0,-3 }, { 0, -std::sqrt(2.f) / 2.f, std::sqrt(2.f) / 2.f });
+			rt::Intersection i(std::sqrt(2.f), &shape);
+			rt::Computations comps = rt::prepare_computations(i, r);
+			rt::Color c = w.reflected_color(comps, 0);
+			Assert::IsTrue(c == rt::Color(0,0,0));
+		}
 	};
 }

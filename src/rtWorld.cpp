@@ -55,7 +55,7 @@ namespace rt {
 			// Intersections have been already sorted - we just need to find the first intersection with the lowest non-negative value
 			for (i32 i = 0; i < xs.size(); i++) {
 				if (xs[i].t > 0) {
-					return shade_hit(prepare_computations(xs[i], ray), remaining);
+					return shade_hit(prepare_computations(xs[i], ray, xs), remaining);
 				}
 			}
 		}
@@ -122,7 +122,6 @@ namespace rt {
 		World w;
 		w.create_default();
 		return w;
-
 	}
 
 }

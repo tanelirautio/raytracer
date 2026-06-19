@@ -48,4 +48,13 @@ namespace rt {
 			lhs.type() == rhs.type() &&
 			equal(lhs.radius(), rhs.radius());
 	}
+
+	Sphere Sphere::glass() {
+		Sphere s;
+		s.material().transparency = 1.0f;
+		s.material().refractive_index = 1.5f;
+		return s;
+	}
+
+
 }

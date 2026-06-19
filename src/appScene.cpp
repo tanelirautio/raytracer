@@ -12,6 +12,7 @@ namespace app {
 		constexpr std::string_view PATTERN_SPHERES = "pattern_spheres";
 		constexpr std::string_view REFLECTIVE_PLANE = "reflective_plane";
 		constexpr std::string_view MUTUALLY_REFLECTIVE_SURFACES = "mutually_reflective_surfaces";
+		constexpr std::string_view REFRACTIVE_INDICES = "refractive_indices";
 
 		Scene make_simple_sphere(i32 width, i32 height) {
 			rt::World world;
@@ -240,6 +241,36 @@ namespace app {
 			return Scene(std::string(MUTUALLY_REFLECTIVE_SURFACES), std::move(world), std::move(camera));
 		}
 
+		Scene make_refractive_indices(i32 width, i32 height) {
+			rt::World world;
+
+			auto& sphere_a = world.emplace_object<rt::Sphere>(rt::Sphere::glass());
+			sphere_a.transform() = rt::scaling(2.f, 2.f, 2.f);
+			sphere_a.material().refractive_index = 1.5f;
+
+			auto& sphere_b = world.emplace_object<rt::Sphere>(rt::Sphere::glass());
+			sphere_b.transform() =
+				rt::translation(0.f, 0.f, -0.6f) *
+				rt::scaling(0.75f, 0.75f, 0.75f);
+			sphere_b.material().refractive_index = 2.0f;
+
+			auto& sphere_c = world.emplace_object<rt::Sphere>(rt::Sphere::glass());
+			sphere_c.transform() =
+				rt::translation(0.f, 0.f, 0.6f) *
+				rt::scaling(0.75f, 0.75f, 0.75f);
+			sphere_c.material().refractive_index = 2.5f;
+
+			world.set_light(rt::PointLight({ -5, 5, -5 }, { 1, 1, 1 }));
+
+			rt::Camera camera(width, height, (f32)(M_PI / 3.f));
+			camera.transform() = rt::view_transform(
+				{ 0, 0, -7 },
+				{ 0, 0, 0 },
+				{ 0, 1, 0 });
+
+			return Scene(std::string(REFRACTIVE_INDICES), std::move(world), std::move(camera));
+		}
+
 		struct SceneFactory {
 			std::string_view name;
 			Scene(*create)(i32 width, i32 height);
@@ -251,7 +282,8 @@ namespace app {
 				{ BASIC_SPHERES, make_basic_spheres },
 				{ PATTERN_SPHERES, make_pattern_spheres },
 				{ REFLECTIVE_PLANE, make_reflective_plane },
-				{ MUTUALLY_REFLECTIVE_SURFACES, make_mutually_reflective_surfaces }
+				{ MUTUALLY_REFLECTIVE_SURFACES, make_mutually_reflective_surfaces },
+				{ REFRACTIVE_INDICES, make_refractive_indices }
 			};
 			return registry;
 		}
@@ -261,7 +293,7 @@ namespace app {
 		: name(std::move(scene_name)), world(std::move(scene_world)), camera(std::move(scene_camera)) {}
 
 	std::string_view default_scene_name() {
-		return MUTUALLY_REFLECTIVE_SURFACES;
+		return REFRACTIVE_INDICES;
 	}
 
 	std::vector<std::string_view> scene_names() {

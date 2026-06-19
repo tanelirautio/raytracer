@@ -33,10 +33,13 @@ namespace rt {
 		Vector eyev;
 		Vector normalv;
 		Vector reflectv;
+		f32 n1 = 1.0f;
+		f32 n2 = 1.0f;
 		bool inside = false;
 	};
 
 	Computations prepare_computations(Intersection i, Ray r);
+	Computations prepare_computations(Intersection i, Ray r, const std::vector<Intersection>& xs);
 
 	template<typename ...Args>
 	std::vector<Intersection> intersections(Args const&... args) {

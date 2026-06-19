@@ -110,5 +110,13 @@ namespace TestProject
 			rt::Shape* shape_ptr = dynamic_cast<rt::Shape*>(sphere_ptr);
 			Assert::IsNotNull(shape_ptr);
 		}
+
+		TEST_METHOD(A_helper_for_producing_a_sphere_with_a_glassy_material)
+		{
+			rt::Sphere s = rt::Sphere::glass();
+			Assert::IsTrue(s.transform() == rt::get_identity_matrix(4));
+			Assert::IsTrue(s.material().transparency == 1.0f);
+			Assert::IsTrue(s.material().refractive_index == 1.5f);
+		}
 	};
 }

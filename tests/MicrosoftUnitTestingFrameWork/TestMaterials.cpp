@@ -112,5 +112,11 @@ namespace TestProject
 			Assert::IsTrue(m.reflective == 0.0f);
 		}
 
+		TEST_METHOD(Transparency_and_refractive_Index_for_the_default_material)
+		{
+			rt::Material m;
+			Assert::IsTrue(m.transparency == 0.0f);
+			Assert::IsTrue(m.refractive_index == 1.0f);
+		}
 	};
 }

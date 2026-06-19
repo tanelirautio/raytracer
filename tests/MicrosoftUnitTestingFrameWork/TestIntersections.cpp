@@ -139,5 +139,42 @@ namespace TestProject
 			Assert::IsTrue(comps.reflectv == rt::Vector(0, std::sqrt(2.f) / 2.f, std::sqrt(2.f) / 2.f));
 		}
 
+		TEST_METHOD(Finding_n1_and_n2_at_various_intersections)
+		{
+			rt::Sphere a = rt::Sphere::glass();
+			a.transform() = rt::scaling(2, 2, 2);
+			a.material().refractive_index = 1.5f;
+
+			rt::Sphere b = rt::Sphere::glass();
+			b.transform() = rt::translation(0, 0, -0.25f);
+			b.material().refractive_index = 2.0f;
+
+			rt::Sphere c = rt::Sphere::glass();
+			c.transform() = rt::translation(0, 0, 0.25f);
+			c.material().refractive_index = 2.5f;
+
+			rt::Ray r({ 0, 0, -4 }, { 0, 0, 1 });
+			std::vector<rt::Intersection> xs{
+				{ 2.0f, &a },
+				{ 2.75f, &b },
+				{ 3.25f, &c },
+				{ 4.75f, &b },
+				{ 5.25f, &c },
+				{ 6.f, &a }
+			};
+
+			const float expected_n1[] = { 1.0f, 1.5f, 2.0f, 2.5f, 2.5f, 1.5f };
+			const float expected_n2[] = { 1.5f, 2.0f, 2.5f, 2.5f, 1.5f, 1.0f };
+
+			for (int index = 0; index < 6; ++index) {
+				rt::Computations comps =
+					rt::prepare_computations(xs[index], r, xs);
+
+				Assert::IsTrue(rt::equal(comps.n1, expected_n1[index]));
+				Assert::IsTrue(rt::equal(comps.n2, expected_n2[index]));
+			}
+
+		}
+
 	};
 }
